@@ -1,0 +1,33 @@
+\lstdefinelanguage{GEXF}{
+    morekeywords=[0]{gexf, meta, graph, creator, description, nodes, edges, node, edge, attributes, attribute, options, attvalues, attvalue, default, keywords, color, size, position, parents, parent},
+    morekeywords=[1]{id, for, pid, label, source, target, mode, defaultedgetype, type, lastmodifieddate, datefrom, dateto, cardinal, class, count, title, value, r, g, b, x, y, z},
+    morekeywords=[2]{simple, double, static, dynamic, integer, double, float, boolean, liststring, string},
+    morestring=[b]",
+}
+
+\lstdefinestyle{gexf}{
+    language=GEXF,
+    xleftmargin=\parindent,
+    xrightmargin=\parindent,
+    aboveskip=3mm,
+    belowskip=3mm,
+    tabsize=2,
+    columns=[l]fullflexible,
+    showstringspaces=false,
+    % text styles
+    basicstyle=\scriptsize\ttfamily,
+    commentstyle=\footnotesize\rmfamily\em,
+    stringstyle=\rmfamily\em\color{gray},
+    keywordstyle=[0]\color{blue},
+    keywordstyle=[1]\color{darkorange},
+    keywordstyle=[2]\underbar,
+    % numbers
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=3,
+    firstnumber=1,
+    % decoration
+    frame=shadowbox,
+    frameround=tttf
+    %backgroundcolor=\color{shadecolor}
+}

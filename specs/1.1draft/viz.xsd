@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:ns1="http://www.gexf.net/1.1draft">
+  <xs:import namespace="http://www.gexf.net/1.1draft" schemaLocation="gexf.xsd"/>
+  <!-- extension point -->
+  <!-- extension point -->
+  <!-- new point -->
+  <xs:attributeGroup name="color-content">
+    <xs:attribute name="r" use="required" type="color-channel"/>
+    <xs:attribute name="g" use="required" type="color-channel"/>
+    <xs:attribute name="b" use="required" type="color-channel"/>
+  </xs:attributeGroup>
+  <!-- new point -->
+  <xs:attributeGroup name="position-content">
+    <xs:attribute name="x" use="required" type="space-point"/>
+    <xs:attribute name="y" use="required" type="space-point"/>
+    <xs:attribute name="z" use="required" type="space-point"/>
+  </xs:attributeGroup>
+  <!-- new point -->
+  <xs:attributeGroup name="size-content">
+    <xs:attribute name="value" use="required" type="size-type"/>
+  </xs:attributeGroup>
+  <!-- new point -->
+  <xs:attributeGroup name="thickness-content">
+    <xs:attribute name="value" use="required" type="thickness-type"/>
+  </xs:attributeGroup>
+  <!-- new point -->
+  <xs:attributeGroup name="node-shape-content">
+    <xs:attribute name="value" use="required" type="node-shape-type"/>
+    <xs:attribute name="uri" type="xs:anyURI"/>
+  </xs:attributeGroup>
+  <!-- new point -->
+  <xs:attributeGroup name="edge-shape-content">
+    <xs:attribute name="value" use="required" type="edge-shape-type"/>
+  </xs:attributeGroup>
+  <!-- new datatype -->
+  <xs:simpleType name="color-channel">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="size-type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="thickness-type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="node-shape-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="disc"/>
+      <xs:enumeration value="square"/>
+      <xs:enumeration value="triangle"/>
+      <xs:enumeration value="diamond"/>
+      <xs:enumeration value="image"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="edge-shape-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="solid"/>
+      <xs:enumeration value="dotted"/>
+      <xs:enumeration value="dashed"/>
+      <xs:enumeration value="double"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="space-point">
+    <xs:restriction base="xs:float"/>
+  </xs:simpleType>
+</xs:schema>

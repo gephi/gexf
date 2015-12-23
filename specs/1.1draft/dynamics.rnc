@@ -1,0 +1,55 @@
+default namespace = "http://www.gexf.net/1.1draft"
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+
+## Note: dynamic weight can be obtained by using the reserved title "weight" in attributes
+
+
+# extension point
+graph-content &=
+    attribute timetype { timetype-type }?
+  & attribute start { time-type }?
+  & attribute end { time-type }?
+
+# extension point
+attributes-content &=
+    attribute start { time-type }?
+  & attribute end { time-type }?
+
+# extension point
+attvalue-content &=
+    attribute start { time-type }?
+  & attribute end { time-type }?
+
+# extension point
+node-content &=
+    attribute start { time-type }?
+  & attribute end { time-type }?
+  & element slices { slices-content }?
+
+# extension point
+edge-content &=
+    attribute start { time-type }?
+  & attribute end { time-type }?
+  & element slices { slices-content }?
+
+# new point
+slices-content =
+    element slice { slice-content }+
+
+# new point
+slice-content =
+    attribute start { time-type }?
+  & attribute end { time-type }?
+
+# new datatype
+time-type = 
+    xsd:date | xsd:float
+
+# new datatype
+timetype-type = [ a:defaultValue = "date" ] 
+    string "float" |
+    string "date"
+

@@ -1,0 +1,48 @@
+<!ELEMENT gexf (meta? , graph)>
+	<!ATTLIST gexf version CDATA #REQUIRED>
+	<!ATTLIST gexf variant CDATA #IMPLIED>
+	<!ELEMENT meta (creator , keywords, description, lastModifiedDate)>
+		<!ELEMENT creator (#PCDATA)>
+		<!ELEMENT keywords (#PCDATA)>
+		<!ELEMENT description (#PCDATA)>
+		<!ELEMENT lastModifiedDate (#PCDATA)>
+	<!ELEMENT graph (attributes*, nodes, edges)>
+		<!ATTLIST graph type (static|dynamic) #REQUIRED>
+		<!ATTLIST graph levels CDATA #IMPLIED>
+		<!ATTLIST graph edges (simple|directed|double) #IMPLIED>
+		<!ATTLIST graph datefrom CDATA #IMPLIED>
+		<!ATTLIST graph dateto CDATA #IMPLIED>
+		<!ELEMENT attributes (attribute*)>
+			<!ATTLIST attributes type (static|dynamic) #REQUIRED>
+			<!ATTLIST attributes class (node|edge) #REQUIRED>
+			<!ATTLIST attributes classlevel CDATA #IMPLIED>
+			<!ATTLIST attributes datefrom CDATA #IMPLIED>
+			<!ATTLIST attributes dateto CDATA #IMPLIED>
+			<!ELEMENT attribute EMPTY>
+				<!ATTLIST attribute id CDATA #REQUIRED>
+				<!ATTLIST attribute title CDATA #REQUIRED>
+				<!ATTLIST attribute type (integer|double|float|boolean|liststring|string) #REQUIRED>
+				<!ATTLIST attribute default CDATA #IMPLIED>
+		<!ELEMENT nodes (node*, edges?)>
+			<!ATTLIST nodes count CDATA #IMPLIED>
+			<!ATTLIST nodes level CDATA #IMPLIED>
+			<!ELEMENT node (attvalues?, nodes?)>
+				<!ATTLIST node id CDATA #REQUIRED>
+				<!ATTLIST node pid CDATA #IMPLIED>
+				<!ATTLIST node label CDATA #REQUIRED>
+				<!ATTLIST node datefrom CDATA #IMPLIED>
+				<!ATTLIST node dateto CDATA #IMPLIED>
+				<!ELEMENT attvalues (attvalue*)>
+					<!ELEMENT attvalue EMPTY>
+						<!ATTLIST attvalue id CDATA #REQUIRED>
+						<!ATTLIST attvalue value CDATA #REQUIRED>
+						<!ATTLIST attvalue datefrom CDATA #IMPLIED>
+						<!ATTLIST attvalue dateto CDATA #IMPLIED>
+		<!ELEMENT edges (edge*)>
+			<!ELEMENT edge (attvalues?)>
+				<!ATTLIST edge id CDATA #REQUIRED>
+				<!ATTLIST edge source CDATA #REQUIRED>
+				<!ATTLIST edge target CDATA #REQUIRED>
+				<!ATTLIST edge cardinal CDATA #IMPLIED>
+				<!ATTLIST edge type (sim|dir|dou) #IMPLIED>
+				

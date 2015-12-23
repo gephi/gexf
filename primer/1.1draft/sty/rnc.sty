@@ -1,0 +1,24 @@
+\lstdefinelanguage{RNC}{
+    morekeywords=[1]{start,element,attribute,text,empty,string,text},
+    morekeywords=[2]{default,namespace,datatypes},
+    morekeywords=[3]{grammar,include,parent,inherit},
+    morekeywords=[4]{xsd},
+    morekeywords=[5]{a,defaultValue},
+    morestring=[b]",
+    morecomment=[l]{\#},
+    alsodigit={-},
+    sensitive
+}
+
+
+\lstdefinestyle{rnc}{
+    language=RNC,
+    basicstyle=\scriptsize\ttfamily,
+    commentstyle=\footnotesize\sffamily\em\color{darkgreen},
+    stringstyle=\sffamily\color{red},
+    keywordstyle=[1]\color{blue}\bfseries,
+    keywordstyle=[2]\color{lightblue}\bfseries,
+    keywordstyle=[3]\color{lightblue}\bfseries,
+    keywordstyle=[4]\color{darkgreen}\bfseries,
+    keywordstyle=[5]\color{orange}\bfseries
+}
