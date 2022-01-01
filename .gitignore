@@ -9,3 +9,5 @@
 *.toc
 *.pdf
 *.idea
+.java-version
+*.iml
