@@ -1,0 +1,78 @@
+default namespace = inherit
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+# Extends node
+node-content &=
+    element color { color-content }?
+  & element position { position-content }?
+  & element size { size-content }?
+  & element shape { node-shape-content }?
+
+# Extend edge
+edge-content &=
+    element color { color-content }?
+  & element thickness { thickness-content }?
+  & element shape { edge-shape-content }?
+
+# Color
+color-content =
+    attribute r { color-channel }
+  & attribute g { color-channel }
+  & attribute b { color-channel }
+  & attribute a { alpha-channel }?
+
+# Position
+position-content =
+    attribute x { xsd:float }
+  & attribute y { xsd:float }
+  & attribute z { xsd:float }?
+
+# Size
+size-content =
+    attribute value { size-type }
+
+# Thickness
+thickness-content =
+    attribute value { thickness-type }
+
+# Node shape
+node-shape-content =
+    attribute value { node-shape-type }
+  & attribute uri { xsd:anyURI }?
+
+# Edge shape
+edge-shape-content =
+    attribute value { edge-shape-type }
+
+# Color
+color-channel = 
+    xsd:nonNegativeInteger { maxInclusive = "255" }
+
+# Alpha Channel
+alpha-channel = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0" maxInclusive = "1.0" }
+
+# Size
+size-type = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0"}
+
+# Thickness
+thickness-type = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0"}
+
+# Node shape
+node-shape-type =  [ a:defaultValue = "disc" ] 
+    string "disc" |
+    string "square" |
+    string "triangle" |
+    string "diamond" |
+    string "image"
+
+# Edge shape
+edge-shape-type =  [ a:defaultValue = "solid" ] 
+    string "solid" |
+    string "dotted" |
+    string "dashed" |
+    string "double"
