@@ -18,9 +18,10 @@ edge-content &=
 
 # Color
 color-content =
-    attribute r { color-channel }
+    ((attribute r { color-channel }
   & attribute g { color-channel }
-  & attribute b { color-channel }
+  & attribute b { color-channel })
+    | attribute hex { xsd:token })
   & attribute a { alpha-channel }?
 
 # Position

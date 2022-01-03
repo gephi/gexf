@@ -36,7 +36,9 @@ attvalues-content =
 
 # Attribute value
 attvalue-content =
-    attribute for { id-type }
+    (attribute for { id-type }
+    | (attribute id { id-type }
+      & attribute type { attrtype-type }))
   & attribute value { xsd:string }
 
 
@@ -46,8 +48,23 @@ attrtype-type =
     string "long" | 
     string "double" | 
     string "float" | 
-    string "boolean" | 
-    string "liststring" | 
+    string "boolean" |
+    string "bigdecimal" |
+    string "biginteger" |
+    string "byte" |
+    string "char" |
+    string "short" |
+    string "liststring" |
+    string "listboolean" |
+    string "listinteger" |
+    string "listlong" |
+    string "listfloat" |
+    string "listdouble" |
+    string "listbyte" |
+    string "listshort" |
+    string "listbigdecimal" |
+    string "listbiginteger" |
+    string "listchar" |
     string "string" |
     string "anyURI"
 
@@ -58,4 +75,4 @@ class-type =
 
 # Id type
 id-type =
-    xsd:string | xsd:integer
+    xsd:string | xsd:integer | xsd:long

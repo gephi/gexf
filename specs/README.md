@@ -10,15 +10,15 @@ Install the [trang](https://relaxng.org/jclark/trang.html) utility, also availab
 
 ## Convert a single file
 
-Run this command to for example convert `gexf.rnc` into `gexf.xsd`.
+Run this command to for example convert `gexf.rnc` into `gexf.xsd`:
 
 ```trang -I rnc -O xsd 1.3/gexf.rnc 1.3/gexf.xsd```
 
 ## Rebuild all
 
-Execute the provided `build.sh` script with the folder name, e.g
+Execute the provided `build.sh` script with the folder name, e.g.
 
-```build.sh 1.2draft```
+```build.sh 1.3```
 
 ---
 
@@ -28,13 +28,49 @@ Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.
 
 ## 1.3
 
-Compatible with Gephi 0.9.3 and above.
+Compatible with Gephi 0.9.3 and above. Note that part of the specifications were already implemented since 0.9 but full support is only guaranteed in 0.9.3.
+
+- Add `kind` attribute on `edge` to support multi-graph (i.e. parallel edges)
+- Add the possibility to omit the upfront `<attribute`> definition and rather define the attribute `id` and `type` in the `<attvalue>` element
+- The edge `weight` is now a `double` instead of a `float`
+- Add `xsd:long`as possible `idtype` on `<graph>`
+- Add new attribute types `bigdecimal`, `biginteger`, `char`, `short` and `byte`
+- Add new list attributes like `listboolean` or `listinteger` for each atomic type
+
+### Dynamics
+
+- Add a `timezone` attribute on `<graph>` to use as a timezone in case it's omitted in the element timestamps
+- Open intervals attributes `startopen` and `endopen` are removed. Use regular inclusive `start` and `end` instead
+- Remove `mode`, `start` and `end` attributes on `<attributes>` as it was redundant with `<graph>` attributes
+
+#### Timestamp support
+
+Add the ability to represent time with single timestamps instead of intervals. We want feature parity between the two time representations but note they can't be mixed.
+
+- Add a `timerepresentation` enum in `<graph>` with either `interval` (default) or `timestamp` to configure the way the time is represented
+- Add `timestamp` attribute to `<node>`, `<edge>`, `<spell>` and `<attvalue>` to support this new time representation
+
+#### Alternative to spell elements
+
+- Add a `timestamps` attribute to `<node>` and `<edge>` to represent a list of timestamps without having to use spells
+- Similarly, add a `intervals` attribute to `<node>` and `<edge>`
+
+#### New slice mode
+
+The optional `mode` attribute on `<graph>` now has an additional `slice` value, in addition of `static` and `dynamic`. With slice, the expectation is that the `<graph>` also has either a `timestamp` or `start` / `end` intervals.
+
+- Add a `timestamp` attribute on `<graph>` to characterise the slice this graph represent
+- Change the meaning of the `start` and `end` attributes on `<graph>` to either characterise the slide instead of the time bounds, which should rather be inferred
+
+### Viz
+
+- Add `hex` attribute on `<color>` so it can support values like `#FF00FF`
+- The `z` position is no longer required
+- Dynamic attributes like `start`, `end` or child elements `<spells>` are no longer supported for viz attributes. To represent viz attributes over time, an alternative is to create multiple graphs each representing a slice
 
 ## 1.2
 
 Compatible with Gephi 0.8 and above.
-
-### Graph structure
 
 - The node `label` attribute is now optional
 - `<meta>` should be placed before `<graph>`

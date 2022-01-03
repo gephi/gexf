@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.gexf.net/1.3" xmlns:ns1="http://www.gexf.net/1.3">
+  <!-- Graph -->
+  <xs:group name="graph-content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ns1:attributes"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="attributes" type="ns1:attributes-content"/>
+  <!-- Node -->
+  <xs:group name="node-content">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:attvalues"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="attvalues" type="ns1:attvalues-content"/>
+  <!-- Edge -->
+  <xs:group name="edge-content">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:attvalues"/>
+    </xs:sequence>
+  </xs:group>
+  <!-- Attributes -->
+  <xs:complexType name="attributes-content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ns1:attribute"/>
+    </xs:sequence>
+    <xs:attribute name="class" use="required" type="ns1:class-type"/>
+  </xs:complexType>
+  <xs:element name="attribute" type="ns1:attribute-content"/>
+  <!-- Attribute -->
+  <xs:complexType name="attribute-content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="ns1:default"/>
+      <xs:element ref="ns1:options"/>
+    </xs:choice>
+    <xs:attribute name="id" use="required" type="ns1:id-type"/>
+    <xs:attribute name="title" use="required" type="xs:string"/>
+    <xs:attribute name="type" use="required" type="ns1:attrtype-type"/>
+  </xs:complexType>
+  <xs:element name="default" type="xs:string"/>
+  <xs:element name="options" type="xs:string"/>
+  <!-- Attribute values (for nodes and edges) -->
+  <xs:complexType name="attvalues-content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ns1:attvalue"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="attvalue">
+    <xs:complexType>
+      <xs:attributeGroup ref="ns1:attvalue-content"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Attribute value -->
+  <xs:attributeGroup name="attvalue-content">
+    <xs:attribute name="for" type="ns1:id-type"/>
+    <xs:attribute name="id" type="ns1:id-type"/>
+    <xs:attribute name="type" type="ns1:attrtype-type"/>
+    <xs:attribute name="value" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <!-- Attribute types -->
+  <xs:simpleType name="attrtype-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="long"/>
+      <xs:enumeration value="double"/>
+      <xs:enumeration value="float"/>
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="bigdecimal"/>
+      <xs:enumeration value="biginteger"/>
+      <xs:enumeration value="byte"/>
+      <xs:enumeration value="char"/>
+      <xs:enumeration value="short"/>
+      <xs:enumeration value="liststring"/>
+      <xs:enumeration value="listboolean"/>
+      <xs:enumeration value="listinteger"/>
+      <xs:enumeration value="listlong"/>
+      <xs:enumeration value="listfloat"/>
+      <xs:enumeration value="listdouble"/>
+      <xs:enumeration value="listbyte"/>
+      <xs:enumeration value="listshort"/>
+      <xs:enumeration value="listbigdecimal"/>
+      <xs:enumeration value="listbiginteger"/>
+      <xs:enumeration value="listchar"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="anyURI"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Attribute class (for attributes) -->
+  <xs:simpleType name="class-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="node"/>
+      <xs:enumeration value="edge"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Id type -->
+  <xs:simpleType name="id-type">
+    <xs:union memberTypes="xs:string xs:integer xs:long"/>
+  </xs:simpleType>
+</xs:schema>

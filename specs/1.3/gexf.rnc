@@ -56,6 +56,7 @@ edge-content =
   & attribute source { id-type }
   & attribute target { id-type }
   & attribute weight { weight-type }?
+  & attribute kind { xsd:token}?
 
 ## Hierarchy
 
@@ -95,7 +96,7 @@ edgetype-type = [ a:defaultValue = "undirected" ]
 
 # Id type
 id-type |=
-    xsd:string | xsd:integer
+    xsd:string | xsd:integer | xsd:long
 
 # Id type (for graph)
 idtype-type = [ a:defaultValue = "string" ] 

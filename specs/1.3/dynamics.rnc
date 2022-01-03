@@ -10,31 +10,35 @@ datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 # Extends graph
 graph-content &=
     attribute timeformat { timeformat-type }?
-  & attribute start { time-type }?
-  & attribute end { time-type }?
+  & ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
   & attribute mode { mode-type }?
-
-# Extends attributes
-attributes-content &=
-    attribute start { time-type }?
-  & attribute end { time-type }?
-  & attribute mode { mode-type }?
+  & attribute timerepresentation { timerepresentation-type }?
+  & attribute timezone { xsd:token}?
 
 # Extends attribute values
 attvalue-content &=
-    attribute start { time-type }?
-  & attribute end { time-type }?
+    ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
 
 # Extends node
 node-content &=
-    attribute start { time-type }?
-  & attribute end { time-type }?
+   (((attribute start { time-type }?
+  & attribute end { time-type }?)
+      | attribute intervals { xsd:token })
+    | (attribute timestamp {time-type})
+      | attribute timestamps { xsd:token })
   & element spells { spells-content }?
 
 # Extends edge
 edge-content &=
-    attribute start { time-type }?
-  & attribute end { time-type }?
+   (((attribute start { time-type }?
+  & attribute end { time-type }?)
+      | attribute intervals { xsd:token })
+    | (attribute timestamp {time-type})
+      | attribute timestamps { xsd:token })
   & element spells { spells-content }?
 
 # Spells
@@ -43,8 +47,9 @@ spells-content =
 
 # Spell
 spell-content =
-    attribute start { time-type }?
-  & attribute end { time-type }?
+    ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
 
 
 # Time type
@@ -54,7 +59,8 @@ time-type =
 # Mode type (for graph and attributes)
 mode-type = [ a:defaultValue = "static" ]
     string "static" |
-    string "dynamic"
+    string "dynamic" |
+    string "slice"
 
 # Time format type
 timeformat-type = [ a:defaultValue = "double" ] 
@@ -62,3 +68,7 @@ timeformat-type = [ a:defaultValue = "double" ]
     string "double" |
     string "date" |
     string "dateTime"
+
+timerepresentation-type = [ a:defaultValue = "interval" ]
+    string "interval" |
+    string "timestamp"
