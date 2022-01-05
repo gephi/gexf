@@ -15,7 +15,7 @@ graph-content &=
     | attribute timestamp {time-type})
   & attribute mode { mode-type }?
   & attribute timerepresentation { timerepresentation-type }?
-  & attribute timezone { xsd:token}?
+  & attribute timezone { xsd:token }?
 
 # Extends attribute values
 attvalue-content &=

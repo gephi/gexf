@@ -75,10 +75,10 @@ This document, GEXF Primer, provides an description of GEXF, and should be used 
 Section 2 covers the basic mechanisms of GEXF. It describes how to declare a simple graph by defining its nodes and edges and how to add simple user data to the graph.
 
 \paragraph{}
-Section 3 describes dynamic graph model (i.e. graphs over time).
+Section 5 describes dynamic graph model (i.e. graphs over time).
 
 \paragraph{}
-Section 4 describes mechanisms for extending GEXF to add specific data with the Visualization module in example.
+Section 6 describes mechanisms for extending GEXF to add specific data with the Visualization module in example.
 
 \paragraph{}
 The primer is a non-normative document, which means that it does not provide a definitive specification of the GEXF language. The examples and other explanatory material in this document are provided to help you understand GEXF, but they may not always provide definitive answers. In such cases, you will need to refer to the GEXF specification, and to help you do this, we provide many links pointing to the relevant parts of the specification.
@@ -361,10 +361,25 @@ weight-type = [ a:defaultValue = "1.0" ]
     xsd:float
 \end{lstlisting}
 
+\subsubsection{Parallel edges}
+
+A multigraph is a graph where multiple edges can exist between two nodes.
+GEXF supports this type of graph.
+Note that this is different from hypergraph, which GEXF doesn't support.
+
+\paragraph{}
+Parallel edges must include the additional \textit{kind} attribute to characterise the edge. The triplet source-target-kind must still be unique. In other words, only parallel edges of different kinds can exist in GEXF. The \textit{kind} attribute is a string. In case the graph doesn't have any parallel edges, \textit{kind} can be omitted.
+
+\lstset{ style=gexf }
+\begin{lstlisting}[caption={Parallel edges},label=paralelEdge]
+<edge id="0" source="0" target="1" weight="1.0" kind="friend"/>
+<edge id="1" source="0" target="1" weight="1.0" kind="neighbor"/>
+\end{lstlisting}
+
 \subsection{Network Data} \label{networkdata}
 
 \paragraph{}
-In the previous section we discussed how to describe the topology of a graph in GEXF. While pure topological information may be sufficient for some applications, these days focus is made on network analysis based on data attributes. Data are everywhere.
+In the previous section we discussed how to describe the topology of a graph in GEXF. While pure topological information may be sufficient for some applications, these days focus is made on network analysis based on data attributes.
 
 \paragraph{}
 A bunch of data can be stored within attributes. The concept is the same as table data or SQL. An attribute has a title/name and a value. Attribute’s name/title must be declared for the whole graph. It could be for instance “degree”, “valid” or “url”. Besides the name of the attribute a column also contains the type.
@@ -650,13 +665,13 @@ Since the 1.3 version, GEXF supports a lean definition of attributes directly as
 A \begin{footnotesize}title\end{footnotesize} may be provided as well but it's optional.
 
 \paragraph{}
-The parser would expect consistency in types and titles for a given id. It isn't recommended to mix this lean format with proper definition via \begin{footnotesize}attributes\end{footnotesize} .
+The parser would expect consistency in types and titles for a given id. In addition, it isn't recommended to mix this lean and regular format.
 
 \section{Advanced Concepts I: Hierarchy structure} \label{hierarchy}
 
 \subsection{Introduction}
 
-GEXF format allows creating hierarchical graph structure essentially for representing clustering. We modelize both a tree structure of ancestors and descendents, and a flat graph of nodes bound by edges.
+GEXF format allows creating hierarchical graph structure essentially for clustering representation. We modelize both a tree structure of ancestors and descendents, and a flat graph of nodes bound by edges.
 
 \begin{figure}[!ht]
   \begin{center}
@@ -923,6 +938,59 @@ The default time representation is \begin{footnotesize}interval\end{footnotesize
 </graph>
 \end{lstlisting}
 
+Note that intervals are always defined with a pair of attributes \textit{start} and \textit{end}. Omitting one of the two translates into an infinity bound. For instance, \begin{footnotesize}node id="0" label="Foo" start="2005"\end{footnotesize} translates into a \begin{footnotesize}[2005, +INF]\end{footnotesize} interval for the node.
+
+\subsection{Time format}
+
+Time in GEXF can be encoded in two ways: via numbers or via dates and times. This is controlled via the \begin{footnotesize}timeformat\end{footnotesize} attribute set on the graph element.
+
+\paragraph{}
+As a number, it is an \textit{integer} or a \textit{double}. As a date, it is encoded as an international standard \textit{date} (yyyy-mm-dd) or a \textit{dateTime} defined by the corresponding \href{http://www.w3.org/TR/xmlschema-2/#dateTime}{XSD Datatype}. If omitted, the default type is \textit{double}.
+
+\lstset{ style=gexf }
+\begin{lstlisting}[caption={Double format}]
+<graph mode="dynamic" timeformat="double">
+  <nodes>
+    <node id="0" label="Gephi" start="1.0" />
+    <node id="1" label="Gexf" start="2.0" end="3.0" />
+    ...
+  </nodes>
+</graph>
+\end{lstlisting}
+
+\lstset{ style=gexf }
+\begin{lstlisting}[caption={Date format}]
+<graph mode="dynamic" timeformat="date">
+  <nodes>
+    <node id="0" label="Gephi" start="2003-01-01" />
+    <node id="1" label="Gexf" start="2003-01-01" end="2004-01-01" />
+    ...
+  </nodes>
+</graph>
+\end{lstlisting}
+
+\lstset{ style=gexf }
+\begin{lstlisting}[caption={Datetime format (also with timezone)}]
+<graph mode="dynamic" timeformat="dateTime">
+  <nodes>
+    <node id="0" label="Gephi" start="2012-09-12T15:04:01" />
+    <!-- With timezone -->
+    <node id="1" label="Gexf" start="2012-11-04T11:00:01+03:00"
+      end="2012-15-04T11:00:01+03:00" />
+    ...
+  </nodes>
+</graph>
+\end{lstlisting}
+
+The timezone can also set globally for the entire graph via the \begin{footnotesize}timezone\end{footnotesize} graph attribute.
+
+\lstset{ style=gexf }
+\begin{lstlisting}[caption={Global timezone setting}]
+<graph mode="dynamic" timeformat="dateTime" timezone="America/Los_Angeles">
+...
+</graph>
+\end{lstlisting}
+
 \subsection{Dynamic Topology}
 
 Graph nodes and edges can exist at various points in time. Existence in time can be represented in different ways.
@@ -1110,16 +1178,16 @@ About the weight: dynamic weight can be used with the reserved \textit{title} "w
 
 \subsection{Dynamic Data}
 
-Node and edges data can take different values over time. Attributes must be declared as dynamic, allowing values to exist in during a time scope.
+Node and edges data can take different values over time. Attributes must be declared as dynamic, allowing values to exist for a given time.
 
 \subsubsection{Declaring Dynamic Attributes}
 
 \lstset{ style=gexf }
-\begin{lstlisting}[caption={Indegree may change over time!}]
+\begin{lstlisting}[caption={Indegree may change over time}]
 <gexf ...>
   ...
   <graph mode="dynamic" defaultedgetype="directed">
-    <attributes class="node" mode="dynamic">
+    <attributes class="node">
       <attribute id="2" title="indegree" type="float"/>
       ...
     </attributes>
@@ -1155,12 +1223,12 @@ Attvalues have their scopes limited by the xml-attributes \begin{footnotesize}st
 \end{lstlisting}
 
 \lstset{ style=gexf }
-\begin{lstlisting}[caption={Using open and closed intervals}]
+\begin{lstlisting}[caption={Using timestamp representation}]
 <node id="3" label="BarabasiLab">
   <attvalues>
-    <attvalue for="2" value="15.0" start="2000" end="2005" />
-          <attvalue for="2" value="20.0" startopen="2005" endopen="2010" />
-          <attvalue for="2" value="25.0" start="2010" endopen="2015" />
+    <attvalue for="2" value="15.0" timestamp="2000" />
+    <attvalue for="2" value="20.0" timestamp="2005" />
+    <attvalue for="2" value="25.0" timestamp="2010" />
   </attvalues>
 </node>
 \end{lstlisting}
@@ -1198,49 +1266,6 @@ If an \begin{footnotesize}attvalue\end{footnotesize} is covering a period out of
     ...
   </graph>
 </gexf>
-\end{lstlisting}
-
-\paragraph{}
-If a value 'B' is declared after a value 'A' of the same attribute and overlaps it, then 'A' is forced to end at 'B' start. In the following example, 'A' will effectively end at 2009-03-03, and the value at 2009-03-03 is 'B':
-
-\lstset{ style=gexf }
-\begin{lstlisting}[caption={Value overlapping}]
-<node id="0" label="Hello">
-  <attvalues>
-    <attvalue for="0" value="A" start="2009-03-01" end="2009-03-05"/>
-    <attvalue for="0" value="B" start="2009-03-03" end="2009-03-10"/>
-  </attvalues>
-</node>
-\end{lstlisting}
-
-One of the consequences of this rule is the right to end 'A' exactly with the 'B' start. Attribute '0' takes then the value 'B' at 2009-03-01.
-
-\lstset{ style=gexf }
-\begin{lstlisting}[caption={Value transition}]
-<node id="0" label="Hello">
-  <attvalues>
-    <attvalue for="0" value="A" end="2009-03-01"/>
-    <attvalue for="0" value="B" start="2009-03-01"/>
-  </attvalues>
-</node>
-\end{lstlisting}
-
-\paragraph{}
-While each data value is encoded in one piece of time, spells can cut them into more pieces. In the following example, a node exists from the beginning of the graph to 2009-03-01, and re-appears from 2009-03-05 to 2009-03-10. The data values will then fit inside these scopes even if they initially have a larger scope. Value 'A' of attribute '2' will be effective in 2009-03-01 (dates are inclusive), and from 2009-03-05 to 2009-03-10.
-
-\lstset{ style=gexf }
-\begin{lstlisting}[caption={Spells}]
-<node id="2" label="RTGI">
-  <attvalues>
-    <attvalue for="0" value="http://rtgi.fr"/>
-    <attvalue for="2" value="X" end="2009-02-28"/>
-    <attvalue for="2" value="A" start="2009-03-01"/>
-  </attvalues>
-  <spells>
-    <spell end="2009-03-01">
-    <spell start="2009-03-05" end="2009-03-10">
-  </spells>
-</node>
 \end{lstlisting}
 
 \lstset{ style=rnc }
@@ -1477,20 +1502,94 @@ This section provides some good tips to write parser-friendly files.
  \item Always place the edges after the nodes, as it is mandatory since version 1.2. Some parsers, depending on their implementation, may reject an edge if its linked nodes haven't been declared before, due to conceptual or data integrity reason.
  \item Use the \textit{count} XML-attribute in \textit{nodes} and \textit{edges} declaration: the parser will know how much memory it should allocate, and will speed up the file reading. Note that count only refers to direct children, not the whole sub-graph!
  \item Prefer \textit{liststring} to \textit{string} attributes if you can. A smart parser will store the strings in one place, and just set pointers to them from the related nodes/edges.
- \item Identifiers may be interpreted as integers if you only use numbers. We encourage this practice, as an integer takes much less size in memory than an equivalent string. Tell the parser to optimize IDs storage by filling the optional graph XML-attribute called \textit{idtype} with “string“ or “integer“.
+ \item Identifiers may be interpreted as integers if you only use numbers. We encourage this practice, as an integer takes much less size in memory than an equivalent string. Tell the parser to optimize IDs storage by filling the optional graph XML-attribute called \textit{idtype} with \textit{string}, \textit{integer} or \textit{long}.
 \end{itemize}
 
 \section{Web Services} \label{ws}
 
 The content-type for serving GEXF files via HTTP/REST is \textit{application/gexf+xml}.
 
+\section{Resources} \label{resources}
+
+Specifications are available on GitHub at \href{https://github.com/gephi/gexf/}{https://github.com/gephi/gexf/}. Contributions and feedback are welcome.
+
+\paragraph{}
+The website \href{https://www.gexf.net}{https://www.gexf.net} contains additional examples and links to popular libraries capable of reading and writing the format.
+
 \section{Changelog} \label{changelog}
 
-This document has been edited on:
+Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.3 when we decided to simply use full versions numbers.
+
+\paragraph{}
+The GEXF specification history:
+
+\subsection{Version 1.3}
+
 \begin{itemize}
-\item 28 March 2012 -- Add open interval example in section Defining Dynamic Values
-\item 29 Nov 2010 -- Initial release
+\item Add `kind` attribute on `edge` to support multi-graph (i.e. parallel edges)
+\item Add the possibility to omit the upfront `\<attribute`\> definition and rather define the attribute `id` and `type` in the `\<attvalue\>` element
+\item The edge `weight` is now a `double` instead of a `float`
+\item Add `xsd:long`as possible `idtype` on `\<graph\>`
+\item Add new attribute types `bigdecimal`, `biginteger`, `char`, `short` and `byte`
+\item Add new list attributes like `listboolean` or `listinteger` for each atomic type
+\item Dynamics
+\begin{itemize}
+\item Add a `timezone` attribute on `\<graph\>` to use as a timezone in case it's omitted in the element timestamps
+\item Open intervals attributes `startopen` and `endopen` are removed. Use regular inclusive `start` and `end` instead
+\item Remove `mode`, `start` and `end` attributes on `\<attributes\>` as it was redundant with `\<graph\>` attributes
+\item Timestamp support
+\begin{itemize}
+\item Add the ability to represent time with single timestamps instead of intervals. We want feature parity between the two time representations but note they can't be mixed.
+\item Add a `timerepresentation` enum in `\<graph\>` with either `interval` (default) or `timestamp` to configure the way the time is represented
+\item Add `timestamp` attribute to `\<node\>`, `\<edge\>`, `\<spell\>` and `\<attvalue\>` to support this new time representation
 \end{itemize}
+\item Alternative to spell elements
+\begin{itemize}
+\item Add a `timestamps` attribute to `\<node\>` and `\<edge\>` to represent a list of timestamps without having to use spells
+\item Similarly, add a `intervals` attribute to `\<node\>` and `\<edge\>`
+\end{itemize}
+\item New slice mode
+\begin{itemize}
+\item The optional `mode` attribute on `\<graph\>` now has an additional `slice` value, in addition of `static` and `dynamic`. With slice, the expectation is that the `\<graph\>` also has either a `timestamp` or `start` / `end` intervals.
+\item Add a `timestamp` attribute on `\<graph\>` to characterise the slice this graph represent
+\item Change the meaning of the `start` and `end` attributes on `\<graph\>` to either characterise the slide instead of the time bounds, which should rather be inferred
+\end{itemize}
+\end{itemize}
+\item Viz
+\begin{itemize}
+\item Add `hex` attribute on `\<color\>` so it can support values like `#FF00FF`
+\item The `z` position is no longer required
+\item Dynamic attributes like `start`, `end` or child elements `\<spells\>` are no longer supported for viz attributes. To represent viz attributes over time, an alternative is to create multiple graphs each representing a slice.
+\end{itemize}
+\end{itemize}
+
+\subsection{Version 1.2}
+
+\begin{itemize}
+\item The node and edge `label` attribute are now optional
+\item \<meta\> should be placed before \<graph\>
+\item Dynamics
+\begin{itemize}
+\item Rename the `timetype` attribute to `timeformat`. This attribute is set on `\<graph\>` to specify how time information is encoded, either like a date or like a double
+\item The `timeformat` is currently either `float` or `date` and default value is `date`. The `float` type is replaced by `double`, and is now the default value
+\item Added `timeformat` types `integer` and `dateTime`. DateTime is equivalent to timestamps
+\item Add open intervals (non-inclusive): `startopen` and `endopen` attributes
+\item `\<slices\>` and `\<slice\>` are renamed `\<spells\>` and `\<spell\>` respectively because slices are a different concept as remarked
+\end{itemize}
+\item Viz
+\begin{itemize}
+\item Add viz attributes support for dynamics
+\item Add the alpha channel to RGB. Colors are now encoded in RGBA. It is a float from 0.0 (invisible) to 1.0 (fully visible). If omitted, the default alpha-value is 1.0 (no transparency).
+\end{itemize}
+\end{itemize}
+
+\subsection{Version 1.1}
+
+Modules are stabilized and new ones appear: hierarchy and phylogeny.
+
+\subsection{Version 1.0}
+
+First specification. Basic topology, associated data and dynamics attempt constitute the core, plus a visualization extension.
 
 \printindex
 

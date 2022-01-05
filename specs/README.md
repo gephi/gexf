@@ -72,7 +72,7 @@ The optional `mode` attribute on `<graph>` now has an additional `slice` value, 
 
 Compatible with Gephi 0.8 and above.
 
-- The node `label` attribute is now optional
+- The node and edge `label` attribute are now optional
 - `<meta>` should be placed before `<graph>`
 
 ### Dynamics
