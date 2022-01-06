@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- extension point -->
+  <define name="node-content" combine="interleave">
+    <interleave>
+      <optional>
+        <element name="color">
+          <ref name="color-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="position">
+          <ref name="position-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="size">
+          <ref name="size-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- new point -->
+  <define name="color-content">
+    <interleave>
+      <attribute name="r">
+        <ref name="color-channel"/>
+      </attribute>
+      <attribute name="g">
+        <ref name="color-channel"/>
+      </attribute>
+      <attribute name="b">
+        <ref name="color-channel"/>
+      </attribute>
+    </interleave>
+  </define>
+  <!-- new point -->
+  <define name="position-content">
+    <interleave>
+      <attribute name="x">
+        <ref name="space-point"/>
+      </attribute>
+      <attribute name="y">
+        <ref name="space-point"/>
+      </attribute>
+      <attribute name="z">
+        <ref name="space-point"/>
+      </attribute>
+    </interleave>
+  </define>
+  <!-- new point -->
+  <define name="size-content">
+    <attribute name="value">
+      <ref name="size-type"/>
+    </attribute>
+  </define>
+  <!-- new datatype -->
+  <define name="color-channel">
+    <data type="nonNegativeInteger">
+      <param name="maxInclusive">255</param>
+    </data>
+  </define>
+  <!-- new datatype -->
+  <define name="size-type">
+    <data type="float" a:defaultValue="1.0">
+      <param name="minInclusive">0.0</param>
+    </data>
+  </define>
+  <!-- new datatype -->
+  <define name="space-point">
+    <data type="float"/>
+  </define>
+</grammar>

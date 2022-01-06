@@ -1,0 +1,14 @@
+Graph structure:
+* The node "label" attribute is now optionnal.
+* <meta> should be placed before <graph>
+
+Dynamics: 
+* Rename the "timetype" attribute in to "timeformat". This attribute is set on <graph> to specify how time information is encoded, either like a date or like a double.
+* The "timeformat" is currently either float or date and default value is date. The float type is replaced by double, and is now the default value.
+* Added "timeformat" types: integer and xsd:dateTime. DateTime is equivalent to timestamps.
+* Add open intervals (non-inclusive): "startopen" and "endopen" attributes.
+* <slices> and "slice" are renamed <spells> and "spell" correspondingly.
+
+Viz:
+* Add viz attributes support for dynamics.
+* Add the alpha channel to RGB. Colors are now encoded in RGBA. It is a float from 0.0 (invisible) to 1.0 (fully visible). If omitted, the default alpha-value is 1.0 (no transparency).

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.gexf.net/1.1draft" xmlns:ns1="http://www.gexf.net/1.1draft">
+  <xs:import schemaLocation="viz.xsd"/>
+  <!-- extension point -->
+  <!-- extension point -->
+  <!-- extension point -->
+  <!-- extension point -->
+  <!-- extension point -->
+  <!-- new point -->
+  <xs:complexType name="slices-content">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="ns1:slice"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="slice">
+    <xs:complexType>
+      <xs:attributeGroup ref="ns1:slice-content"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- new point -->
+  <xs:attributeGroup name="slice-content">
+    <xs:attribute name="start" type="ns1:time-type"/>
+    <xs:attribute name="end" type="ns1:time-type"/>
+  </xs:attributeGroup>
+  <!-- new datatype -->
+  <xs:simpleType name="time-type">
+    <xs:union memberTypes="xs:date xs:float"/>
+  </xs:simpleType>
+  <!-- new datatype -->
+  <xs:simpleType name="timetype-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="float"/>
+      <xs:enumeration value="date"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

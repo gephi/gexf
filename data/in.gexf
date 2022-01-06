@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.1draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.gexf.net/1.1draft http://www.gexf.net/1.1draft/gexf.xsd"
+    version="1.1">
+    <meta>
+        <creator>me, myself and I</creator>
+        <description>The answer is 42.</description>
+    </meta>
+    <graph mode="static" defaultedgetype="directed">
+        <attributes class="node">
+            <attribute id="0" title="foo" type="boolean">
+                <default>false</default>
+            </attribute>
+        </attributes>
+        <nodes>
+            <node id="0" label="Hello"/>
+            <node id="1" label="world">
+                <attvalues>
+                    <attvalue for="0" value="true"/>
+                </attvalues>
+            </node>
+        </nodes>
+        <edges>
+            <edge id="0" source="0" target="1"/>
+        </edges>
+    </graph>
+</gexf>

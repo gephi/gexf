@@ -1,0 +1,287 @@
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.nl */
+/*@font-face {
+      font-family: "Fontin-Sans";
+      src: url(../font/fontin-sans.otf) format("opentype");
+}
+@font-face {
+      font-family: "Fontin-Sans SC";
+      src: url(../font/fontin-sans-sc.otf) format("opentype");
+}*/
+body {
+    background: #fff;
+    /*font: 100.01% "Fontin-Sans", "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", Lucida, Verdana, Helvetica, sans-serif;*/
+    font: 1em "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", Lucida, Verdana, Helvetica, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+img {
+    border: none;
+}            
+#header {
+    background: #000;
+    height: 100px;
+    margin: 0 auto;
+    padding: 0;
+}
+#rss {
+    float: right;
+    margin:3px;
+    height: 14px;
+    width: 14px;
+    background-image: url(../img/rss.png);
+}
+h1 {
+    /*background-image: url(../img/logo.png);
+    background-repeat: no-repeat;
+    padding: 0 0 0 200px;*/
+    color: #fff;
+    font-family: "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", Lucida, Verdana, Helvetica, sans-serif;
+    height: 100px;
+    line-height: 100px;
+    margin: 0;
+    padding: 0;
+}
+h1 em {
+    font-style: normal;
+}
+#content {
+    background: #fff;/*#eee*/
+    margin: 0 auto;
+    text-align: left;
+}
+#content div {
+    background-repeat: repeat-y;
+}
+#content div div {
+    background-repeat: repeat-y;
+    background-position: 100% 0;
+    padding: .5em 2em 0;
+    font-size: .85em;
+    zoom: 1;
+}
+#content div div div {
+    background: none;
+    position: static;
+    padding: 0;
+    font-size: 1em;
+}
+#content #footer {
+    margin: 0 -2em;
+    clear: both;
+    position: relative;
+    zoom: 1;
+}
+#footer h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    height: 30px;
+    font-size: 0.8em;
+    color: #666;
+    font-weight: 400;
+    text-align: center;
+}
+#footer #copyright {
+    padding-bottom: 40px;
+    margin-bottom: -40px;
+    position: relative;
+}
+#footer #font {
+    padding-bottom: 10px;
+    position: relative;
+}
+h2 {
+    clear: left;
+    font-family: "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", Lucida, Verdana, Helvetica, sans-serif;
+    font-size: 1.4em;
+    font-weight: 400;
+    line-height: 1.85;
+    margin: 1em 0 0 0;
+    position: relative;
+}
+#reference h2 {
+    padding-left: 0;
+}
+p {
+    margin: 0;
+}
+p.not-prime {
+    text-indent: 1.4em;
+}
+p.code,
+code,
+samp {
+    font: 1.1em Monaco, "Lucida Console", monospace;
+    color: #0b094b;
+}
+code span {
+    color: #690;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+a, a * {
+    color: #090;
+    text-decoration: none;
+}
+a:hover, a:hover * {
+    color: #0a0;
+    text-shadow: 0 0 3px #090;
+}
+code a, samp a {
+    color: #090;
+}
+sup {
+    color: #aaa;
+}
+wbr {
+    display: inline-block;
+}
+address {
+    font-style: normal;
+}
+address img {
+    float: left;
+    margin: 0 10px 0 0;
+    width: 8.36em;
+    height: 8.36em;
+}
+strong.very {
+    color: #f00;
+}
+pre.code code,
+pre.code samp {
+    color: #fff;
+}
+pre.code {
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    -webkit-box-shadow: 0 2px 5px #000;
+    border-radius: 1em;
+    background: #141414;
+    color: #fff;
+    padding: 1em;
+    overflow-x: auto;
+}
+pre.javascript b {
+    color: #e9df8f;
+    font-weight: normal;
+}
+pre.javascript i,
+pre.javascript i *,
+pre.javascript i .d {
+    color: #8b9967;
+    font-style: normal;
+}
+pre.javascript .s {
+    color: #e7be61;
+}
+pre.javascript .d {
+    color: #cf6a4c;
+}
+pre.javascript .c,
+pre.javascript .c * {
+    color: #555;
+    font-style: italic;
+}
+pre.css b {
+    color: #e9df8f;
+    font-weight: normal;
+}
+pre.css i,
+pre.css i *,
+pre.css i .d {
+    color: #8b9967;
+    font-style: normal;
+}
+pre.css var {
+    color: #907241;
+    font-style: normal;
+}
+pre.css .d,
+pre.css .c {
+    color: #cf6a4c;
+}
+pre.html b,
+pre.xml b {
+    color: #e9df8f;
+    font-weight: normal;
+}
+pre.html i,
+pre.html i *,
+pre.xml i,
+pre.xml i * {
+    color: #8b9967;
+    font-style: normal;
+}
+pre.html .c,
+pre.html .c *,
+pre.xml .c,
+pre.xml .c * {
+    color: #555;
+    font-style: italic;
+}
+pre.terminal code,
+pre.terminal samp {
+    color: #c7fd2d;
+}
+em.amp {
+    font-family: Baskerville;
+    font-style: italic;
+}
+#xml-result,
+#json-result {
+    height: 26em;
+}
+form, fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: left;
+}
+#column-1 h3 {
+    font-size: 2em;
+    font-weight: 400;
+}
+#contents ul {
+    overflow: hidden;
+}
+#content #column-1 {
+    width: 75%;
+    float: left;
+    margin: 0;
+}
+#content #column-2 {
+    width: 25%;
+    margin: 0;
+    float: left;
+}
+#aside {
+    margin: 0 0 0 2em;
+    padding: 0;
+    list-style: none;
+}
+#aside li {
+    padding: 0;
+}
+#aside li p {
+    margin-left: 52px;
+}
+#aside li h2 {
+    margin-top: 0;
+}
+.forSubmit {
+    visibility: hidden;
+}
+.links li {
+    margin-left: 52px;
+    padding: 0;
+}
+.links ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: disc;
+}

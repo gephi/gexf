@@ -1,0 +1,39 @@
+default namespace = inherit
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+# extension point
+node-content &=
+    element color { color-content }?
+  & element position { position-content }?
+  & element size { size-content }?
+
+# new point
+color-content =
+    attribute r { color-channel }
+  & attribute g { color-channel }
+  & attribute b { color-channel }
+
+# new point
+position-content =
+    attribute x { space-point }
+  & attribute y { space-point }
+  & attribute z { space-point }
+
+# new point
+size-content =
+    attribute value { size-type }
+
+
+# new datatype
+color-channel = 
+    xsd:nonNegativeInteger { maxInclusive = "255" }
+
+# new datatype
+size-type = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0"}
+
+# new datatype
+space-point = 
+    xsd:float

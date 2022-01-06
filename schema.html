@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+        <title>GEXF File Format</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="GEXF (Graph Exchange XML Format), language for describing complex networks structures, their associated data and dynamics.">
+        <link rel="stylesheet" href="sty/css/screen.css" type="text/css" charset="utf-8" media="screen,projection">
+        <link rel="stylesheet" type="text/css" media="print" href="sty/css/print.css">
+        <link rel="shortcut icon" href="" type="image/x-icon">
+    </head>
+    <body>
+        <div id="header">
+            <h1>
+                GEXF File Format
+            </h1>
+        </div>
+        <div id="content">
+            <div>
+                <div>
+                    <div id="column-1">
+                        <h2 id="specifications">Specifications</h2>
+                        <p>
+New versions follow 3 steps : proposal,  and official specification. The official spec is actually <i>1.0</i>, but is deprecated (see <a href="history.html">history</a>). The <i>1.2 </i> version is the recommanded version to work with. A programming library is available to help using the format: <a href="lib/">libgexf</a>. See the <a href="primer.html">Primer</a> to have a complete introduction on syntax, processing rules and extension mechanism.
+                        </p><br /><p>
+The GEXF syntax is defined by a <a href="http://relaxng.org/compact-tutorial-20030326.html">RelaxNG Compact</a> Schema. XSD Schema is produced from this one for automatic validation (see below).</p>
+						<ul>
+							<li> GEXF RelaxNG Compact definition</li>
+							<li> GEXF RelaxNG XML definition</li>
+							<li> GEXF XSD documentation</li>
+							<li> GEXF XSD files</li>
+                        </ul>
+                        <h2 id="schema">XML Schema 1.2</h2>
+                        <ul>
+							<li> Basic graph: <a href="1.2/gexf.rnc">RNC</a> | <a href="1.2/gexf.rng">RNG</a> | <a href="1.2/gexf.xsd">XSD</a></li>
+							<li> Associated data: <a href="1.2/data.rnc">RNC</a> | <a href="1.2/data.rng">RNG</a> | <a href="1.2/data.xsd">XSD</a></li>
+							<li> Network and data dynamics: <a href="1.2/dynamics.rnc">RNC</a> | <a href="1.2/dynamics.rng">RNG</a> | <a href="1.2/dynamics.xsd">XSD</a></li>
+							<li> Hierarchy structure: <a href="1.2/hierarchy.rnc">RNC</a> | <a href="1.2/hierarchy.rng">RNG</a> | <a href="1.2/hierarchy.xsd">XSD</a></li>
+							<li> Phylogeny structure: <a href="1.2/phylogenics.rnc">RNC</a> | <a href="1.2/phylogenics.rng">RNG</a> | <a href="1.2/phylogenics.xsd">XSD</a></li>
+							<li> Visualization: <a href="1.2/viz.rnc">RNC</a> | <a href="1.2/viz.rng">RNG</a> | <a href="1.2/viz.xsd">XSD</a></li>
+                        </ul>
+                        <h2 id="schema">XML Schema 1.1 (deprecated)</h2>
+                        <ul>
+							<li> Basic graph: <a href="1.1/gexf.rnc">RNC</a> | <a href="1.1/gexf.rng">RNG</a> | <a href="1.1/gexf.xsd">XSD</a></li>
+							<li> Associated data: <a href="1.1/data.rnc">RNC</a> | <a href="1.1/data.rng">RNG</a> | <a href="1.1/data.xsd">XSD</a></li>
+							<li> Network and data dynamics: <a href="1.1/dynamics.rnc">RNC</a> | <a href="1.1/dynamics.rng">RNG</a> | <a href="1.1/dynamics.xsd">XSD</a></li>
+							<li> Hierarchy structure: <a href="1.1/hierarchy.rnc">RNC</a> | <a href="1.1/hierarchy.rng">RNG</a> | <a href="1.1/hierarchy.xsd">XSD</a></li>
+							<li> Phylogeny structure: <a href="1.1/phylogenics.rnc">RNC</a> | <a href="1.1/phylogenics.rng">RNG</a> | <a href="1.1/phylogenics.xsd">XSD</a></li>
+							<li> Visualization: <a href="1.1/viz.rnc">RNC</a> | <a href="1.1/viz.rng">RNG</a> | <a href="1.1/viz.xsd">XSD</a></li>
+                        </ul>
+                        <h2 id="validation">Validation</h2>
+                        <p>
+GEXF data files can be verified using the <a href="1.1/gexf.xsd">XSD Schema</a>. All the XSD files are required to run a validation. For example, open mynetwork.gexf in oXygen XML Editor and press Validate document. That’s it, the software notifies now the errors and missing components! Another way is to download the XSD schema and use <a href="http://xmlsoft.org/xmllint.html">xmllint</a> (command line XML tool) as follow:
+                        </p>
+                        <pre class="terminal code"><samp>$ xmllint --noout --schema gexf.xsd mynetwork.gexf</samp></pre>
+                        <p>Note: remove the 'xsi:schemaLocation' element in your GEXF file before checking it with xmllint or libgexf. This workaround is necessary since XMLSchema has failed so specify how parsers may deal with it...</p>
+                        <p>Please keep therefore in mind that XML validation is not perfect, especially:</p>
+                        <ul>
+							<li> Edge source and edge target references are not verified</li>
+							<li> Attribute values and types are not checked</li>
+							<li> Default attribute value and types are not checked</li>
+							<li> Dynamic value edge.start >= target.start</li>
+							<li> Dynamic value edge.end <= target.end</li>
+                        </ul>
+                        <p>However a complete validation is processed by the <a href="lib/">libgexf</a> toolkit on loading a file, so you should simply use it. If you need to implement your own parser or generator, a <a href="primer.html">primer</a> is available.</p>
+                    </div>
+                    <div id="column-2">
+                        <ul id="aside">
+                            <li id="overview">
+                                <h2>Overview</h2>
+                                <ul>
+                                    <li>
+                                        <a href="index.html" title="Home">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="authors.html" title="Authors">Authors</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="specifications">
+                                <h2>Specifications</h2>
+                                <ul>
+                                    <li>
+                                        <a href="schema.html" title="XML Schema">XML Schema</a>
+                                    </li>
+                                    <li>
+                                        <a href="primer.html" title="Primer">Primer</a>
+                                    </li>
+                                    <li>
+                                        <a href="history.html" title="History">History</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="examples">
+                                <h2>Examples</h2>
+                                <ul>
+                                    <li>
+                                        <a href="basic.html" title="Basic graph">Basic graph</a>
+                                    </li>
+                                    <li>
+                                        <a href="data.html" title="Data">Data</a>
+                                    </li>
+                                    <li>
+                                        <a href="dynamics.html" title="Dynamics">Dynamics</a>
+                                    </li>
+                                    <li>
+                                        <a href="hierarchy.html" title="Hierarchy">Hierarchy</a>
+                                    </li>
+                                    <li>
+                                        <a href="phylogeny.html" title="Phylogeny">Phylogeny</a>
+                                    </li>
+                                    <li>
+                                        <a href="viz.html" title="Visualization">Visualization</a>
+                                    </li>
+                                    <li>
+                                        <a href="datasets.html" title="Real datasets">Real datasets</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="communication">
+                                <h2>Communication</h2>
+                                <ul>
+                                    <li>
+                                        <a href="https://github.com/gephi/gexf/discussions/categories/announcements" title="News (external)">News</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/gephi/gexf/discussions">Discussions</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/gephi/gexf/issues" title="Issue Tracker (external)">Issue Tracker</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="tools">
+                                <h2>Tools</h2>
+                                <ul>
+                                    <li>
+                                        <a href="lib/" title="libgexf">libgexf</a>: C++ library and validator
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/gvegayon/rgexf" title="rgexf">rgexf</a>: R library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/francesco-ficarola/gexf4j" title="gexf4j">gexf4j</a>: Java library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/paulgirard/pygexf" title="pygexf">pygexf</a>: Python library
+                                    </li>
+                                    <li>
+                                        <a href="https://www.npmjs.com/package/graphology-gexf" title="graphology-gexf">graphology-gexf</a>: Javascript library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/raphv/gexf-js" title="gexf-js">gexf-js</a>: JavaScript library
+                                    </li>
+                                    <li>
+                                        <a href="http://sigmajs.org" title="sigma.js">sigma.js</a>: JavaScript library
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="graph-links" class="links">
+                                <h2>Graph Drawing Links</h2>
+                                <ul>
+                                    <li>
+                                        <a href="http://gephi.org/" title="Gephi">Gephi</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="format-links" class="links">
+                                <h2>Other File Formats</h2>
+                                <ul>
+                                    <li>
+                                        <a href="http://graphml.graphdrawing.org/" title="GraphML">GraphML</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.cs.rpi.edu/~puninj/XGMML/" title="XGMML">XGMML</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.w3.org/Graphics/SVG/" title="SVG">SVG</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="footer">
+                        <h3 id="copyright">
+                            <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-ShareAlike 3.0 Unported" rel="license">Some Rights Reserved</a> by the GEXF Working Group (<a href="mailto:contact@gexf.net">contact@gexf.net</a>), for the Gephi Community project, 2009.
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-11563920-1");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2012-03-27">
+    <creator>Gephi 0.8</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="directed" timeformat="double" mode="dynamic">
+    <attributes class="node" mode="dynamic">
+      <attribute id="value" title="value" type="integer"></attribute>
+    </attributes>
+    <attributes class="edge" mode="dynamic">
+      <attribute id="value" title="value" type="integer"></attribute>
+    </attributes>
+    <nodes>
+      <node id="1" label="growing slowly">
+        <attvalues>
+          <attvalue for="value" value="15" start="2000.0" end="2005.0"></attvalue>
+          <attvalue for="value" value="20" startopen="2005.0" endopen="2010.0"></attvalue>
+          <attvalue for="value" value="25" start="2010.0" endopen="2015.0"></attvalue>
+        </attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-405.11203" y="264.4478" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="2" label="growing fast">
+        <attvalues>
+          <attvalue for="value" value="5" start="2000.0" end="2005.0"></attvalue>
+          <attvalue for="value" value="20" startopen="2005.0" endopen="2010.0"></attvalue>
+          <attvalue for="value" value="40" start="2010.0" endopen="2015.0"></attvalue>
+        </attvalues>
+        <viz:size value="31.0"></viz:size>
+        <viz:position x="334.12238" y="-20.660065" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+    </nodes>
+    <edges>
+		<edge source="1" target="2">
+        <attvalues>
+          <attvalue for="value" value="15" start="2000.0" end="2005.0"></attvalue>
+          <attvalue for="value" value="20" startopen="2005.0" endopen="2010.0"></attvalue>
+          <attvalue for="value" value="25" start="2010.0" endopen="2015.0"></attvalue>
+        </attvalues>
+		</edge>
+	</edges>
+  </graph>
+</gexf>

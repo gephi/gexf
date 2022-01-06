@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+        <title>LibGEXF</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="LibGEXF, open source C++ toolkit library for creating, reading and writing efficiently GEXF file format.">
+        <link rel="stylesheet" href="sty/css/screen.css" type="text/css" charset="utf-8" media="screen,projection">
+        <link rel="stylesheet" type="text/css" media="print" href="sty/css/print.css">
+        <link rel="shortcut icon" href="" type="image/x-icon">
+    </head>
+    <body>
+        <div id="header">
+            <a href="http://feeds.launchpad.net/libgexf/announcements.atom" id="rss" name="rss"></a>
+            <h1>
+                LibGEXF
+            </h1>
+        </div>
+        <div id="content">
+            <div>
+                <div>
+                    <div id="column-1">
+                        <h2 id="what-is-it">What is it?</h2>
+                        <p>No brain-fucking to use the Graph Exchange XML Format in your programs!</p>
+                        <p>
+Libgexf is the official C++ toolkit library for the GEXF file format. It is free software available under the MIT License. Though the library is written in C++ a variety of language bindings make it available in other environments.</p>
+<p>
+Libgexf currently only works on Linux systems (tested on Ubuntu 8.10 and 9.04), but the portability will be increased on demand. Python, Perl and Java binding facilities are also provided.
+                        </p>
+                        <h2 id="how-to-use-it">How to use it?</h2>
+                        <p>
+                        Using the library in your C++ programs is very simple:
+                        </p>
+                        <ol>
+                        	<li><pre class="terminal code"><samp>add -I/usr/include/libgexf -I/usr/include/libxml2 to the g++ compiler options</samp></pre></li>
+                        	<li><pre class="terminal code"><samp>add -lgexf -lxml2 to the g++ linker options</samp></pre></li>
+                        	<li><pre class="terminal code"><samp>insert #include &lt;libgexf.h&gt; in your C++ program. Namespace: libgexf</samp></pre></li>
+                        </ol>
+                        <p>That's all, folks! See related README files for each language binding.</p>
+                        <h2 id="features">Features</h2>
+                        <ul>
+                        	<li> static graph</li>
+							<li> basic topology (no hierarchical graphs or hypergraphs for the moment)</li>
+							<li> full data attributes</li>
+							<li> read/write GEXF 1.0 (legacy Gephi 0.6) and 1.1 (Gephi 0.7+)</li>
+							<li> data integrity and type checking</li>
+							<li> RelaxNG and XSD validator</li>
+                        </ul>
+                        <h2 id="example">Example</h2>
+                        <p>This is how to create a GEXF file:</p>
+                        <pre class="javascript code"><code><b>#include</b> &lt;stdlib.h&gt;
+
+<span class="c">// if libgexf is installed</span>
+<b>#include</b> &lt;libgexf/libgexf.h&gt;
+
+<b>void</b> create() {
+
+    libgexf::<span class="d">GEXF</span> *gexf = <b>new</b> libgexf::GEXF();
+
+    libgexf::<span class="d">DirectedGraph</span>&#038; graph = gexf->getDirectedGraph();
+
+    <span class="c">// nodes</span>
+    graph.addNode(<i>"0"</i>);
+    graph.addNode(<i>"1"</i>);
+
+    <span class="c">// edges</span>
+    graph.addEdge(<i>"0"</i>, <i>"0"</i>, <i>"1"</i>);
+
+    <span class="c">// node labels</span>
+    libgexf::<span class="d">Data</span>&#038; data = gexf->getData();
+    data.setLabel(<i>"0"</i>, <i>"Hello"</i>);
+    data.setLabel(<i>"1"</i>, <i>"world"</i>);
+
+    <span class="c">// attributes</span>
+    data.addNodeAttributeColumn(<i>"0"</i>, <i>"foo"</i>, libgexf::<span class="d">BOOLEAN</span>);
+    data.setNodeAttributeDefault(<i>"0"</i>, <i>"false"</i>);
+    data.setNodeValue(<i>"1"</i>, <i>"0"</i>, <i>"true"</i>);
+
+    <span class="c">// meta data</span>
+    libgexf::<span class="d">MetaData</span>&#038; meta = gexf->getMetaData();
+    meta.setCreator(<i>"The Hitchhiker's Guide to the Galaxy"</i>);
+    meta.setDescription(<i>"The answer is 42."</i>);
+
+    <span class="c">// write gexf file</span>
+    libgexf::<span class="d">FileWriter</span> *writer = <b>new</b> libgexf::FileWriter();
+    writer->init(<i>"life.gexf"</i>, gexf);
+    writer->write();
+}</code></pre>
+                        <p>The result will be: </p>
+                        <pre id="xml-result" class="xml code" style="height:34.3em;"><samp><i class="c">&lt;?xml version=<i>&quot;1.0&quot;</i> encoding=<i>&quot;UTF-8&quot;</i>?&gt;</i>
+<b>&lt;gexf xmlns=<i>"http://www.gexf.net/1.1"</i> version=<i>"1.1"</i>&gt;</b>
+    <b>&lt;meta&gt;</b>
+        <b>&lt;creator&gt;</b>The Hitchhiker's Guide to the Galaxy<b>&lt;creator&gt;</b>
+        <b>&lt;description&gt;</b>The answer is 42.<b>&lt;description&gt;</b>
+    <b>&lt;/meta&gt;</b>
+    <b>&lt;graph mode=<i>"static"</i> defaultedgetype=<i>"undirected"</i>&gt;</b>
+        <b>&lt;attributes class=<i>"node"</i>&gt;</b>
+            <b>&lt;attribute id=<i>"0"</i> title=<i>"foo"</i> type=<i>"boolean"</i>&gt;</b>
+                <b>&lt;default&gt;</b>false<b>&lt;/default&gt;</b>
+            <b>&lt;/attribute&gt;</b>
+        <b>&lt;/attributes&gt;</b>
+        <b>&lt;nodes&gt;</b>
+            <b>&lt;node id=<i>"0"</i> label=<i>"Hello"</i>/&gt;</b>
+            <b>&lt;node id=<i>"1"</i> label=<i>"world"</i>/&gt;</b>
+                <b>&lt;attvalues&gt;</b>
+                    <b>&lt;attvalue for=<i>"0"</i> value=<i>"true"</i>&gt;</b>
+                <b>&lt;/attvalues&gt;</b>
+            <b>&lt;/node&gt;</b>
+        <b>&lt;/nodes&gt;</b>
+        <b>&lt;edges&gt;</b>
+            <b>&lt;edge id=<i>"0"</i> source=<i>"0"</i> target=<i>"1"</i>/&gt;</b>
+        <b>&lt;/edges&gt;</b>
+    <b>&lt;/graph&gt;</b>
+<b>&lt;/gexf&gt;</b></samp></pre>
+                        <h2 id="release-policy">Release policy</h2>
+                        <p>The development is divided into 2 series: stable and unstable. The stable serie represents an interface which should not change until further additions, and is well tested. The unstable serie is the cutting-edge development version packaged for testing. Interfaces may change.</p>
+                        <p>Stable serie has a pair second revision number, i.e. 1.2.x<br />
+                        Unstable serie has an odd second revision number, i.e. 1.1.x</p>
+                        <h2 id="get-started">Get started!</h2>
+                        <p>
+                            Download the latest <a href="https://launchpad.net/libgexf/+download">release</a> and try the <a href="examples.html">examples</a> now!
+                        </p>
+                    </div>
+                    <div id="column-2">
+                        <ul id="aside">
+                            <li id="download">
+                                <h2><a href="https://launchpad.net/libgexf/+download" title="Download (external)">Download v0.1.2 (500 KB)</a></h2>
+                                <p>Only sources in GZIP are available for unstable versions.</p>
+                            </li>
+                            <li id="documentation">
+                                <h2><a href="api/" title="Documentation (external)">Documentation</a></h2>
+                                <p>Hope it will help.</p>
+                            </li>
+                            <li id="examples">
+                                <h2><a href="examples.html" title="Examples">Examples</a></h2>
+                                <p>Start easily.</p>
+                            </li>
+                            <li id="stay-involved">
+                                <h2>Stay involved</h2>
+                                <p>Syndicate to our <a href="https://launchpad.net/libgexf/+announcements" title="news feed">news feed</a>, read the <a href="https://answers.launchpad.net/libgexf/+faqs" title="FAQ">FAQ</a> and ask your questions <a href="https://answers.launchpad.net/libgexf" title="discussions">there</a>.</p>
+                            </li>
+                            <li id="open">
+                                <h2>It is Open</h2>
+                                <p>This project is distributed under <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT License">MIT License</a>.</p>
+                            </li>
+                            <li id="source-and-bugs">
+                                <h2>Source and Bugs</h2>
+                                <p>LibGEXF uses the DCVS <a href="http://bazaar-vcs.org/" title="Bazaar">Bazaar</a> and the platforme <a href="https://launchpad.net/libgexf/+series" title="libgexf on Launchpad">Launchpad</a>. The current repository is hosted on Launchpad, this means you can get there the most up to date code, but it may be unstable.</p>
+                                <p>Please report bugs in our <a href="https://bugs.launchpad.net/libgexf" title="issue tracker">issue tracker</a>.</p>
+                            </li>
+                            <li id="links" class="links">
+                                <h2>Useful Links</h2>
+                                <ul>
+                                    <li>
+                                        <a href="../index.html" title="gexf file format">gexf file format</a>: official format specifications
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/gvegayon/rgexf" title="rgexf">rgexf</a>: R library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/francesco-ficarola/gexf4j" title="gexf4j">gexf4j</a>: Java library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/paulgirard/pygexf" title="pygexf">pygexf</a>: Python library
+                                    </li>
+                                    <li>
+                                        <a href="https://www.npmjs.com/package/graphology-gexf" title="graphology-gexf">graphology-gexf</a>: Javascript library
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/raphv/gexf-js" title="gexf-js">gexf-js</a>: JavaScript library
+                                    </li>
+                                    <li>
+                                        <a href="http://sigmajs.org" title="sigma.js">sigma.js</a>: JavaScript library
+                                    </li>
+                                    <li>
+                                        <a href="https://gephi.org/" title="Gephi">Gephi</a>: graph exploration and manipulation sofware
+                                    </li>
+                                    <li>
+                                        <a href="http://www.swig.org/" title="SWIG">SWIG</a>: Simplified Wrapper Interface Generator
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="footer">
+                        <h3 id="copyright">
+                            <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-ShareAlike 3.0 Unported" rel="license">Some Rights Reserved</a> by Sebastien Heymann (<a href="mailto:sebastien.heymann@gexf.net">sebastien.heymann@gexf.net</a>), for the Gephi Community project, 2009.
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-11563920-1");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
+</html>
