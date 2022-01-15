@@ -33,6 +33,7 @@ Compatible with Gephi 0.9.3 and above. Note that part of the specifications were
 - Add `kind` attribute on `edge` to support multi-graph (i.e. parallel edges)
 - Add the possibility to omit the upfront `<attribute`> definition and rather define the attribute `id` and `type` in the `<attvalue>` element
 - The edge `weight` is now a `double` instead of a `float`
+- The edge `id` is now optional
 - Add `xsd:long`as possible `idtype` on `<graph>`
 - Add new attribute types `bigdecimal`, `biginteger`, `char`, `short` and `byte`
 - Add new list attributes like `listboolean` or `listinteger` for each atomic type

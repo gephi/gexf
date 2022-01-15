@@ -310,7 +310,7 @@ id-type =
 
 \subsubsection{Declaring an Edge}
 
-Edges in the graph are declared by the \begin{footnotesize}edge\end{footnotesize} element. Each edge must define its two endpoints with the XML-Attributes \begin{footnotesize}source\end{footnotesize} and \begin{footnotesize}target\end{footnotesize}. The value of the source, resp. target, must be the identifier of a node in the same document. The identifier of an edge is defined by the XML-Attribute \begin{footnotesize}id\end{footnotesize}. There is no order notion applied to edges.
+Edges in the graph are declared by the \begin{footnotesize}edge\end{footnotesize} element. Each edge must define its two endpoints with the XML-Attributes \begin{footnotesize}source\end{footnotesize} and \begin{footnotesize}target\end{footnotesize}. The value of the source, resp. target, must be the identifier of a node in the same document. The identifier of an edge is defined by the XML-Attribute \begin{footnotesize}id\end{footnotesize} and is optional. There is no order notion applied to edges.
 
 \paragraph{}
 Edges with only one endpoint, also called loops, selfloops, or reflexive edges, are defined by having the same value for source and target.
@@ -1529,6 +1529,7 @@ The GEXF specification history:
 \item Add `kind` attribute on `edge` to support multi-graph (i.e. parallel edges)
 \item Add the possibility to omit the upfront `\<attribute`\> definition and rather define the attribute `id` and `type` in the `\<attvalue\>` element
 \item The edge `weight` is now a `double` instead of a `float`
+\item The edge `id` is now optional
 \item Add `xsd:long`as possible `idtype` on `\<graph\>`
 \item Add new attribute types `bigdecimal`, `biginteger`, `char`, `short` and `byte`
 \item Add new list attributes like `listboolean` or `listinteger` for each atomic type

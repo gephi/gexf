@@ -50,7 +50,7 @@ node-content =
 
 # Edge
 edge-content =
-    attribute id { id-type }
+    attribute id { id-type }?
   & attribute type { edgetype-type }?
   & attribute label { xsd:token }?
   & attribute source { id-type }
