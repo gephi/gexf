@@ -36,10 +36,7 @@ attvalues-content =
 
 # Attribute value
 attvalue-content =
-    (attribute for { id-type }
-    | (attribute id { id-type }
-      & attribute type { attrtype-type }
-      & attribute title { xsd:string }?))
+    attribute for { id-type }
   & attribute value { xsd:string }
 
 

@@ -53,9 +53,7 @@
   </xs:element>
   <!-- Attribute value -->
   <xs:attributeGroup name="attvalue-content">
-    <xs:attribute name="for" type="ns1:id-type"/>
-    <xs:attribute name="id" type="ns1:id-type"/>
-    <xs:attribute name="type" type="ns1:attrtype-type"/>
+    <xs:attribute name="for" use="required" type="ns1:id-type"/>
     <xs:attribute name="value" use="required" type="xs:string"/>
   </xs:attributeGroup>
   <!-- Attribute types -->

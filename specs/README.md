@@ -31,7 +31,6 @@ Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.
 Compatible with Gephi 0.9.3 and above. Note that part of the specifications were already implemented since 0.9 but full support is only guaranteed in 0.9.3.
 
 - Add `kind` attribute on `edge` to support multi-graph (i.e. parallel edges)
-- Add the possibility to omit the upfront `<attribute`> definition and rather define the attribute `id` and `type` in the `<attvalue>` element
 - The edge `weight` is now a `double` instead of a `float`
 - The edge `id` is now optional
 - Add `xsd:long`as possible `idtype` on `<graph>`

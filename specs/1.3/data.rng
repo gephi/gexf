@@ -72,19 +72,9 @@
   <!-- Attribute value -->
   <define name="attvalue-content">
     <interleave>
-      <choice>
-        <attribute name="for">
-          <ref name="id-type"/>
-        </attribute>
-        <interleave>
-          <attribute name="id">
-            <ref name="id-type"/>
-          </attribute>
-          <attribute name="type">
-            <ref name="attrtype-type"/>
-          </attribute>
-        </interleave>
-      </choice>
+      <attribute name="for">
+        <ref name="id-type"/>
+      </attribute>
       <attribute name="value">
         <data type="string"/>
       </attribute>

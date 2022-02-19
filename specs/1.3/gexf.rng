@@ -126,9 +126,11 @@
   <!-- Edge -->
   <define name="edge-content">
     <interleave>
-      <attribute name="id">
-        <ref name="id-type"/>
-      </attribute>
+      <optional>
+        <attribute name="id">
+          <ref name="id-type"/>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="type">
           <ref name="edgetype-type"/>
