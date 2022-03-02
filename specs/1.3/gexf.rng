@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar ns="http://www.gexf.net/1.3" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:viz="http://www.gexf.net/1.3/viz" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="data.rng"/>
   <include href="dynamics.rng"/>
   <include href="viz.rng" ns="http://www.gexf.net/1.3/viz"/>
   <start>
@@ -71,6 +70,11 @@
         </attribute>
       </optional>
       <group>
+        <zeroOrMore>
+          <element name="attributes">
+            <ref name="attributes-content"/>
+          </element>
+        </zeroOrMore>
         <element name="nodes">
           <ref name="nodes-content"/>
         </element>
@@ -121,6 +125,11 @@
           <data type="token"/>
         </attribute>
       </optional>
+      <optional>
+        <element name="attvalues">
+          <ref name="attvalues-content"/>
+        </element>
+      </optional>
     </interleave>
   </define>
   <!-- Edge -->
@@ -156,6 +165,11 @@
         <attribute name="kind">
           <data type="token"/>
         </attribute>
+      </optional>
+      <optional>
+        <element name="attvalues">
+          <ref name="attvalues-content"/>
+        </element>
       </optional>
     </interleave>
   </define>
@@ -203,6 +217,98 @@
       <ref name="id-type"/>
     </attribute>
   </define>
+  <!-- Attributes -->
+  <define name="attributes-content">
+    <a:documentation>Attributes</a:documentation>
+    <interleave>
+      <attribute name="class">
+        <ref name="class-type"/>
+      </attribute>
+      <zeroOrMore>
+        <element name="attribute">
+          <ref name="attribute-content"/>
+        </element>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <!-- Attribute -->
+  <define name="attribute-content">
+    <interleave>
+      <attribute name="id">
+        <ref name="id-type"/>
+      </attribute>
+      <attribute name="title">
+        <data type="string"/>
+      </attribute>
+      <attribute name="type">
+        <ref name="attrtype-type"/>
+      </attribute>
+      <optional>
+        <element name="default">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="options">
+          <text/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Attribute values (for nodes and edges) -->
+  <define name="attvalues-content">
+    <zeroOrMore>
+      <element name="attvalue">
+        <ref name="attvalue-content"/>
+      </element>
+    </zeroOrMore>
+  </define>
+  <!-- Attribute value -->
+  <define name="attvalue-content">
+    <interleave>
+      <attribute name="for">
+        <ref name="id-type"/>
+      </attribute>
+      <attribute name="value">
+        <data type="string"/>
+      </attribute>
+    </interleave>
+  </define>
+  <!-- Attribute types -->
+  <define name="attrtype-type">
+    <choice>
+      <value type="string" datatypeLibrary="">integer</value>
+      <value type="string" datatypeLibrary="">long</value>
+      <value type="string" datatypeLibrary="">double</value>
+      <value type="string" datatypeLibrary="">float</value>
+      <value type="string" datatypeLibrary="">boolean</value>
+      <value type="string" datatypeLibrary="">bigdecimal</value>
+      <value type="string" datatypeLibrary="">biginteger</value>
+      <value type="string" datatypeLibrary="">byte</value>
+      <value type="string" datatypeLibrary="">char</value>
+      <value type="string" datatypeLibrary="">short</value>
+      <value type="string" datatypeLibrary="">liststring</value>
+      <value type="string" datatypeLibrary="">listboolean</value>
+      <value type="string" datatypeLibrary="">listinteger</value>
+      <value type="string" datatypeLibrary="">listlong</value>
+      <value type="string" datatypeLibrary="">listfloat</value>
+      <value type="string" datatypeLibrary="">listdouble</value>
+      <value type="string" datatypeLibrary="">listbyte</value>
+      <value type="string" datatypeLibrary="">listshort</value>
+      <value type="string" datatypeLibrary="">listbigdecimal</value>
+      <value type="string" datatypeLibrary="">listbiginteger</value>
+      <value type="string" datatypeLibrary="">listchar</value>
+      <value type="string" datatypeLibrary="">string</value>
+      <value type="string" datatypeLibrary="">anyURI</value>
+    </choice>
+  </define>
+  <!-- Attribute class (for attributes) -->
+  <define name="class-type">
+    <choice>
+      <value type="string" datatypeLibrary="">node</value>
+      <value type="string" datatypeLibrary="">edge</value>
+    </choice>
+  </define>
   <!-- Default edge type -->
   <define name="defaultedgetype-type">
     <a:documentation>Datatypes</a:documentation>
@@ -221,7 +327,7 @@
     </choice>
   </define>
   <!-- Id type -->
-  <define name="id-type" combine="choice">
+  <define name="id-type">
     <choice>
       <data type="string"/>
       <data type="integer"/>

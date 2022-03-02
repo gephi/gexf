@@ -4,7 +4,6 @@ namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace     rng = "http://relaxng.org/ns/structure/1.0"
 datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 
-include "data.rnc"
 include "dynamics.rnc"
 include "viz.rnc" inherit = viz
 
@@ -30,7 +29,8 @@ meta-content =
 graph-content =
     attribute defaultedgetype { defaultedgetype-type }?
   & attribute idtype { idtype-type }?
-  & (element nodes { nodes-content }
+  & (element attributes { attributes-content }*
+  ,  element nodes { nodes-content }
   ,  element edges { edges-content })
 
 # Nodes
@@ -47,6 +47,7 @@ edges-content =
 node-content =
     attribute id { id-type }
   & attribute label { xsd:token }?
+  & element attvalues { attvalues-content }?
 
 # Edge
 edge-content =
@@ -57,6 +58,7 @@ edge-content =
   & attribute target { id-type }
   & attribute weight { weight-type }?
   & attribute kind { xsd:token}?
+  & element attvalues { attvalues-content }?
 
 ## Hierarchy
 
@@ -80,6 +82,61 @@ parents-content =
 parent-content =
     attribute for { id-type }
 
+## Attributes
+
+# Attributes
+attributes-content =
+    attribute class { class-type }
+  & element attribute { attribute-content }*
+
+# Attribute
+attribute-content =
+    attribute id { id-type }
+  & attribute title { xsd:string }
+  & attribute type { attrtype-type }
+  & element default { text }?
+  & element options { text }?
+
+# Attribute values (for nodes and edges)
+attvalues-content =
+    element attvalue { attvalue-content }*
+
+# Attribute value
+attvalue-content =
+    attribute for { id-type }
+  & attribute value { xsd:string }
+
+# Attribute types
+attrtype-type =
+    string "integer" |
+    string "long" |
+    string "double" |
+    string "float" |
+    string "boolean" |
+    string "bigdecimal" |
+    string "biginteger" |
+    string "byte" |
+    string "char" |
+    string "short" |
+    string "liststring" |
+    string "listboolean" |
+    string "listinteger" |
+    string "listlong" |
+    string "listfloat" |
+    string "listdouble" |
+    string "listbyte" |
+    string "listshort" |
+    string "listbigdecimal" |
+    string "listbiginteger" |
+    string "listchar" |
+    string "string" |
+    string "anyURI"
+
+# Attribute class (for attributes)
+class-type =
+    string "node" |
+    string "edge"
+
 ## Datatypes
 
 # Default edge type
@@ -95,7 +152,7 @@ edgetype-type = [ a:defaultValue = "undirected" ]
     string "mutual"
 
 # Id type
-id-type |=
+id-type =
     xsd:string | xsd:integer | xsd:long
 
 # Id type (for graph)
