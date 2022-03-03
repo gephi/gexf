@@ -119,13 +119,13 @@ This is a dummy graph:
       <node id="1" label="Word"/>
     </nodes>
     <edges>
-      <edge id="0" source="0" target="1"/>
+      <edge source="0" target="1"/>
     </edges>
   </graph>
 </gexf>
 \end{lstlisting}
 
-The GEXF document consists of a gexf element and a variety of subelements: graph, node, edge. In the remainder of this section we will discuss these elements in detail and show how they define a graph.
+The GEXF document consists of a gexf element and a variety of subelements. In the remainder of this section we will discuss these elements in detail and show how they define a graph.
 
 \subsection{Header}
 
@@ -155,41 +155,14 @@ The first line of the document is an XML process instruction which defines that 
 The second line contains the root-element element of a GEXF document: the gexf element. The gexf element, like all other GEXF elements, belongs to the namespace \begin{footnotesize}http://www.gexf.net/1.3\end{footnotesize}. For this reason we define this namespace as the default namespace in the document by adding the XML Attribute \begin{footnotesize}xmlns="http://www.gexf.net/1.3"\end{footnotesize} to it. The two other XML Attributes are needed to specify the XML Schema for this document. In our example we use the standard schema for GEXF documents located on the gexf.net server. The first attribute, \begin{footnotesize}xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\end{footnotesize}, defines xsi as the XML Schema namespace. The second attribute, \begin{footnotesize}xsi:schemaLocation ="http://www.gexf.net/1.3 http://www.gexf.net/1.3/gexf.xsd"\end{footnotesize}, defines the XML Schema location for all elements in the GEXF namespace.
 
 \paragraph{}
-The XML Schema reference is not required but it provides means to validate the document and is therefore strongly recommended.
+The XML Schema reference is not required, but it provides means to validate the document and is therefore strongly recommended.
 
 \paragraph{}
-The \begin{footnotesize}meta\end{footnotesize} element contains additionnal information about the network. Element leafs are assumed to be text, and \begin{footnotesize}lastmodifieddate\end{footnotesize} is an international standard date (yyyy-mm-dd). The \begin{footnotesize}graph\end{footnotesize} element must be declared after the \begin{footnotesize}meta\end{footnotesize} element.
-
-\paragraph{}
-GEXF document is specified in the \href{http://relaxng.org/compact-tutorial-20030326.html}{RelaxNG Compact} file \href{http://www.gexf.net/1.3/gexf.rnc}{gexf.rnc}. Header is ruled by the following declaration :
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Header Specification},label=headerRNC]
-default namespace = "http://www.gexf.net/1.3"
-namespace     rng = "http://relaxng.org/ns/structure/1.0"
-datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
-
-# Grammar root
-start = element gexf { gexf-content }
-
-# Tree
-gexf-content =
-    attribute version { string "1.3" }
-  & attribute variant { xsd:string }?
-  & (element meta { meta-content }?
-  ,  element graph { graph-content })
-
-# Attributes & Leafs
-meta-content =
-    attribute lastmodifieddate { xsd:date }?
-  & element creator { text }?
-  & element keywords { text }?
-  & element description { text }?
-\end{lstlisting}
+The \begin{footnotesize}meta\end{footnotesize} element contains additional information about the network. Element leafs are assumed to be text, and \begin{footnotesize}lastmodifieddate\end{footnotesize} is an international standard date (yyyy-mm-dd). The \begin{footnotesize}graph\end{footnotesize} element must be declared after the \begin{footnotesize}meta\end{footnotesize} element.
 
 \subsection{Network Topology} \label{networktopology}
 
-The network topology structure containing nodes and edges is called the graph. A graph is, not surprisingly, denoted by a \begin{footnotesize}graph\end{footnotesize} element. Nested inside a graph element are the declarations of nodes and edges. A node is declared with the \begin{footnotesize}node\end{footnotesize} element inside a \begin{footnotesize}nodes\end{footnotesize} element, and an egde with the \begin{footnotesize}edge\end{footnotesize} element inside an \begin{footnotesize}edges\end{footnotesize} element. Nodes and edges order doesn't matter.
+The network topology structure containing nodes and edges is called the graph. A graph is, not surprisingly, denoted by a \begin{footnotesize}graph\end{footnotesize} element. Nested inside a graph element are the declarations of nodes and edges. A node is declared with the \begin{footnotesize}node\end{footnotesize} element inside a \begin{footnotesize}nodes\end{footnotesize} element, and an egde with the \begin{footnotesize}edge\end{footnotesize} element inside an \begin{footnotesize}edges\end{footnotesize} element.
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={The definition of the graph},label=topology]
@@ -200,7 +173,7 @@ The network topology structure containing nodes and edges is called the graph. A
     ...
   </nodes>
   <edges>
-    <edge id="0" source="0" target="1" weight="3.167" />
+    <edge source="0" target="1" weight="3.167" />
     ...
   </edges>
 </graph>
@@ -208,11 +181,11 @@ The network topology structure containing nodes and edges is called the graph. A
 
 \subsubsection{Declaring a Graph}
 
-Graphs in GEXF are mixed, in other words, they can contain directed and undirected edges at the same time. If no direction is specified when an edge is declared, the default direction \begin{footnotesize}defaultedgetype\end{footnotesize} is applied to the edge. If you know what kind of edges are stored, you may interpret the mixed graph as a directed or an undirected graph at your own risks.
+Graphs in GEXF are mixed, in other words, they can contain directed and undirected edges at the same time. If no direction is specified when an edge is declared, the default direction \begin{footnotesize}defaultedgetype\end{footnotesize} is applied to the edge.
 
 The default direction is declared as the optional XML-attribute \begin{footnotesize}defaultedgetype\end{footnotesize} of the \begin{footnotesize}graph\end{footnotesize} element. The three possible values for this XML-attribute are \textit{directed}, \textit{undirected} and \textit{mutual}. Note that the default direction is optional and would be assumed as \textit{undirected}.
 
-The optional XML-attribute \begin{footnotesize}mode\end{footnotesize} set the kind of network: static or dynamic. Last one provides time support (see  the section \ref{dynamics} on Dynamics). Static mode is assumed by default.
+The optional XML-attribute \begin{footnotesize}mode\end{footnotesize} set the kind of network: static or dynamic. The latter provides time support (see  the section \ref{dynamics} on Dynamics). Static mode is assumed by default.
 
 The \begin{footnotesize}edges\end{footnotesize} element must be declared after the \begin{footnotesize}nodes\end{footnotesize} element.
 
@@ -226,69 +199,6 @@ The \begin{footnotesize}edges\end{footnotesize} element must be declared after t
 </graph>
 \end{lstlisting}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Topology Specification},label=topologyRNC]
-graph-content =
-    attribute defaultedgetype { defaultedgetype-type }?
-  & attribute idtype { idtype-type }?
-  & attribute mode { mode-type }?
-  & (element nodes { nodes-content }
-  ,  element edges { edges-content })
-
-
-# Nodes
-
-nodes-content =
-    attribute count { xsd:nonNegativeInteger }?
-  & element node { node-content }*
-
-node-content =
-    attribute id { id-type }
-  & attribute label { xsd:token }?
-
-
-# Edges
-
-edges-content =
-    attribute count { xsd:nonNegativeInteger }?
-  & element edge { edge-content }*
-
-edge-content =
-    attribute id { id-type }
-  & attribute type { edgetype-type }?
-  & attribute label { xsd:token }?
-  & attribute source { id-type }
-  & attribute target { id-type }
-  & attribute weight { weight-type }?
-
-
-# Datatypes
-
-defaultedgetype-type = [ a:defaultValue = "undirected" ]
-    string "directed" |
-    string "undirected" |
-    string "mutual"
-
-edgetype-type = [ a:defaultValue = "undirected" ]
-    string "directed" |
-    string "undirected" |
-    string "mutual"
-
-id-type =
-    xsd:string | xsd:integer
-
-idtype-type = [ a:defaultValue = "string" ]
-    string "integer" |
-    string "string"
-
-mode-type = [ a:defaultValue = "static" ]
-    string "static" |
-    string "dynamic"
-
-weight-type = [ a:defaultValue = "1.0" ]
-    xsd:float
-\end{lstlisting}
-
 \subsubsection{Declaring a Node}
 
 Nodes in the graph are declared by the \begin{footnotesize}node\end{footnotesize} element. Each node has an identifier, which must be unique within the entire document, i.e., in a document there must be no two nodes with the same identifier. The identifier of a node is defined by the XML-attribute \begin{footnotesize}id\end{footnotesize}, which is a string. Each node also may have a XML-attribute \begin{footnotesize}label\end{footnotesize} that acts as a description, which is a string.
@@ -296,16 +206,6 @@ Nodes in the graph are declared by the \begin{footnotesize}node\end{footnotesize
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={A node!},label=aNode]
 <node id="0" label="Hello world" />
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Node Specification},label=nodeRNC]
-node-content =
-    attribute id { id-type }
-  & attribute label { xsd:token }?
-
-id-type =
-    xsd:string | xsd:integer
 \end{lstlisting}
 
 \subsubsection{Declaring an Edge}
@@ -329,36 +229,12 @@ Assuming two nodes having respectively the \begin{footnotesize}id\end{footnotesi
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={An edge!},label=anEdge]
-<edge id="0" source="0" target="1"/>
+<edge source="0" target="1"/>
 \end{lstlisting}
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={A more complete edge},label=aMoreEdge]
 <edge id="0" source="0" target="1" type="directed" weight="2.4" />
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Edge Specification},label=edgeRNC]
-edge-content =
-    attribute id { id-type }
-  & attribute type { edgetype-type }?
-  & attribute label { xsd:token }?
-  & attribute source { id-type }
-  & attribute target { id-type }
-  & attribute weight { weight-type }?
-
-# Datatypes
-
-id-type =
-    xsd:string | xsd:integer
-
-edgetype-type = [ a:defaultValue = "undirected" ]
-    string "directed" |
-    string "undirected" |
-    string "mutual"
-
-weight-type = [ a:defaultValue = "1.0" ]
-    xsd:float
 \end{lstlisting}
 
 \subsubsection{Parallel edges}
@@ -372,14 +248,14 @@ Parallel edges must include the additional \textit{kind} attribute to characteri
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Parallel edges},label=paralelEdge]
-<edge id="0" source="0" target="1" weight="1.0" kind="friend"/>
-<edge id="1" source="0" target="1" weight="1.0" kind="neighbor"/>
+<edge source="0" target="1" weight="1.0" kind="friend"/>
+<edge source="0" target="1" weight="1.0" kind="neighbor"/>
 \end{lstlisting}
 
 \subsection{Network Data} \label{networkdata}
 
 \paragraph{}
-In the previous section we discussed how to describe the topology of a graph in GEXF. While pure topological information may be sufficient for some applications, these days focus is made on network analysis based on data attributes.
+In the previous section we discussed how to describe the topology of a graph in GEXF. In this section we see how additional data can be associated with nodes and edges.
 
 \paragraph{}
 A bunch of data can be stored within attributes. The concept is the same as table data or SQL. An attribute has a title/name and a value. Attribute’s name/title must be declared for the whole graph. It could be for instance “degree”, “valid” or “url”. Besides the name of the attribute a column also contains the type.
@@ -444,11 +320,11 @@ Each Node of this graph has three attributes : an url, an indegree value and a b
       </node>
     </nodes>
     <edges>
-      <edge id="0" source="0" target="1"/>
-      <edge id="1" source="0" target="2"/>
-      <edge id="2" source="1" target="0"/>
-      <edge id="3" source="2" target="1"/>
-      <edge id="4" source="0" target="3"/>
+      <edge source="0" target="1"/>
+      <edge source="0" target="2"/>
+      <edge source="1" target="0"/>
+      <edge source="2" target="1"/>
+      <edge source="0" target="3"/>
     </edges>
   </graph>
 </gexf>
@@ -474,42 +350,6 @@ Attributes are declared inside an \begin{footnotesize}attributes\end{footnotesiz
   </attributes>
   ...
 </graph>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Attributes Specification},label=attributesRNC]
-attributes-content =
-    attribute class { class-type }
-  & attribute mode { mode-type }?
-  & element attribute { attribute-content }*
-
-attribute-content =
-    attribute id { id-type }
-  & attribute title { xsd:string }
-  & attribute type { attrtype-type }
-  & element default { text }?
-  & element options { text }?
-
-
-# Datatypes
-
-class-type =
-    string "node" |
-    string "edge"
-
-mode-type = [ a:defaultValue = "static" ]
-    string "static" |
-    string "dynamic"
-
-attrtype-type =
-    string "integer" |
-    string "long" |
-    string "double" |
-    string "float" |
-    string "boolean" |
-    string "liststring" |
-    string "string" |
-    string "anyURI"
 \end{lstlisting}
 
 Note about the \textit{options} attribute: it defines the available values, separated by a coma and surrounded by brackets. It is both used as a type constraint and for parser optimization. The combined default value must be an available option, like the following example.
@@ -548,21 +388,11 @@ You may understand attributes while looking at this node definition. Besides nat
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Edge Attributes},label=edgeattributes]
-<edge id="0" source="0" target="1">
+<edge source="0" target="1">
   <attvalues>
     <attvalue for="0" value="1.5"/>
   </attvalues>
 </edge>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Attribute Values Specification},label=attributeValuesRNC]
-attvalues-content =
-    element attvalue { attvalue-content }*
-
-attvalue-content =
-    attribute for { id-type }
-  & attribute value { xsd:string }
 \end{lstlisting}
 
 \subsubsection{List Attributes}
@@ -668,15 +498,6 @@ Two ways are available:
  \item Each node refers to a parent node id with the XML-attribute \begin{footnotesize}pid\end{footnotesize}.
 \end{enumerate}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Hierarchy Specification},label=hierarchyRNC]
-# Extension Point
-node-content &=
-    attribute pid { id-type }?
-  & element nodes { nodes-content }?
-  & element edges { edges-content }?
-\end{lstlisting}
-
 The first style is preferred when the structure written is previously ordered. Sequential reading of this kind of GEXF is safe because no node reference is used. But in the case your program can't provide this, the second way allows writing (and then reading) nodes randomly, but linear reading is at your own risks.
 
 \subsection{Sequential-safe Reading}
@@ -703,10 +524,10 @@ The first style is preferred when the structure written is previously ordered. S
           </node>
         </nodes>
         <edges>
-            <edge id="0" source="b" target="e" />
-            <edge id="1" source="c" target="d" />
-            <edge id="2" source="g" target="b" />
-            <edge id="3" source="f" target="a" />
+            <edge source="b" target="e" />
+            <edge source="c" target="d" />
+            <edge source="g" target="b" />
+            <edge source="f" target="a" />
         </edges>
     </graph>
 \end{lstlisting}
@@ -724,7 +545,7 @@ Note that edges are not necessarily written at the end:
                   <node id="d" label="human2"/>
                 </nodes>
                 <edges>
-                  <edge id="0" source="c" target="d" />
+                  <edge source="c" target="d" />
                 </edges>
               </node>
               <node id="e" label="Me">
@@ -735,9 +556,9 @@ Note that edges are not necessarily written at the end:
               </node>
             </nodes>
             <edges>
-              <edge id="1" source="b" target="e" />
-              <edge id="3" source="f" target="a" />
-              <edge id="2" source="g" target="b" />
+              <edge source="b" target="e" />
+              <edge source="f" target="a" />
+              <edge source="g" target="b" />
             </edges>
           </node>
         </nodes>
@@ -793,21 +614,6 @@ Multiple parents can be addressed with the following syntax, where a and b are c
     </parents>
   </node>
 </nodes>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Phylogeny Specification},label=phylogenyRNC]
-# Extension Point
-node-content &=
-    element parents { parents-content }?
-
-# New Point
-parents-content =
-    element parent { parent-content }*
-
-# New Point
-parent-content =
-    attribute for { id-type }
 \end{lstlisting}
 
 \section{Advanced Concepts III: Dynamics} \label{dynamics}
@@ -885,12 +691,12 @@ Both network topology and data have a lifetime. The whole graph, each node, each
       </node>
     </nodes>
     <edges>
-      <edge id="0" source="0" target="1" start="2009-03-01"/>
-      <edge id="1" source="0" target="2"
+      <edge source="0" target="1" start="2009-03-01"/>
+      <edge source="0" target="2"
              start="2009-03-01" end="2009-03-10"/>
-      <edge id="2" source="1" target="0" start="2009-03-01"/>
-      <edge id="3" source="2" target="1" end="2009-03-10"/>
-      <edge id="4" source="0" target="3" start="2009-03-01"/>
+      <edge source="1" target="0" start="2009-03-01"/>
+      <edge source="2" target="1" end="2009-03-10"/>
+      <edge source="0" target="3" start="2009-03-01"/>
     </edges>
   </graph>
 </gexf>
@@ -1016,7 +822,7 @@ Each edge must declare time limits inside the join scope of its \begin{footnotes
   ...
 </nodes>
 <edges>
-  <edge id="0" source="0" target="1" start="2009-01-20" end="2009-02-01"/>
+  <edge source="0" target="1" start="2009-01-20" end="2009-02-01"/>
 </edges>
 \end{lstlisting}
 
@@ -1024,7 +830,7 @@ Important: \begin{footnotesize}start\end{footnotesize} and \begin{footnotesize}e
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Smallest time scope}]
-<edge id="0" source="0" target="1" start="2009-01-20" end="2009-01-20"/>
+<edge source="0" target="1" start="2009-01-20" end="2009-01-20"/>
 \end{lstlisting}
 
 And of course the \begin{footnotesize}end\end{footnotesize} value must be equal or later than the \begin{footnotesize}start\end{footnotesize} value.
@@ -1120,40 +926,6 @@ For a more compact spell representation, GEXF also offers \begin{footnotesize}ti
 
 Note that the separator between intervals is a semi-colon as the comma is reserved for the interval itself.
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Dynamic Topology Specification},label=dyntopoRNC]
-# Extension Point
-graph-content &=
-    attribute timeformat { timeformat-type }?
-  & (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
-
-# Extension Point
-node-content &= (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
-  & element spells { spells-content }?
-
-# Extension Point
-edge-content &= (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
-  & element spells { spells-content }?
-\end{lstlisting}
-
 \paragraph{}
 About the weight: dynamic weight can be used with the reserved \textit{title} "weight" in attributes. In dynamic mode, the static XML-attribute \textit{weight} should be ignored if the dynamic one is provided.
 
@@ -1175,18 +947,6 @@ Node and edges data can take different values over time. Attributes must be decl
     ...
   </graph>
 </gexf>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Dynamic Attributes Specification},label=dyndataRNC]
-# Extension Point
-attributes-content &= (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
 \end{lstlisting}
 
 \subsubsection{Defining Dynamic Values}
@@ -1214,18 +974,6 @@ Attvalues have their scopes limited by the xml-attributes \begin{footnotesize}st
 </node>
 \end{lstlisting}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Dynamic Values Specification},label=dynvalRNC]
-# Extension Point
-attributes-content &= (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
-\end{lstlisting}
-
 \subsubsection{Dynamic Values and Spells}
 
 If an \begin{footnotesize}attvalue\end{footnotesize} is covering a period out of any spell, this period should be ignored by parsers. In the following example, the day 2009-01-03 is ignored:
@@ -1247,22 +995,6 @@ If an \begin{footnotesize}attvalue\end{footnotesize} is covering a period out of
     ...
   </graph>
 </gexf>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Spells Specification},label=dynspellsRNC]
-# New Point
-spells-content =
-    element spell { spell-content }+
-
-# New Point
-spell-content = (
-      ( attribute start { time-type }?
-      | attribute startopen { time-type }?)
-      &
-      ( attribute end { time-type }?
-      & attribute endopen { time-type }?)
-  )
 \end{lstlisting}
 
 \section{Advanced Concepts IV: Extending GEXF} \label{extendgexf}
@@ -1322,28 +1054,6 @@ Colors are defined by the \href{http://en.wikipedia.org/wiki/RGBA}{RGBA color mo
 <viz:color r="239" g="173" b="66" a="0.5"/>
 \end{lstlisting}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Color Specification},label=colorRNC]
-# Extension Point
-node-content &=
-    element color { color-content }?
-
-# New Point
-color-content =
-    attribute r { color-channel }
-  & attribute g { color-channel }
-  & attribute b { color-channel }
-  & attribute a { alpha-channel }?
-
-# Datatypes
-
-color-channel =
-    xsd:nonNegativeInteger { maxInclusive = "255" }
-
-alpha-channel = [ a:defaultValue = "1.0" ]
-    xsd:float { minInclusive = "0.0" maxInclusive = "1.0" }
-\end{lstlisting}
-
 Colors can alternatively be defined with a unique \begin{footnotesize}hex\end{footnotesize} attribute. It can still be combined with the alpha parameter
 
 \lstset{ style=gexf }
@@ -1360,23 +1070,6 @@ Space positions are set in three dimensions called \begin{footnotesize}x\end{foo
 <viz:position x="15.783598" y="40.109245" z="0.0"/>
 \end{lstlisting}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Position Specification},label=positionRNC]
-# Extension Point
-node-content &=
-  element position { position-content }?
-
-# New Point
-position-content =
-    attribute x { space-point }
-  & attribute y { space-point }
-  & attribute z { space-point }
-
-# Datatype
-space-point =
-    xsd:float
-\end{lstlisting}
-
 \subsubsection{Size}
 
 Node size is a scale. It is set to \textit{1.0} by default and is a non-negative float. Network viz softwares assume that an object representing a node of size \textit{2.0} is twice bigger as one of \textit{1.0}.
@@ -1384,21 +1077,6 @@ Node size is a scale. It is set to \textit{1.0} by default and is a non-negative
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={VIZ Size Declaration},label=vizsize]
 <viz:size value="2.0375757"/>
-\end{lstlisting}
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Size Specification},label=sizeRNC]
-# Extension Point
-node-content &=
-  element size { size-content }?
-
-# New Point
-size-content =
-    attribute value { size-type }
-
-# Datatype
-size-type = [ a:defaultValue = "1.0" ]
-    xsd:float { minInclusive = "0.0"}
 \end{lstlisting}
 
 \subsubsection{Thickness}
@@ -1410,44 +1088,9 @@ Edge thickness is a scale. It is set to \textit{1.0} by default and is a non-neg
 <viz:thickness value="2.0375757"/>
 \end{lstlisting}
 
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Thickness Specification},label=thicknessRNC]
-# Extension Point
-edge-content &=
-  element thickness { thickness-content }?
-
-# New Point
-thickness-content =
-    attribute value { thickness-type }
-
-# Datatype
-thickness-type = [ a:defaultValue = "1.0" ]
-    xsd:float { minInclusive = "0.0"}
-\end{lstlisting}
-
 \subsubsection{Node Shape}
 
 Default node is shaped as a disc. Four shapes are proposed: \textit{disc}, \textit{square}, \textit{triangle} and \textit{diamond}. Images require an additional xml-attribute to set their location: \begin{footnotesize}uri\end{footnotesize}.
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Node Shape Specification},label=nshapeRNC]
-# Extension Point
-node-content &=
-  element shape { node-shape-content }?
-
-# New Point
-node-shape-content =
-    attribute value { node-shape-type }
-   & attribute uri { xsd:anyURI }?
-
-# Datatype
-node-shape-type =  [ a:defaultValue = "disc" ]
-    string "disc" |
-    string "square" |
-    string "triangle" |
-    string "diamond" |
-    string "image"
-\end{lstlisting}
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Image Declaration},label=vizimage]
@@ -1457,24 +1100,6 @@ node-shape-type =  [ a:defaultValue = "disc" ]
 \subsubsection{Edge Shape}
 
 Default edge is shaped as solid. Four shapes are proposed: \textit{solid}, \textit{dotted}, \textit{dashed} and \textit{double}.
-
-\lstset{ style=rnc }
-\begin{lstlisting}[caption={Edge Shape Specification},label=eshapeRNC]
-# Extension Point
-edge-content &=
-  element shape { edge-shape-content }?
-
-# New Point
-edge-shape-content =
-    attribute value { edge-shape-type }
-
-# Datatype
-edge-shape-type =  [ a:defaultValue = "solid" ]
-    string "solid" |
-    string "dotted" |
-    string "dashed" |
-    string "double"
-\end{lstlisting}
 
 \section{Advices: Parser optimization} \label{advices}
 
