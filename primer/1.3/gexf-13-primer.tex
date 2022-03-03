@@ -104,10 +104,10 @@ This is a dummy graph:
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Hello world!},label=helloworld]
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.3"
+<gexf xmlns="http://gexf.net/1.3"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.gexf.net/1.3
-                             http://www.gexf.net/1.3/gexf.xsd"
+       xsi:schemaLocation="http://gexf.net/1.3
+                             http://gexf.net/1.3/gexf.xsd"
       version="1.3">
   <meta lastmodifieddate="2009-03-20">
     <creator>Gephi.org</creator>
@@ -134,10 +134,10 @@ In this section we discuss the parts of the document which are common to all GEX
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Header},label=header]
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.3"
+<gexf xmlns="http://gexf.net/1.3"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.gexf.net/1.3
-                             http://www.gexf.net/1.3/gexf.xsd"
+       xsi:schemaLocation="http://gexf.net/1.3
+                             http://gexf.net/1.3/gexf.xsd"
       version="1.3">
   <meta lastmodifieddate="2009-03-20">
     <creator>Gephi.org</creator>
@@ -152,7 +152,7 @@ In this section we discuss the parts of the document which are common to all GEX
 The first line of the document is an XML process instruction which defines that the document adheres to the XML 1.0 standard and that the encoding of the document is UTF-8, the standard encoding for XML documents. Of course other encodings can be chosen for GEXF documents.
 
 \paragraph{}
-The second line contains the root-element element of a GEXF document: the gexf element. The gexf element, like all other GEXF elements, belongs to the namespace \begin{footnotesize}http://www.gexf.net/1.3\end{footnotesize}. For this reason we define this namespace as the default namespace in the document by adding the XML Attribute \begin{footnotesize}xmlns="http://www.gexf.net/1.3"\end{footnotesize} to it. The two other XML Attributes are needed to specify the XML Schema for this document. In our example we use the standard schema for GEXF documents located on the gexf.net server. The first attribute, \begin{footnotesize}xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\end{footnotesize}, defines xsi as the XML Schema namespace. The second attribute, \begin{footnotesize}xsi:schemaLocation ="http://www.gexf.net/1.3 http://www.gexf.net/1.3/gexf.xsd"\end{footnotesize}, defines the XML Schema location for all elements in the GEXF namespace.
+The second line contains the root-element element of a GEXF document: the gexf element. The gexf element, like all other GEXF elements, belongs to the namespace \begin{footnotesize}http://gexf.net/1.3\end{footnotesize}. For this reason we define this namespace as the default namespace in the document by adding the XML Attribute \begin{footnotesize}xmlns="http://gexf.net/1.3"\end{footnotesize} to it. The two other XML Attributes are needed to specify the XML Schema for this document. In our example we use the standard schema for GEXF documents located on the gexf.net server. The first attribute, \begin{footnotesize}xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\end{footnotesize}, defines xsi as the XML Schema namespace. The second attribute, \begin{footnotesize}xsi:schemaLocation ="http://gexf.net/1.3 http://gexf.net/1.3/gexf.xsd"\end{footnotesize}, defines the XML Schema location for all elements in the GEXF namespace.
 
 \paragraph{}
 The XML Schema reference is not required, but it provides means to validate the document and is therefore strongly recommended.
@@ -275,10 +275,10 @@ Each Node of this graph has three attributes : an url, an indegree value and a b
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={A (small) Web Graph},label=webgraph]
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.3"
+<gexf xmlns="http://gexf.net/1.3"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.gexf.net/1.3
-                             http://www.gexf.net/1.3/gexf.xsd"
+       xsi:schemaLocation="http://gexf.net/1.3
+                             http://gexf.net/1.3/gexf.xsd"
       version="1.3">
   <meta lastmodifieddate="2009-03-20">
     <creator>Gephi.org</creator>
@@ -634,10 +634,10 @@ Both network topology and attributes can be dynamic. Time values in GEXF can be 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={A (small) Dynamic Web Graph with date format},label=dynwebgraph]
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.3"
+<gexf xmlns="http://gexf.net/1.3"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.gexf.net/1.3
-                             http://www.gexf.net/1.3/gexf.xsd"
+       xsi:schemaLocation="http://gexf.net/1.3
+                             http://gexf.net/1.3/gexf.xsd"
       version="1.3">
   <graph mode="dynamic" defaultedgetype="directed" timeformat="date">
     <attributes class="node" mode="static">
@@ -994,7 +994,7 @@ GEXF is designed to be easily extensible. Additional namespaces are defined by a
 
 \subsection{VIZ module} \label{viz}
 
-Using the visualization module must be declared by adding the XML Attribute \begin{footnotesize}xmlns:viz="http://www.gexf.net/1.3/viz"\end{footnotesize} to the document namespaces. The \begin{footnotesize}xsi:schemaLocation\end{footnotesize} attribute includes the XML-Schema declaration of the VIZ module. The RelaxNG Compact specification is available in \href{http://www.gexf.net/1.3/viz.rnc}{viz.rnc}, and independent XSD declaration in \href{http://www.gexf.net/1.3/viz.xsd}{viz.xsd}.
+Using the visualization module must be declared by adding the XML Attribute \begin{footnotesize}xmlns:viz="http://gexf.net/1.3/viz"\end{footnotesize} to the document namespaces. The \begin{footnotesize}xsi:schemaLocation\end{footnotesize} attribute includes the XML-Schema declaration of the VIZ module. The RelaxNG Compact specification is available in \href{http://gexf.net/1.3/viz.rnc}{viz.rnc}, and independent XSD declaration in \href{http://gexf.net/1.3/viz.xsd}{viz.xsd}.
 
 \paragraph{}
 Color, position, size and shape are stored as attributes.
@@ -1005,8 +1005,8 @@ The following gexf contains a node having a color, a position, a shape and a spe
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={VIZ Attributes},label=vizattr]
-<gexf xmlns="http://www.gexf.net/1.3"
-      xmlns:viz="http://www.gexf.net/1.3/viz">
+<gexf xmlns="http://gexf.net/1.3"
+      xmlns:viz="http://gexf.net/1.3/viz">
 ...
   <node ... >
     <viz:color r="239" g="173" b="66" a="0.5"/>
@@ -1024,8 +1024,8 @@ The following gexf contains an edge having a color, a thickness and a shape.
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={VIZ Attributes},label=vizattr]
-<gexf xmlns="http://www.gexf.net/1.3"
-      xmlns:viz="http://www.gexf.net/1.3/viz">
+<gexf xmlns="http://gexf.net/1.3"
+      xmlns:viz="http://gexf.net/1.3/viz">
 ...
   <edge ... >
     <viz:color r="157" g="213" b="78"/>
@@ -1111,7 +1111,7 @@ The content-type for serving GEXF files via HTTP/REST is \textit{application/gex
 Specifications are available on GitHub at \href{https://github.com/gephi/gexf/}{https://github.com/gephi/gexf/}. Contributions and feedback are welcome.
 
 \paragraph{}
-The website \href{https://www.gexf.net}{https://www.gexf.net} contains additional examples and links to popular libraries capable of reading and writing the format.
+The website \href{https://gexf.net}{https://gexf.net} contains additional examples and links to popular libraries capable of reading and writing the format.
 
 \section{Changelog} \label{changelog}
 
