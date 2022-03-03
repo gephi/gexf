@@ -627,29 +627,19 @@ As networks dynamics is a growing topic of research, GEXF format includes extens
 </graph>
 \end{lstlisting}
 
-Time in GEXF is encoded in two ways, discrete or continuous.
-
-Discrete, it is an \textit{integer} or a \textit{double}. Continuous, it is encoded as an international standard \textit{date} (yyyy-mm-dd) or a \textit{dateTime} defined by the corresponding \href{http://www.w3.org/TR/xmlschema-2/#dateTime}{XSD Datatype}. If omitted, the default type is \textit{double}. Use the the XML-attribute \begin{footnotesize}timeformat\end{footnotesize} of the graph element to explicitly declare the type.
-
-Both network topology and data have a lifetime. The whole graph, each node, each edge and their respective data values may have time limits, beginning with an XML-attribute \begin{footnotesize}start\end{footnotesize} and ending with a \begin{footnotesize}end\end{footnotesize}. Omitting \begin{footnotesize}start\end{footnotesize} set the past of the thing to infinity, so as for \begin{footnotesize}end\end{footnotesize}. The file creator is responsible for the dates consistency.
-
+Both network topology and attributes can be dynamic. Time values in GEXF can be represented either via numbers or date or date plus time. In addition, the time representation can either use timestamps or intervals. We'll go into more details later. In the example below is uses the date time format and the default interval time representation.
 
 \subsection{Example}
 
 \lstset{ style=gexf }
-\begin{lstlisting}[caption={A (small) Dynamic Web Graph with continuous time},label=dynwebgraph]
+\begin{lstlisting}[caption={A (small) Dynamic Web Graph with date format},label=dynwebgraph]
 <?xml version="1.0" encoding="UTF-8"?>
 <gexf xmlns="http://www.gexf.net/1.3"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.gexf.net/1.3
                              http://www.gexf.net/1.3/gexf.xsd"
       version="1.3">
-  <meta lastmodifieddate="2009-03-20">
-    <creator>Gephi.org</creator>
-    <description>A Web network changing over time</description>
-  </meta>
-  <graph mode="dynamic" defaultedgetype="directed" timeformat="date"
-         start="2009-01-01" end="2009-03-20">
+  <graph mode="dynamic" defaultedgetype="directed" timeformat="date">
     <attributes class="node" mode="static">
       <attribute id="0" title="url" type="string"/>
       <attribute id="1" title="frog" type="boolean">
@@ -837,7 +827,7 @@ And of course the \begin{footnotesize}end\end{footnotesize} value must be equal 
 
 \subsubsection{Spells}
 
-If a node or an edge exists only at some timeranges, we use the concept of spells. Use the xml-element \begin{footnotesize}spells\end{footnotesize} for topology like this:
+If a node or an edge exists at multiple timestamps or intervals, we use the concept of spells. Use the xml-element \begin{footnotesize}spells\end{footnotesize} for topology like this:
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Node with multiple spells (Intervals)}]
@@ -873,6 +863,7 @@ If no \begin{footnotesize}start\end{footnotesize} is provided, the spell begins 
 
 If spells are provided, only their content are taken into account and other time attributes on the element like \begin{footnotesize}timestamp\end{footnotesize} will be ignored.
 
+\paragraph{}
 Important: Intervals can't overlap for an element.
 
 \lstset{ style=gexf }
