@@ -4,13 +4,13 @@ GEXF file format specifications. Details and examples at  [gexf.net](http://gexf
 
 The repository contains both the [specifications](specs) and the [primer](primer) sources.
 
-The latest **stable** version in **1.2**.
+The latest **stable** version in **1.3**.
 
 # Changelog
 
 Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.3 when we decided to simply use full versions numbers.
 
-## 1.3 (work in progress)
+## 1.3
 
 Compatible with Gephi 0.9.3 and above. Note that part of the specifications were already implemented since 0.9 but full support is only guaranteed in 0.9.3.
 
