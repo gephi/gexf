@@ -20,7 +20,7 @@
                     <div id="column-1">
                         <h2 id="specifications">Specifications</h2>
                         <p>
-New versions follow 3 steps : proposal,  and official specification. The <i>1.2 </i> version is the recommended version to work with. See <a href="history.html">history</a> for previous versions. See the <a href="primer.html">Primer</a> to have a complete introduction on syntax, processing rules and extension mechanism.
+New versions follow 3 steps : proposal,  and official specification. The <i>1.3</i> version is the recommended version to work with. See <a href="history.html">history</a> for previous versions. See the <a href="primer.html">Primer</a> to have a complete introduction on syntax, processing rules and extension mechanism.
                         </p><br /><p>
 The GEXF syntax is defined by a <a href="http://relaxng.org/compact-tutorial-20030326.html">RelaxNG Compact</a> Schema. XSD Schema is produced from this one for automatic validation (see below).</p>
 						<ul>
@@ -28,6 +28,12 @@ The GEXF syntax is defined by a <a href="http://relaxng.org/compact-tutorial-200
 							<li> GEXF RelaxNG XML definition</li>
 							<li> GEXF XSD documentation</li>
 							<li> GEXF XSD files</li>
+                        </ul>
+                        <h2 id="schema">XML Schema 1.3</h2>
+                        <ul>
+                            <li> Graph, Data, Hierarchy and Phylogeny: <a href="1.3/gexf.rnc">RNC</a> | <a href="1.3/gexf.rng">RNG</a> | <a href="1.3/gexf.xsd">XSD</a></li>
+                            <li> Network and data dynamics: <a href="1.3/dynamics.rnc">RNC</a> | <a href="1.3/dynamics.rng">RNG</a> | <a href="1.3/dynamics.xsd">XSD</a></li>
+                            <li> Visualization: <a href="1.3/viz.rnc">RNC</a> | <a href="1.3/viz.rng">RNG</a> | <a href="1.3/viz.xsd">XSD</a></li>
                         </ul>
                         <h2 id="schema">XML Schema 1.2</h2>
                         <ul>
@@ -49,7 +55,7 @@ The GEXF syntax is defined by a <a href="http://relaxng.org/compact-tutorial-200
                         </ul>
                         <h2 id="validation">Validation</h2>
                         <p>
-GEXF data files can be verified using the <a href="1.1/gexf.xsd">XSD Schema</a>. All the XSD files are required to run a validation. For example, open mynetwork.gexf in oXygen XML Editor and press Validate document. That’s it, the software notifies now the errors and missing components! Another way is to download the XSD schema and use <a href="http://xmlsoft.org/xmllint.html">xmllint</a> (command line XML tool) as follow:
+GEXF data files can be verified using the <a href="1.3/gexf.xsd">XSD Schema</a>. All the XSD files are required to run a validation. For example, open mynetwork.gexf in oXygen XML Editor and press Validate document. That’s it, the software notifies now the errors and missing components! Another way is to download the XSD schema and use <a href="http://xmlsoft.org/xmllint.html">xmllint</a> (command line XML tool) as follow:
                         </p>
                         <pre class="terminal code"><samp>$ xmllint --noout --schema gexf.xsd mynetwork.gexf</samp></pre>
                         <p>Note: remove the 'xsi:schemaLocation' element in your GEXF file before checking it with xmllint or libgexf. This workaround is necessary since XMLSchema has failed so specify how parsers may deal with it...</p>
