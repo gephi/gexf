@@ -1,0 +1,74 @@
+default namespace = "http://www.gexf.net/1.3"
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+## Gext and data extension
+
+## Note: dynamic weight can be obtained by using the reserved title "weight" in attributes
+
+# Extends graph
+graph-content &=
+    attribute timeformat { timeformat-type }?
+  & ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
+  & attribute mode { mode-type }?
+  & attribute timerepresentation { timerepresentation-type }?
+  & attribute timezone { xsd:token }?
+
+# Extends attribute values
+attvalue-content &=
+    ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
+
+# Extends node
+node-content &=
+   (((attribute start { time-type }?
+  & attribute end { time-type }?)
+      | attribute intervals { xsd:token })
+    | (attribute timestamp {time-type})
+      | attribute timestamps { xsd:token })
+  & element spells { spells-content }?
+
+# Extends edge
+edge-content &=
+   (((attribute start { time-type }?
+  & attribute end { time-type }?)
+      | attribute intervals { xsd:token })
+    | (attribute timestamp {time-type})
+      | attribute timestamps { xsd:token })
+  & element spells { spells-content }?
+
+# Spells
+spells-content =
+    element spell { spell-content }+
+
+# Spell
+spell-content =
+    ((attribute start { time-type }?
+  & attribute end { time-type }?)
+    | attribute timestamp {time-type})
+
+
+# Time type
+time-type = 
+    xsd:integer | xsd:double | xsd:date | xsd:dateTime
+
+# Mode type (for graph and attributes)
+mode-type = [ a:defaultValue = "static" ]
+    string "static" |
+    string "dynamic" |
+    string "slice"
+
+# Time format type
+timeformat-type = [ a:defaultValue = "double" ] 
+    string "integer" |
+    string "double" |
+    string "date" |
+    string "dateTime"
+
+timerepresentation-type = [ a:defaultValue = "interval" ]
+    string "interval" |
+    string "timestamp"

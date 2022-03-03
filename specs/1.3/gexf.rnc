@@ -1,0 +1,166 @@
+default namespace = "http://www.gexf.net/1.3"
+namespace     viz = "http://www.gexf.net/1.3/viz"
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+include "dynamics.rnc"
+include "viz.rnc" inherit = viz
+
+## Grammar root
+
+start = element gexf { gexf-content }
+
+# Gexf
+gexf-content = 
+    attribute version { string "1.3" }
+  & attribute variant { xsd:string }?
+  & (element meta { meta-content }?
+  ,  element graph { graph-content })
+
+# Meta
+meta-content =
+    attribute lastmodifieddate { xsd:date }?
+  & element creator { text }?
+  & element keywords { text }?
+  & element description { text }?
+
+# Graph
+graph-content =
+    attribute defaultedgetype { defaultedgetype-type }?
+  & attribute idtype { idtype-type }?
+  & (element attributes { attributes-content }*
+  ,  element nodes { nodes-content }
+  ,  element edges { edges-content })
+
+# Nodes
+nodes-content =
+    attribute count { xsd:nonNegativeInteger }?
+  & element node { node-content }*
+
+# Edges
+edges-content =
+    attribute count { xsd:nonNegativeInteger }?
+  & element edge { edge-content }*
+
+# Node
+node-content =
+    attribute id { id-type }
+  & attribute label { xsd:token }?
+  & element attvalues { attvalues-content }?
+
+# Edge
+edge-content =
+    attribute id { id-type }?
+  & attribute type { edgetype-type }?
+  & attribute label { xsd:token }?
+  & attribute source { id-type }
+  & attribute target { id-type }
+  & attribute weight { weight-type }?
+  & attribute kind { xsd:token}?
+  & element attvalues { attvalues-content }?
+
+## Hierarchy
+
+# Extends nodes
+node-content &=
+    attribute pid { id-type }?
+  & element nodes { nodes-content }?
+  & element edges { edges-content }?
+
+## Phylogenics
+
+# Extends nodes
+node-content &=
+    element parents { parents-content }?
+
+# Parents
+parents-content =
+    element parent { parent-content }*
+
+# Parent
+parent-content =
+    attribute for { id-type }
+
+## Attributes
+
+# Attributes
+attributes-content =
+    attribute class { class-type }
+  & element attribute { attribute-content }*
+
+# Attribute
+attribute-content =
+    attribute id { id-type }
+  & attribute title { xsd:string }
+  & attribute type { attrtype-type }
+  & element default { text }?
+  & element options { text }?
+
+# Attribute values (for nodes and edges)
+attvalues-content =
+    element attvalue { attvalue-content }*
+
+# Attribute value
+attvalue-content =
+    attribute for { id-type }
+  & attribute value { xsd:string }
+
+# Attribute types
+attrtype-type =
+    string "integer" |
+    string "long" |
+    string "double" |
+    string "float" |
+    string "boolean" |
+    string "bigdecimal" |
+    string "biginteger" |
+    string "byte" |
+    string "char" |
+    string "short" |
+    string "liststring" |
+    string "listboolean" |
+    string "listinteger" |
+    string "listlong" |
+    string "listfloat" |
+    string "listdouble" |
+    string "listbyte" |
+    string "listshort" |
+    string "listbigdecimal" |
+    string "listbiginteger" |
+    string "listchar" |
+    string "string" |
+    string "anyURI"
+
+# Attribute class (for attributes)
+class-type =
+    string "node" |
+    string "edge"
+
+## Datatypes
+
+# Default edge type
+defaultedgetype-type = [ a:defaultValue = "undirected" ] 
+    string "directed" | 
+    string "undirected" | 
+    string "mutual"
+
+# Edge type
+edgetype-type = [ a:defaultValue = "undirected" ] 
+    string "directed" | 
+    string "undirected" | 
+    string "mutual"
+
+# Id type
+id-type =
+    xsd:string | xsd:integer | xsd:long
+
+# Id type (for graph)
+idtype-type = [ a:defaultValue = "string" ] 
+    string "integer" |
+    string "string"
+
+# Edge weigth
+weight-type = [ a:defaultValue = "1.0" ] 
+    xsd:double
+
