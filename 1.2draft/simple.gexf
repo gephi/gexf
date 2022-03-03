@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.2draft"
- xmlns:viz="http://www.gexf.net/1.2draft/viz"
+<gexf xmlns="http://gexf.net/1.2draft"
+ xmlns:viz="http://gexf.net/1.2draft/viz"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.gexf.net/1.2draft 
-                     http://www.gexf.net/1.2draft/gexf.xsd" 
+ xsi:schemaLocation="http://gexf.net/1.2draft
+                     http://gexf.net/1.2draft/gexf.xsd"
  version="1.2">
     <meta lastmodifieddate="2009-03-20">
         <creator>Gephi.org</creator>
