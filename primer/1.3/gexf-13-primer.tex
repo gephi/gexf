@@ -35,11 +35,11 @@
     pdfmenubar=true,        % show Acrobat’s menu?
     pdffitwindow=false,     % window fit to page when opened
     pdfstartview={FitH},    % fits the width of the page to the window
-    pdftitle={GEXF 1.2draft Primer},    % title
-    pdfauthor={Sebastien Heymann},     % author
-    pdfsubject={GEXF 1.2draft Primer},   % subject of the document
-    pdfcreator={Gephi},   % creator of the document
-    pdfproducer={Gephi}, % producer of the document
+    pdftitle={GEXF 1.3 Primer},    % title
+    pdfauthor={GEXF Working Group},     % author
+    pdfsubject={GEXF 1.3 Primer},   % subject of the document
+    pdfcreator={GEXF Working Group},   % creator of the document
+    pdfproducer={GEXF Working Group}, % producer of the document
     pdfkeywords={gephi gexf graph}, % list of keywords
     pdfnewwindow=true,      % links in new window
     colorlinks=false,       % false: boxed links; true: colored links
@@ -1133,7 +1133,7 @@ The GEXF specification history:
 \begin{itemize}
 \item Add a `timezone` attribute on `\<graph\>` to use as a timezone in case it's omitted in the element timestamps
 \item Open intervals attributes `startopen` and `endopen` are removed. Use regular inclusive `start` and `end` instead
-\item Remove `mode`, `start` and `end` attributes on `\<attributes\>` as it was redundant with `\<graph\>` attributes
+\item Remove `start` and `end` attributes on `\<attributes\>` as it was redundant with `\<graph\>` attributes
 \item Timestamp support
 \begin{itemize}
 \item Add the ability to represent time with single timestamps instead of intervals. We want feature parity between the two time representations but note they can't be mixed.
