@@ -36,7 +36,7 @@
                             <ul>
                                 <li>Add a timezone attribute on "graph" to use as a timezone in case it's omitted in the element timestamps</li>
                                 <li>Open intervals attributes "startopen" and "endopen" are removed. Use regular inclusive start and end instead</li>
-                                <li>Remove mode, start and end attributes on "attributes" as it was redundant with "graph" attributes</li>
+                                <li>Remove start and end attributes on "attributes" as it was redundant with "graph" attributes</li>
                                 <li>Add the ability to represent time with single timestamps instead of intervals. We want feature parity between the two time representations but note they can't be mixed.</li>
                                 <li>Add a "timerepresentation" enum in "graph" with either interval (default) or timestamp to configure the way the time is represented.</li>
                                 <li>Add timestamp attribute to "node", "edge", "spell" and "attvalue" to support this new time representation.</li>

@@ -69,16 +69,6 @@
     <xs:attribute name="for" use="required" type="ns1:id-type"/>
   </xs:attributeGroup>
   <!-- Attributes -->
-  <xs:complexType name="attributes-content">
-    <xs:annotation>
-      <xs:documentation>Attributes</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ns1:attribute"/>
-    </xs:sequence>
-    <xs:attribute name="class" use="required" type="ns1:class-type"/>
-  </xs:complexType>
-  <xs:element name="attribute" type="ns1:attribute-content"/>
   <!-- Attribute -->
   <xs:complexType name="attribute-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">

@@ -9,9 +9,13 @@
     <xs:attribute name="start" type="ns1:time-type"/>
     <xs:attribute name="end" type="ns1:time-type"/>
     <xs:attribute name="timestamp" type="ns1:time-type"/>
-    <xs:attribute name="mode" type="ns1:mode-type"/>
+    <xs:attribute name="mode" type="ns1:mode-type-graph"/>
     <xs:attribute name="timerepresentation" type="ns1:timerepresentation-type"/>
     <xs:attribute name="timezone" type="xs:token"/>
+  </xs:attributeGroup>
+  <!-- Extends attributes -->
+  <xs:attributeGroup name="attributes-content">
+    <xs:attribute name="mode" type="ns1:mode-type-attributes"/>
   </xs:attributeGroup>
   <!-- Extends attribute values -->
   <xs:attributeGroup name="attvalue-content">
@@ -67,12 +71,19 @@
   <xs:simpleType name="time-type">
     <xs:union memberTypes="xs:integer xs:double xs:date xs:dateTime"/>
   </xs:simpleType>
-  <!-- Mode type (for graph and attributes) -->
-  <xs:simpleType name="mode-type">
+  <!-- Mode type (for graph) -->
+  <xs:simpleType name="mode-type-graph">
     <xs:restriction base="xs:string">
       <xs:enumeration value="static"/>
       <xs:enumeration value="dynamic"/>
       <xs:enumeration value="slice"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Mode type (for attributes) -->
+  <xs:simpleType name="mode-type-attributes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="static"/>
+      <xs:enumeration value="dynamic"/>
     </xs:restriction>
   </xs:simpleType>
   <!-- Time format type -->

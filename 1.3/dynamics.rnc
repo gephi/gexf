@@ -13,9 +13,13 @@ graph-content &=
   & ((attribute start { time-type }?
   & attribute end { time-type }?)
     | attribute timestamp {time-type})
-  & attribute mode { mode-type }?
+  & attribute mode { mode-type-graph }?
   & attribute timerepresentation { timerepresentation-type }?
   & attribute timezone { xsd:token }?
+
+# Extends attributes
+attributes-content &=
+  attribute mode { mode-type-attributes }?
 
 # Extends attribute values
 attvalue-content &=
@@ -56,11 +60,16 @@ spell-content =
 time-type = 
     xsd:integer | xsd:double | xsd:date | xsd:dateTime
 
-# Mode type (for graph and attributes)
-mode-type = [ a:defaultValue = "static" ]
+# Mode type (for graph)
+mode-type-graph = [ a:defaultValue = "static" ]
     string "static" |
     string "dynamic" |
     string "slice"
+
+# Mode type (for attributes)
+mode-type-attributes = [ a:defaultValue = "static" ]
+    string "static" |
+    string "dynamic"
 
 # Time format type
 timeformat-type = [ a:defaultValue = "double" ] 
