@@ -29,7 +29,7 @@
       </choice>
       <optional>
         <attribute name="mode">
-          <ref name="mode-type"/>
+          <ref name="mode-type-graph"/>
         </attribute>
       </optional>
       <optional>
@@ -43,6 +43,14 @@
         </attribute>
       </optional>
     </interleave>
+  </define>
+  <!-- Extends attributes -->
+  <define name="attributes-content" combine="interleave">
+    <optional>
+      <attribute name="mode">
+        <ref name="mode-type-attributes"/>
+      </attribute>
+    </optional>
   </define>
   <!-- Extends attribute values -->
   <define name="attvalue-content" combine="interleave">
@@ -171,12 +179,19 @@
       <data type="dateTime"/>
     </choice>
   </define>
-  <!-- Mode type (for graph and attributes) -->
-  <define name="mode-type">
+  <!-- Mode type (for graph) -->
+  <define name="mode-type-graph">
     <choice>
       <value type="string" datatypeLibrary="" a:defaultValue="static">static</value>
       <value type="string" datatypeLibrary="">dynamic</value>
       <value type="string" datatypeLibrary="">slice</value>
+    </choice>
+  </define>
+  <!-- Mode type (for attributes) -->
+  <define name="mode-type-attributes">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="static">static</value>
+      <value type="string" datatypeLibrary="">dynamic</value>
     </choice>
   </define>
   <!-- Time format type -->

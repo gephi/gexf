@@ -25,7 +25,7 @@ Compatible with Gephi 0.9.3 and above. Note that part of the specifications were
 
 - Add a `timezone` attribute on `<graph>` to use as a timezone in case it's omitted in the element timestamps
 - Open intervals attributes `startopen` and `endopen` are removed. Use regular inclusive `start` and `end` instead
-- Remove `mode`, `start` and `end` attributes on `<attributes>` as it was redundant with `<graph>` attributes
+- Remove `start` and `end` attributes on `<attributes>` as it was redundant with `<graph>` attributes
 
 #### Timestamp support
 
@@ -44,7 +44,7 @@ Add the ability to represent time with single timestamps instead of intervals. W
 The optional `mode` attribute on `<graph>` now has an additional `slice` value, in addition of `static` and `dynamic`. With slice, the expectation is that the `<graph>` also has either a `timestamp` or `start` / `end` intervals.
 
 - Add a `timestamp` attribute on `<graph>` to characterise the slice this graph represent
-- Change the meaning of the `start` and `end` attributes on `<graph>` to either characterise the slide instead of the time bounds, which should rather be inferred
+- Change the meaning of the `start` and `end` attributes on `<graph>` to either characterise the slice instead of the time bounds, which should rather be inferred
 
 ### Viz
 
