@@ -51,6 +51,11 @@
         </element>
       </optional>
       <optional>
+        <element name="title">
+          <text/>
+        </element>
+      </optional>
+      <optional>
         <element name="description">
           <text/>
         </element>

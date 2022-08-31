@@ -24,6 +24,7 @@ meta-content =
     attribute lastmodifieddate { xsd:date }?
   & element creator { text }?
   & element keywords { text }?
+  & element title { text }?
   & element description { text }?
 
 # Graph

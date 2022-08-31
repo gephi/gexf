@@ -27,12 +27,14 @@
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element ref="ns2:creator"/>
       <xs:element ref="ns2:keywords"/>
+      <xs:element ref="ns2:title"/>
       <xs:element ref="ns2:description"/>
     </xs:choice>
     <xs:attribute name="lastmodifieddate" type="xs:date"/>
   </xs:complexType>
   <xs:element name="creator" type="xs:string"/>
   <xs:element name="keywords" type="xs:string"/>
+  <xs:element name="title" type="xs:string"/>
   <xs:element name="description" type="xs:string"/>
   <!-- Graph -->
   <!-- Nodes -->
