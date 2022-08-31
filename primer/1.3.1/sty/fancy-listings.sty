@@ -1,0 +1,132 @@
+\newcommand{\as}{\ensuremath{\rightarrow}}
+\newcommand{\variable}[1]{\texttt{#1}}
+\newcommand{\keyword}[1]{\texttt{\textbf{#1}}}
+\newcommand{\function}[1]{\textsf{#1}}
+\newcommand{\element}[1]{\textsf{#1}}
+
+\RequirePackage{fancyvrb}
+\RequirePackage{color}
+    \definecolor{lightblue}{rgb}{.3,.5,1}
+    \definecolor{orange}{rgb}{1,.7,0}
+    \definecolor{darkorange}{rgb}{1,.4,0}
+    \definecolor{darkgreen}{rgb}{0,.4,0}
+    \definecolor{darkblue}{rgb}{0,0,.4}
+    \definecolor{darkred}{rgb}{.56,0,0}
+    \definecolor{gray}{rgb}{.3,.3,.3}
+    \definecolor{darkgray}{rgb}{.2,.2,.2}
+    \definecolor{shadecolor}{gray}{0.925}
+
+\RequirePackage{listings}
+\lstdefinelanguage{Xcerpt}{%
+      morekeywords=[1]{GOAL,CONSTRUCT,FROM,END,DECLARE,PROGRAM},% blocks
+      morekeywords=[2]{declare,all,some,position,pos,optional,opt,where,order-by,group-by,and,or,not},%
+      morekeywords=[2]{variable,ns-default,ns-prefix,not,if,then,else,case,without,desc,descendant,in,identity},%
+      morekeywords=[3]{idvar,var,->,as},% variables
+      morekeywords=[4]{lexical,sum,count,join},% aggregation/sorting
+      morekeywords=[5]{},% regexps (s.moredelim below)
+      morestring=[b]",%
+      morecomment=[l]{\#},%
+      morecomment=[s]{\\\#}{\#\\\\)},%
+      alsodigit={-},%
+      literate= {->}{$\rightarrow$}{2},%
+      sensitive%
+    }[keywords,strings]
+
+    \lstdefinelanguage{CXcerpt}{%
+      morekeywords=[1]{GOAL,CONSTRUCT,FROM,END,DECLARE,PROGRAM},% blocks
+      morekeywords=[2]{declare,all,some,position,pos,optional,opt,where,order-by,group-by,and,or,not},%
+      morekeywords=[2]{variable,ns-default,ns-prefix,not,if,then,else,case,without,desc,descendant,identity},%
+      morekeywords=[3]{var,->,as},% variables
+      morekeywords=[4]{lexical,sum,count,join},% aggregation/sorting
+      morekeywords=[5]{},% regexps (s.moredelim below)
+      morestring=[b]",%
+      morecomment=[l]{\#},%
+      morecomment=[s]{\\\#}{\#\\\\)},%
+      morecomment=[s]{<!--}{-->},%
+      alsodigit={-},%
+      literate= {->}{$\rightarrow$}{2},%
+      sensitive%
+    }[keywords,strings]
+
+    \lstdefinelanguage{XQuery}{%
+      morekeywords=[1]{for,in,let,where,return,if,then,else,case,default,typeswitch},% 
+      morekeywords=[1]{child,descendant,attribute,self,descendant-or-self,following-sibling,following,parent,ancestor,preceding-sibling,preceding,ancestor-or-self,},% 
+      morekeywords=[2]{cast,as,castable,instance,of,some,every,in,satisfies,unordered,ordered,stable,order,by,descending,empty,collation,derives-from,nilled,nillable,node,schema-element,document-node},%
+      morekeywords=[3]{element,function,variable,comment,processing-instruction,text,document,attribute,to},%
+      morekeywords=[4]{xquery,declare,namespace,module,option,ordering,version,encoding,order,last,copy-namespaces,preserve,no-inherit,import,schema,at,external,construction,strip,base-uri,boundary-space},%
+      morekeywords=[3]{fn:count,fn:sum,fn:empty,fn:max,fn:doc,fn:avg,fn:node-name,fn:last,fn:position,fn:error,position,last,size,count,substring,fn:substring,string,fn:string,contains,fn:contains,concat,fn:concat},% 
+      morekeywords=[5]{mod,eq,or,and,idiv,true,false,is,div,union,intersect,except,gt,lt,},% 
+      morestring=[b]",%
+      morecomment=[s]{(:}{:)},%
+      sensitive%
+    }[keywords,comments,strings]
+
+    \lstdefinelanguage{RNC}{%
+      morekeywords=[1]{start,element,attribute,text,empty},% blocks
+      morekeywords=[2]{default,namespace},%
+      morekeywords=[4]{grammar,include,parent},%
+      morekeywords=[3]{},% aggregation/sorting
+      morekeywords=[5]{},% regexps (s.moredelim below)
+      morestring=[b]",%
+      morecomment=[l]{\#},%
+      alsodigit={-},%
+      sensitive%
+    }[keywords,comments,strings]
+
+    \lstdefinelanguage{N3}{%
+      morekeywords=[1]{@prefix},% 
+      morestring=[b]",%
+      %morecomment=[s]{(:}{:)},%
+      sensitive%
+    }[keywords,comments,strings]
+
+    \lstdefinelanguage{DAPLEX}{%
+      morekeywords=[1]{FOR,EACH,SUCH,THAT,FOR,SOME,AND,PRINT},% 
+      morestring=[b]",%
+      %morecomment=[s]{(:}{:)},%
+      sensitive%
+    }[keywords,strings]
+
+
+    \lstdefinelanguage{XMLXcerpt}[]{XML}%
+    {morekeywords={goal,rule,data,construct,from,out,xc:goal,xc:rule,xc:data,xc:construct,xc:from,variable,without,except,optional,all,some,first,%
+        order-by,group-by,with-default,condition,arithmetic-expression,%
+        comparison-expression,and,or,not,declare,ns-prefix,ns-default,%
+        iri,name,%
+        xc:variable,xc:without,xc:except,xc:optional,xc:all,xc:some,xc:first,%
+        xc:order-by,xc:group-by,xc:with-default,xc:condition,xc:arithmetic-expression,%
+        xc::comparison-expression,xc:and,xc:or,xc:not,xc:declare,xc:ns-prefix,xc:ns-default,%
+        xc:iri,xc:name,%
+        children,attributes,label,element,identifier,ordered,total,attribute,value,name,wildcard,min,max,order-relation,equivalence-relation,operator,comment,reference,text},%
+      % morekeywords=[3]{xc:value},%
+      alsodigit={-},%
+    }%
+  
+
+    \lstset{%
+      basicstyle      = \ttfamily,%
+      keywordstyle    = [1]\bfseries,%
+      keywordstyle    = [2]\bfseries,%
+      keywordstyle    = [3]\itshape,%
+      keywordstyle    = [4]\bfseries,%
+      keywordstyle    = [5]\bfseries,%
+      stringstyle     = \sffamily\color{darkgreen},%
+      commentstyle    = \sffamily\color{darkgray},%
+      showstringspaces= false,%
+      fancyvrb        = true,%
+      firstnumber=auto,%
+%      frame=tb,%
+      breaklines=true,breakatwhitespace=true,%
+%      prebreak=\textellipsis,postbreak=\textellipsis,%
+      emphstyle=\color{red}\underbar, emphstyle={[2]\color{blue}\underbar},%
+      numbers=right, numberstyle=\tiny, stepnumber=2, numbersep=5pt,%
+      extendedchars=true,inputencoding=utf8,%
+      backgroundcolor=\color{shadecolor},
+      xleftmargin=10pt,
+      xrightmargin=10pt,
+      language=Xcerpt%
+    }
+
+  \lstset{columns={[c]fullflexible}}%
+
+\lstdefinestyle{xml}{keywordstyle    = \color{blue}}
