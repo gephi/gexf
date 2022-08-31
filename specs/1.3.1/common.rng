@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="id-type">
+    <choice>
+      <data type="string"/>
+      <data type="integer"/>
+      <data type="long"/>
+    </choice>
+  </define>
+  <!-- Attribute types -->
+  <define name="attrtype-type">
+    <choice>
+      <value type="string" datatypeLibrary="">integer</value>
+      <value type="string" datatypeLibrary="">long</value>
+      <value type="string" datatypeLibrary="">double</value>
+      <value type="string" datatypeLibrary="">float</value>
+      <value type="string" datatypeLibrary="">boolean</value>
+      <value type="string" datatypeLibrary="">bigdecimal</value>
+      <value type="string" datatypeLibrary="">biginteger</value>
+      <value type="string" datatypeLibrary="">byte</value>
+      <value type="string" datatypeLibrary="">char</value>
+      <value type="string" datatypeLibrary="">short</value>
+      <value type="string" datatypeLibrary="">liststring</value>
+      <value type="string" datatypeLibrary="">listboolean</value>
+      <value type="string" datatypeLibrary="">listinteger</value>
+      <value type="string" datatypeLibrary="">listlong</value>
+      <value type="string" datatypeLibrary="">listfloat</value>
+      <value type="string" datatypeLibrary="">listdouble</value>
+      <value type="string" datatypeLibrary="">listbyte</value>
+      <value type="string" datatypeLibrary="">listshort</value>
+      <value type="string" datatypeLibrary="">listbigdecimal</value>
+      <value type="string" datatypeLibrary="">listbiginteger</value>
+      <value type="string" datatypeLibrary="">listchar</value>
+      <value type="string" datatypeLibrary="">string</value>
+      <value type="string" datatypeLibrary="">anyURI</value>
+    </choice>
+  </define>
+  <!-- Attribute class (for attributes) -->
+  <define name="class-type">
+    <choice>
+      <value type="string" datatypeLibrary="">node</value>
+      <value type="string" datatypeLibrary="">edge</value>
+    </choice>
+  </define>
+</grammar>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:simpleType name="id-type">
+    <xs:union memberTypes="xs:string xs:integer xs:long"/>
+  </xs:simpleType>
+  <!-- Attribute types -->
+  <xs:simpleType name="attrtype-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="long"/>
+      <xs:enumeration value="double"/>
+      <xs:enumeration value="float"/>
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="bigdecimal"/>
+      <xs:enumeration value="biginteger"/>
+      <xs:enumeration value="byte"/>
+      <xs:enumeration value="char"/>
+      <xs:enumeration value="short"/>
+      <xs:enumeration value="liststring"/>
+      <xs:enumeration value="listboolean"/>
+      <xs:enumeration value="listinteger"/>
+      <xs:enumeration value="listlong"/>
+      <xs:enumeration value="listfloat"/>
+      <xs:enumeration value="listdouble"/>
+      <xs:enumeration value="listbyte"/>
+      <xs:enumeration value="listshort"/>
+      <xs:enumeration value="listbigdecimal"/>
+      <xs:enumeration value="listbiginteger"/>
+      <xs:enumeration value="listchar"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="anyURI"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Attribute class (for attributes) -->
+  <xs:simpleType name="class-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="node"/>
+      <xs:enumeration value="edge"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

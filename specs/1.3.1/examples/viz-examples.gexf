@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gexf xmlns="http://gexf.net/1.3.1" version="1.3.1" xmlns:viz="http://gexf.net/1.3.1/viz" >
+  <meta lastmodifieddate="2022-08-30">
+    <creator>Gephi 0.9.3</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="type" title="type" type="string">
+        <viz:colors scale="qualitative">
+          <viz:color forvalue="person" hex="#FF0000"/>
+          <viz:color forvalue="city" hex="#00FF00"/>
+        </viz:colors>
+      </attribute>
+      <attribute id="degree" title="Degree" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="square-root">
+          <viz:scalepoint forratio="0" factor="0" />
+          <viz:scalepoint forratio="0.1" factor="0.316227766"/>
+          <viz:scalepoint forratio="0.2" factor="0.447213595"/>
+          <viz:scalepoint forratio="0.3" factor="0.547722558"/>
+          <viz:scalepoint forratio="0.4" factor="0.632455532"/>
+          <viz:scalepoint forratio="0.5" factor="0.707106781"/>
+          <viz:scalepoint forratio="0.6" factor="0.774596669"/>
+          <viz:scalepoint forratio="0.7" factor="0.836660027"/>
+          <viz:scalepoint forratio="0.8" factor="0.894427191"/>
+          <viz:scalepoint forratio="0.9" factor="0.948683298"/>
+          <viz:scalepoint forratio="1.0" factor="1"/>
+          <viz:range min="1" max="10" default="1" />
+        </viz:sizes>
+      </attribute>
+      <viz:defaultscales  colors="type" sizes="degree" />
+      <viz:positions layoutalgorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679">
+        <viz:param name="scale" type="integer" value="10"/>
+        <viz:param name="stronger gravity" type="boolean" value="true"/>
+      </viz:positions>
+    </attributes>
+    <attributes class="edge" mode="static">
+      <attribute id="type" title="type" type="string">
+        <viz:colors scale="qualitative">
+          <viz:color forvalue="lives in" hex="#112345"/>
+          <viz:color forvalue="works with" hex="#654523"/>
+        </viz:colors>
+      </attribute>
+      <viz:defaultscales colors="type"/>
+    </attributes>
+    <nodes>
+      <node id="0" label="Paul">
+        <attvalues>
+          <attvalue for="type" value="person"/>
+          <attvalue for="degree" value="1"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-1301.586" y="688.9311"/>
+        <viz:color r="153" g="153" b="153"/>
+      </node>
+      <node id="1" label="Nantes">
+        <attvalues>
+          <attvalue for="type" value="city"/>
+          <attvalue for="degree" value="1"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-757.35565" y="647.0624"/>
+        <viz:color r="153" g="153" b="153"/>
+      </node>
+      <node id="2" label="Alexis">
+        <attvalues>
+          <attvalue for="type" value="person"/>
+          <attvalue for="degree" value="0"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-322.79947" y="461.26642"/>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="0" target="1">
+        <attvalues>
+          <attvalue for="type" value="lives in"/>
+        </attvalues>
+      </edge>
+      <edge id="1" source="2" target="1">
+        <attvalues>
+          <attvalue for="type" value="lives in"/>
+        </attvalues>
+      </edge>
+      <edge id="2" source="0" target="2">
+        <attvalues>
+          <attvalue for="type" value="works with"/>
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

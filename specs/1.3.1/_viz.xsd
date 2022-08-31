@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <!-- Extends node -->
+  <xs:group name="node-content">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="color">
+          <xs:complexType>
+            <xs:attributeGroup ref="color-content"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="position"/>
+        <xs:element ref="size"/>
+        <xs:element name="shape">
+          <xs:complexType>
+            <xs:attributeGroup ref="node-shape-content"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="position">
+    <xs:complexType>
+      <xs:attributeGroup ref="position-content"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="size">
+    <xs:complexType>
+      <xs:attributeGroup ref="size-content"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Extend edge -->
+  <xs:group name="edge-content">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="color">
+          <xs:complexType>
+            <xs:attributeGroup ref="color-content"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="thickness"/>
+        <xs:element name="shape">
+          <xs:complexType>
+            <xs:attributeGroup ref="edge-shape-content"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="thickness">
+    <xs:complexType>
+      <xs:attributeGroup ref="thickness-content"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Color -->
+  <xs:attributeGroup name="color-content">
+    <xs:attribute name="r" type="color-channel"/>
+    <xs:attribute name="g" type="color-channel"/>
+    <xs:attribute name="b" type="color-channel"/>
+    <xs:attribute name="hex" type="xs:token"/>
+    <xs:attribute name="a" type="alpha-channel"/>
+  </xs:attributeGroup>
+  <!-- Position -->
+  <xs:attributeGroup name="position-content">
+    <xs:attribute name="x" use="required" type="xs:float"/>
+    <xs:attribute name="y" use="required" type="xs:float"/>
+    <xs:attribute name="z" type="xs:float"/>
+  </xs:attributeGroup>
+  <!-- Size -->
+  <xs:attributeGroup name="size-content">
+    <xs:attribute name="value" use="required" type="size-type"/>
+  </xs:attributeGroup>
+  <!-- Thickness -->
+  <xs:attributeGroup name="thickness-content">
+    <xs:attribute name="value" use="required" type="thickness-type"/>
+  </xs:attributeGroup>
+  <!-- Node shape -->
+  <xs:attributeGroup name="node-shape-content">
+    <xs:attribute name="value" use="required" type="node-shape-type"/>
+    <xs:attribute name="uri" type="xs:anyURI"/>
+  </xs:attributeGroup>
+  <!-- Edge shape -->
+  <xs:attributeGroup name="edge-shape-content">
+    <xs:attribute name="value" use="required" type="edge-shape-type"/>
+  </xs:attributeGroup>
+  <!-- Color -->
+  <xs:simpleType name="color-channel">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Alpha Channel -->
+  <xs:simpleType name="alpha-channel">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+      <xs:maxInclusive value="1.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Size -->
+  <xs:simpleType name="size-type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Thickness -->
+  <xs:simpleType name="thickness-type">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Node shape -->
+  <xs:simpleType name="node-shape-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="disc"/>
+      <xs:enumeration value="square"/>
+      <xs:enumeration value="triangle"/>
+      <xs:enumeration value="diamond"/>
+      <xs:enumeration value="image"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Edge shape -->
+  <xs:simpleType name="edge-shape-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="solid"/>
+      <xs:enumeration value="dotted"/>
+      <xs:enumeration value="dashed"/>
+      <xs:enumeration value="double"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Scales specs -->
+  <xs:attributeGroup name="scale-label-attribute">
+    <xs:annotation>
+      <xs:documentation>common attributes</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="scalelabel" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="for-value-attribute">
+    <xs:attribute name="forvalue" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="for-ratio-attribute">
+    <xs:attribute name="forratio" use="required" type="xs:float"/>
+  </xs:attributeGroup>
+  <xs:complexType name="colors-content">
+    <xs:annotation>
+      <xs:documentation>colors scale content</xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="color">
+        <xs:complexType>
+          <xs:attributeGroup ref="color-content"/>
+          <xs:attribute name="forvalue" type="xs:string"/>
+          <xs:attribute name="forratio" type="xs:float"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="colordefault"/>
+    </xs:choice>
+    <xs:attribute name="scale" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="quantitative"/>
+          <xs:enumeration value="qualitative"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="scalelabel" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="colordefault">
+    <xs:complexType>
+      <xs:attributeGroup ref="color-content"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="shapes-content">
+    <xs:annotation>
+      <xs:documentation>shapes scale content</xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="shape">
+        <xs:complexType>
+          <xs:attribute name="value" use="required">
+            <xs:simpleType>
+              <xs:union memberTypes="node-shape-type edge-shape-type"/>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="uri" type="xs:anyURI"/>
+          <xs:attributeGroup ref="for-value-attribute"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="shapedefault"/>
+    </xs:choice>
+    <xs:attribute name="scalelabel" type="xs:string"/>
+    <xs:attribute name="scale" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="qualitative"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="shapedefault">
+    <xs:complexType>
+      <xs:attribute name="value" use="required">
+        <xs:simpleType>
+          <xs:union memberTypes="node-shape-type edge-shape-type"/>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="uri" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="sizes-scale-content">
+    <xs:annotation>
+      <xs:documentation>quantitative scale content</xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="scalepoint"/>
+      <xs:element name="range">
+        <xs:complexType>
+          <xs:attribute name="min" use="required" type="size-type"/>
+          <xs:attribute name="max" use="required" type="size-type"/>
+          <xs:attribute name="default" use="required" type="size-type"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="scalelabel" type="xs:string"/>
+    <xs:attribute name="scale" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="quantitative"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="scalepoint">
+    <xs:complexType>
+      <xs:attributeGroup ref="for-ratio-attribute"/>
+      <xs:attribute name="factor" use="required" type="xs:float"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="thicknesses-scale-content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="scalepoint"/>
+      <xs:element name="range">
+        <xs:complexType>
+          <xs:attribute name="min" use="required" type="thickness-type"/>
+          <xs:attribute name="max" use="required" type="thickness-type"/>
+          <xs:attribute name="default" use="required" type="thickness-type"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="scalelabel" type="xs:string"/>
+    <xs:attribute name="scale" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="quantitative"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="positions-content">
+    <xs:annotation>
+      <xs:documentation>layout </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
+    </xs:sequence>
+    <xs:attribute name="layoutalgorithm" use="required" type="xs:string"/>
+    <xs:attribute name="referenceURL" type="xs:anyURI"/>
+  </xs:complexType>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="type" use="required" type="attrtype-type"/>
+      <xs:attribute name="value" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Extends attribute with scales -->
+  <xs:group name="attribute-content">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="colors"/>
+        <xs:element ref="shapes"/>
+        <xs:element ref="sizes"/>
+        <xs:element ref="thicknesses"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="colors" type="colors-content"/>
+  <xs:element name="shapes" type="shapes-content"/>
+  <xs:element name="sizes" type="sizes-scale-content"/>
+  <xs:element name="thicknesses" type="thicknesses-scale-content"/>
+  <!-- Extends attributes with positions and defaultscales -->
+  <xs:group name="attributes-content">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="positions"/>
+        <xs:element ref="defaultscales"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="positions" type="positions-content"/>
+  <xs:element name="defaultscales">
+    <xs:complexType>
+      <xs:attribute name="colors" type="id-type"/>
+      <xs:attribute name="sizes" type="id-type"/>
+      <xs:attribute name="shapes" type="id-type"/>
+      <xs:attribute name="thicknesses" type="id-type"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

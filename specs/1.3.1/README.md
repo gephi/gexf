@@ -16,7 +16,7 @@ In such cases we cant to be able to inform the user when visualizing the graph t
 Ideally we would like to know the exact way which was used to render such viz attributes.
 Viz attributes can be computed from attributes (globally set) or set manually (locally set).
 
-TWe propose to keep the existing way (1.3) to set viz attributes at the node/edge level to cover the manually set (locally set) use case.
+We propose to keep the existing way (1.3) to set viz attributes at the node/edge level to cover the manually set (locally set) use case.
 
 To cover the cases where the viz atts were computed we need to add the specifications which indicates the computation specs. We propose to set this at the data attributes definition level (globally).
 
@@ -29,11 +29,11 @@ we propose to keep the viz attributes as they exist. First to ensure retro-compa
 We propose to create plural version of viz attributes: `viz:colors`, `viz:sizes`, `viz:positions`, `viz:thicknesses`.
 Those tag will host the dynamic definitions of viz attributes.
 
-We propose to include those into the the attributes definition in order to:
+We propose to include those into the the attribute(s) definitions in order to:
 
 - set the rule globally for the graph
 - reuse the node/edge class attribute already set in the attributes
-- impose to have only one plural viz attributes set by node/edge attributes definition
+- nest the scale definition inside the corresponding attribute definition
 
 To represent the dynamic definitions of viz attributes we need to define:
 
@@ -41,25 +41,9 @@ To represent the dynamic definitions of viz attributes we need to define:
 - the method: partition, ranking, layout...
 - the parameters: color hashmap, domain, spline method...
 
-##### viz-colors
+Finally this specification allows to have more than one scale for one viz parameter set in the same gexf file. For instance colors could be derived from two different node attributes type and degree. So we add a defaultscales element to specify which scale has been used to render the colors, sizes (...) in the gexf.
 
-```relaxng
-element colors {
-    attribute use { id-type }
-    attribute method { "ranking" | "partition" }
-    element color {
-        color-content
-        & attribute forvalue {xsd:string}?
-        & attribute forratio {xsd: float}?
-    }*
-    element spline {
-        element controlpoint {
-            attribute x { xsd:float }
-            attribute y { xsd:float }
-        }+
-    }?
-}
-```
+##### viz-colors
 
 **Set by a partition**
 
@@ -67,10 +51,11 @@ element colors {
 <attributes class="node" mode="static">
     <attribute id="modularity_class" title="Modularity Class" type="integer">
         <default>0</default>
+        <viz:colors scale="qualitative">
+            <viz:color forvalue="1" r="168" g="168" b="29"/>
+            <viz:colordefault r="1" g="1" b="1"/>
+        </viz:colors>
     </attribute>
-    <viz:colors use="modularity_class" method="partition">
-        <viz:color forvalue="1" r="168" g="168" b="29"></viz:color>
-    </viz:colors>
 </attributes>
 ```
 
@@ -80,148 +65,108 @@ element colors {
 <attributes class="node" mode="static">
     <attribute id="degree" title="Degree" type="integer">
         <default>0</default>
+        <viz:colors use="degree" scale="continuous" scalelabel="greenish gradient">
+            <viz:color forratio="0" hex="#EDF8FB"/>
+            <viz:color forratio="0.5" hex="#66C2A4"/>
+            <viz:color forratio="1" r="0" g="109" b="44"/>
+            <viz:colordefault r="1" g="1" b="1"/>
+        </viz:colors>
     </attribute>
-    <viz:colors use="degree" method="ranking">
-        <viz:color forratio="0" r="168" g="168" b="29"></viz:color>
-        <viz:color forratio="0.5" r="168" g="168" b="29"></viz:color>
-        <viz:color forratio="1" r="168" g="200" b="56"></viz:color>
-        <viz:spline>
-            <viz:controlpoint x="0" y="1" />
-            <viz:controlpoint x="0" y="1" />
-        </viz:spline>
-    </viz:colors>
+</attributes>
+```
+
+**Two colors scales**
+
+```xml
+<attributes class="node" mode="static">
+    <attribute id="modularity_class" title="Modularity Class" type="integer">
+        <default>0</default>
+        <viz:colors scale="qualitative">
+            <viz:color forvalue="1" r="168" g="168" b="29"/>
+            <viz:colordefault r="1" g="1" b="1"/>
+        </viz:colors>
+    </attribute>
+    <attribute id="degree" title="Degree" type="integer">
+        <default>0</default>
+        <viz:colors scale="quantitative" scalelabel="greenish gradient">
+            <viz:color forratio="0" hex="#EDF8FB"/>
+            <viz:color forratio="0.5" hex="#66C2A4"/>
+            <viz:color forratio="1" r="0" g="109" b="44"/>
+            <viz:colordefault r="1" g="1" b="1"/>
+        </viz:colors>
+    </attribute>
+     <viz:defaultscales  colors="type" />
+</attributes>
+```
+
+##### viz-shapes
+
+```xml
+<attributes class="node" mode="static">
+    <attribute id="node_type" title="Type of node" type="string">
+        <default>person</default>
+        <viz:shapes scale="qualitative">
+            <viz:shape forvalue="person" value="disc"></viz:shape>
+            <viz:shape forvalue="city" value="square"></viz:shape>
+        </viz:shapes>
+    </attribute>
 </attributes>
 ```
 
 ##### viz-sizes
 
-```relaxng
-element sizes {
-    attribute use { id-type }
-    attribute method { "ranking" }
-    element size {
-        size-content
-        & attribute forratio { xsd:float }
-    }*
-    element spline {
-        element controlpoint {
-            attribute x { xsd:float }
-            attribute y { xsd:float }
-        }+
-    }?
-}
+```xml
+<attributes class="node" mode="static">
+    <attribute id="degree" title="Degree" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="square-root">
+            <viz:scalepoint forratio="0" factor="0" ></viz:scalepoint>
+            <viz:scalepoint forratio="0.1" factor="0.316227766" ></viz:scalepoint>
+            <viz:scalepoint forratio="0.2" factor="0.447213595"></viz:scalepoint>
+            <viz:scalepoint forratio="0.3" factor="0.547722558"></viz:scalepoint>
+            <viz:scalepoint forratio="0.4" factor="0.632455532"></viz:scalepoint>
+            <viz:scalepoint forratio="0.5" factor="0.707106781"></viz:scalepoint>
+            <viz:scalepoint forratio="0.6" factor="0.774596669"></viz:scalepoint>
+            <viz:scalepoint forratio="0.7" factor="0.836660027"></viz:scalepoint>
+            <viz:scalepoint forratio="0.8" factor="0.894427191"></viz:scalepoint>
+            <viz:scalepoint forratio="0.9" factor="0.948683298"></viz:scalepoint>
+            <viz:scalepoint forratio="1" factor="1"></viz:scalepoint>
+            <viz:sizedomain min="1" max="10" default="1" />
+        </viz:sizes>
+    </attribute>
+</attributes>
 ```
+
+##### viz-thicknesses
+
+```xml
+<attributes class="edge" mode="static">
+    <attribute id="weightAttribute" title="Weight Attribute" type="integer">
+        <default>1</default>
+        <viz:thicknesses scale="quantitative">
+            <viz:range min="1" max="10" default="1" />
+        </viz:thicknesses>
+    </attribute>
+</attributes>
+```
+
+##### viz-positions
+
+**Positions set by a layout**
+
+Since positions layout does not depend on specific attribute we nest it in the attributes element.
 
 ```xml
 <attributes class="node" mode="static">
     <attribute id="degree" title="Degree" type="integer">
         <default>0</default>
     </attribute>
-    <viz:sizes use="degree" method="ranking">
-        <viz:color forratio="0" value="1" ></viz:color>
-        <viz:color forratio="0.5" value="4"></viz:color>
-        <viz:color forratio="1" value="10"></viz:color>
-        <viz:spline>
-            <viz:controlpoint x="0" y="1" />
-            <viz:controlpoint x="0" y="1" />
-        </viz:spline>
-    </viz:colors>
+    <viz:positions layoutalgorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679">
+        <viz:param name="scale" type="integer" value="10"/>
+        <viz:param name="stronger gravity" type="boolean" value="true"/>
+      </viz:positions>
 </attributes>
 ```
-
-##### viz-positions
-
-```relaxng
-element positions {
-    element xpositions {
-        attribute use { id-type }?
-        attribute method { "ranking" }
-        element x {
-            attribute forratio { xsd:float }
-            attribute value { xsd:float }
-        }*
-        element spline {
-            element controlpoint {
-                attribute x { xsd:float }
-                attribute y { xsd:float }
-            }+
-        }?
-    }?
-    element ypositions {
-        attribute use { id-type }?
-        attribute method { "ranking" }
-        element y {
-            attribute forratio { xsd:float }
-            attribute value { xsd:float }
-        }*
-        element spline {
-            element controlpoint {
-                attribute x { xsd:float }
-                attribute y { xsd:float }
-            }+
-        }?
-    }?
-    element layout {
-        attribute algorithm { xsd:string }
-        element param {
-            attribute name { xsd:string }
-            text
-        }
-    }?
-}
-```
-
-**Positions set by a ranking**
-
-```xml
-<attributes class="node" mode="static">
-    <attribute id="lat" title="Lattitude" type="float">
-        <default>0.0</default>
-    </attribute>
-    <attribute id="lng" title="Longitude" type="float">
-        <default>0.0</default>
-    </attribute>
-    <viz:positions>
-        <viz:xpositions use="lat" method="ranking">
-            <viz:x forratio="0" value="0" ></viz:color>
-            <viz:x forratio="0.5" value="0.4"></viz:color>
-            <viz:x forratio="1" value="1"></viz:color>
-            <viz:spline>
-                <viz:controlpoint x="0" y="1" />
-                <viz:controlpoint x="0" y="1" />
-            </viz:spline>
-        </viz:xpositions>
-        <viz:xpositions use="lng" method="ranking" />
-    </viz:positions>
-</attributes>
-```
-
-**Positions set by a layout**
-
-```xml
-<attributes class="node" mode="static">
-    <attribute id="lat" title="Lattitude" type="float">
-        <default>0.0</default>
-    </attribute>
-    <attribute id="lng" title="Longitude" type="float">
-        <default>0.0</default>
-    </attribute>
-    <viz:positions>
-        <viz:layout algorithm="forceatlas2">
-            <viz:param name="scale">10</viz:param>
-        </viz:layout>
-    </viz:positions>
-</attributes>
-```
-
-| **viz attributes** | **method** |                                     **parameters**                                     |
-| :----------------: | :--------: | :------------------------------------------------------------------------------------: |
-|   **viz:color**    | partition  |                                {[value:string]: string}                                |
-|   **viz:color**    |  ranking   | {domain:{[ratio:number]: string}, spline?:[{x:number, y:number},{x:number, y:number}]} |
-|    **viz:size**    |  ranking   | {domain:{min: number, max:number}, spline?:[{x:number, y:number},{x:number, y:number}} |
-|  **viz:position**  |   layout   |                     {algorithm:enum, params:{[param:string]:any}}                      |
-|   **viz:shape**    | partition  |                                {[value:string]: string}                                |
-| **viz:thickness**  |  ranking   | {domain:{min: number, max:number}, spline?:[{x:number, y:number},{x:number, y:number}} |
 
 #### local takes over global
 
@@ -231,6 +176,4 @@ A GEXF file can contain both definitions for the same graph.
 
 We propose that implementations reading GEXF must use locally set viz attributes in priority if global rule are also indicated.
 
-### questions
-
-transform missing values
+To ensure the best GEXF compatibility among existing consumers we recommend to set both systematically.
