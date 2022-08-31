@@ -1,14 +1,21 @@
 # GEXF Format
 
-GEXF file format specifications. Details and examples at  [gexf.net](http://gexf.net).
+GEXF file format specifications. Details and examples at [gexf.net](http://gexf.net).
 
 The repository contains both the [specifications](specs) and the [primer](primer) sources.
 
-The latest **stable** version in **1.3**.
+The latest **stable** version in **1.3.1**.
 
 # Changelog
 
 Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.3 when we decided to simply use full versions numbers.
+
+## 1.3.1
+
+Compatible with Gephi 0.9.10? and above. The general purpose of this version is to embed enough information in the GEXF to ease legend drawing aside the graph.
+
+- Add `title` element in `meta`
+- Extend the `viz` module with scaling information. It describes how the `viz` attributes were calculated from node/edge attributes
 
 ## 1.3
 
@@ -76,7 +83,7 @@ Compatible with Gephi 0.8 and above.
 
 Compatible with Gephi 0.7 and above.
 
--  Modules are stabilized and new ones appear: hierarchy and phylogeny.
+- Modules are stabilized and new ones appear: hierarchy and phylogeny.
 
 ## 1.0
 
