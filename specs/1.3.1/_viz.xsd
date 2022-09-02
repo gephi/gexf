@@ -138,7 +138,14 @@
     <xs:attribute name="forvalue" use="required" type="xs:string"/>
   </xs:attributeGroup>
   <xs:attributeGroup name="for-ratio-attribute">
-    <xs:attribute name="forratio" use="required" type="xs:float"/>
+    <xs:attribute name="forratio" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:float">
+          <xs:minInclusive value="0"/>
+          <xs:maxInclusive value="1.0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:attributeGroup>
   <xs:complexType name="colors-content">
     <xs:annotation>
@@ -149,7 +156,14 @@
         <xs:complexType>
           <xs:attributeGroup ref="color-content"/>
           <xs:attribute name="forvalue" type="xs:string"/>
-          <xs:attribute name="forratio" type="xs:float"/>
+          <xs:attribute name="forratio">
+            <xs:simpleType>
+              <xs:restriction base="xs:float">
+                <xs:minInclusive value="0"/>
+                <xs:maxInclusive value="1.0"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
       <xs:element ref="colordefault"/>
@@ -211,7 +225,19 @@
       <xs:documentation>quantitative scale content</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="scalepoint"/>
+      <xs:element name="scalepoint">
+        <xs:complexType>
+          <xs:attributeGroup ref="for-ratio-attribute"/>
+          <xs:attribute name="factor" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:float">
+                <xs:minInclusive value="0"/>
+                <xs:maxInclusive value="1.0"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="range">
         <xs:complexType>
           <xs:attribute name="min" use="required" type="size-type"/>
@@ -229,15 +255,14 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
-  <xs:element name="scalepoint">
-    <xs:complexType>
-      <xs:attributeGroup ref="for-ratio-attribute"/>
-      <xs:attribute name="factor" use="required" type="xs:float"/>
-    </xs:complexType>
-  </xs:element>
   <xs:complexType name="thicknesses-scale-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="scalepoint"/>
+      <xs:element name="scalepoint">
+        <xs:complexType>
+          <xs:attributeGroup ref="for-ratio-attribute"/>
+          <xs:attribute name="factor" use="required" type="xs:float"/>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="range">
         <xs:complexType>
           <xs:attribute name="min" use="required" type="thickness-type"/>
@@ -255,16 +280,16 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
-  <xs:complexType name="positions-content">
-    <xs:annotation>
-      <xs:documentation>layout </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
-    </xs:sequence>
-    <xs:attribute name="layoutalgorithm" use="required" type="xs:string"/>
-    <xs:attribute name="referenceURL" type="xs:anyURI"/>
-  </xs:complexType>
+  <xs:element name="layout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
+      </xs:sequence>
+      <xs:attribute name="layoutalgorithm" use="required" type="xs:string"/>
+      <xs:attribute name="step" use="required" type="xs:positiveInteger"/>
+      <xs:attribute name="referenceURL" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="param">
     <xs:complexType>
       <xs:attribute name="name" use="required" type="xs:string"/>
@@ -296,7 +321,13 @@
       </xs:choice>
     </xs:sequence>
   </xs:group>
-  <xs:element name="positions" type="positions-content"/>
+  <xs:element name="positions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="layout"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="defaultscales">
     <xs:complexType>
       <xs:attribute name="colors" type="id-type"/>

@@ -133,13 +133,16 @@ thicknesses-scale-content = scale-label-attribute?
     }
 
 ## layout 
-positions-content =  attribute layoutalgorithm { xsd:string }
-    & attribute referenceURL { xsd:anyURI}?
-    & element param {
+layout = element layout {
+    attribute algorithm { xsd:string },
+    attribute step {xsd:positiveInteger},
+    attribute referenceURL { xsd:anyURI}?,
+    element param {
         attribute name { xsd:string },
         attribute type { attrtype-type},
         attribute value { xsd:string }
     }*
+}
 
 # Extends attribute with scales
 attribute-content &= element colors {colors-content}?
@@ -148,7 +151,7 @@ attribute-content &= element colors {colors-content}?
     & element thicknesses {thicknesses-scale-content}?
 
 # Extends attributes with positions and defaultscales
-attributes-content &= element positions {positions-content}?
+attributes-content &= element positions { layout+}?
     & element defaultscales { 
         attribute colors { id-type}?,
         attribute sizes { id-type}?,

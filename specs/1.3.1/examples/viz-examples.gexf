@@ -31,9 +31,16 @@
         </viz:sizes>
       </attribute>
       <viz:defaultscales  colors="type" sizes="degree" />
-      <viz:positions layoutalgorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679">
-        <viz:param name="scale" type="integer" value="10"/>
-        <viz:param name="stronger gravity" type="boolean" value="true"/>
+      <viz:positions> 
+        <viz:layout algorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679" step="1">
+          <viz:param name="scale" type="integer" value="10"/>
+          <viz:param name="stronger gravity" type="boolean" value="true"/>
+        </viz:layout>
+        <viz:layout algorithm="nooverlap" step="2">
+          <viz:param name="speed" type="integer" value="3"/>
+          <viz:param name="ratio" type="float" value="1.2"/>
+          <viz:param name="margin" type="float" value="5.0"/>
+        </viz:layout>  
       </viz:positions>
     </attributes>
     <attributes class="edge" mode="static">

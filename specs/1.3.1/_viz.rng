@@ -176,7 +176,10 @@
   </define>
   <define name="for-ratio-attribute">
     <attribute name="forratio">
-      <data type="float"/>
+      <data type="float">
+        <param name="minInclusive">0</param>
+        <param name="maxInclusive">1.0</param>
+      </data>
     </attribute>
   </define>
   <define name="colors-content">
@@ -251,7 +254,10 @@
           <interleave>
             <ref name="for-ratio-attribute"/>
             <attribute name="factor">
-              <data type="float"/>
+              <data type="float">
+                <param name="minInclusive">0</param>
+                <param name="maxInclusive">1.0</param>
+              </data>
             </attribute>
           </interleave>
         </element>
@@ -300,11 +306,14 @@
       </element>
     </interleave>
   </define>
-  <define name="positions-content">
+  <define name="layout">
     <a:documentation>layout </a:documentation>
-    <interleave>
+    <element name="layout">
       <attribute name="layoutalgorithm">
         <data type="string"/>
+      </attribute>
+      <attribute name="step">
+        <data type="positiveInteger"/>
       </attribute>
       <optional>
         <attribute name="referenceURL">
@@ -324,7 +333,7 @@
           </attribute>
         </element>
       </zeroOrMore>
-    </interleave>
+    </element>
   </define>
   <!-- Extends attribute with scales -->
   <define name="attribute-content" combine="interleave">
@@ -356,7 +365,9 @@
     <interleave>
       <optional>
         <element name="positions">
-          <ref name="positions-content"/>
+          <oneOrMore>
+            <ref name="layout"/>
+          </oneOrMore>
         </element>
       </optional>
       <optional>
