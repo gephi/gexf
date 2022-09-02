@@ -1268,7 +1268,7 @@ To do so the \textit{viz:colors} element contains a color gradient definition de
 </attributes>
 \end{lstlisting}
 
-\paragraph{Positions layout} Nodes layouts are algorithms which are used to calculate (x,y) node positions. As they usually are not bind on one specific attribute the \textit{vis:positions} element is placed in the \textit{attributes} element. It documents which algorithm has been used with an optional \textit{referenceURL}. The \textit{vis:positions} element contains a list of parameters which were used. 
+\paragraph{Positions layout} Nodes layouts are algorithms which are used to calculate (x,y) node positions. As they usually are not bind on one specific attribute the \textit{vis:positions} element is placed in the \textit{attributes} element. It documents which algorithm(s) has been used with an optional \textit{referenceURL}. The \textit{vis:layout} element contains a list of parameters which were used. Each \textit{vis:layout} must have a \textit{step} attribute which indicates in which order the layouts were applied.
 
 \lstset{ style=gexf }
 \begin{lstlisting}[caption={Positions layout},label=vizpositionlayout]
@@ -1276,11 +1276,17 @@ To do so the \textit{viz:colors} element contains a color gradient definition de
     <attribute id="degree" title="Degree" type="integer">
         <default>0</default>
     </attribute>
-    <viz:positions layoutalgorithm="forceatlas2" 
-        referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679">
+    <viz:positions> 
+      <viz:layout algorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679" step="1">
         <viz:param name="scale" type="integer" value="10"/>
         <viz:param name="stronger gravity" type="boolean" value="true"/>
-      </viz:positions>
+      </viz:layout>
+      <viz:layout algorithm="nooverlap" step="2">
+        <viz:param name="speed" type="integer" value="3"/>
+        <viz:param name="ratio" type="float" value="1.2"/>
+        <viz:param name="margin" type="float" value="5.0"/>
+      </viz:layout>  
+    </viz:positions>
 </attributes>
 \end{lstlisting}
 
