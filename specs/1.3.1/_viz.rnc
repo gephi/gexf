@@ -84,7 +84,7 @@ edge-shape-type =  [ a:defaultValue = "solid" ]
 ## common attributes
 scale-label-attribute = attribute scalelabel {xsd:string}
 for-value-attribute = attribute forvalue {xsd:string}
-for-ratio-attribute = attribute forratio {xsd:float}
+for-ratio-attribute = attribute forratio {xsd:float { minInclusive = "0" maxInclusive = "1.0" }}
 
 ## colors scale content
 colors-content =  attribute scale { "quantitative" | "qualitative" }
@@ -113,7 +113,7 @@ sizes-scale-content = scale-label-attribute?
     & attribute scale {"quantitative"} 
     & element scalepoint {
         for-ratio-attribute
-        & attribute factor {xsd:float}
+        & attribute factor {xsd:float { minInclusive = "0" maxInclusive = "1.0" }}
     }*
     & element range {
         attribute min { size-type },
