@@ -109,12 +109,30 @@ shapes-content = scale-label-attribute?
         node-shape-content | edge-shape-content}
 
 ## quantitative scale content
+
+control-point-type = xsd:float { minInclusive = "0" maxInclusive = "1.0" }
+
+control-point-content =  attribute x {control-point-type}
+                & attribute y {control-point-type}
+
 sizes-scale-content = scale-label-attribute?
     & attribute scale {"quantitative"} 
-    & element scalepoint {
-        for-ratio-attribute
-        & attribute factor {xsd:float { minInclusive = "0" maxInclusive = "1.0" }}
-    }*
+    & element transform {
+        (element pow { attribute exponent {xsd:integer}}|
+        element sqrt {empty}|
+        element log {empty}|
+        element log10 {empty}|
+        element exp {empty}|
+        element exp10 {empty}|
+        element spline {
+            element origin-control-point { 
+               control-point-content
+            },
+            element destination-control-point { 
+                control-point-content
+            }
+        })
+    }
     & element range {
         attribute min { size-type },
         attribute max { size-type },

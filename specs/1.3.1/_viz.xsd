@@ -220,24 +220,22 @@
       <xs:attribute name="uri" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="sizes-scale-content">
+  <xs:simpleType name="control-point-type">
     <xs:annotation>
       <xs:documentation>quantitative scale content</xs:documentation>
     </xs:annotation>
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="1.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="control-point-content">
+    <xs:attribute name="x" use="required" type="control-point-type"/>
+    <xs:attribute name="y" use="required" type="control-point-type"/>
+  </xs:attributeGroup>
+  <xs:complexType name="sizes-scale-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="scalepoint">
-        <xs:complexType>
-          <xs:attributeGroup ref="for-ratio-attribute"/>
-          <xs:attribute name="factor" use="required">
-            <xs:simpleType>
-              <xs:restriction base="xs:float">
-                <xs:minInclusive value="0"/>
-                <xs:maxInclusive value="1.0"/>
-              </xs:restriction>
-            </xs:simpleType>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
+      <xs:element ref="transform"/>
       <xs:element name="range">
         <xs:complexType>
           <xs:attribute name="min" use="required" type="size-type"/>
@@ -255,14 +253,60 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
+  <xs:element name="transform">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="pow"/>
+        <xs:element ref="sqrt"/>
+        <xs:element ref="log"/>
+        <xs:element ref="log10"/>
+        <xs:element ref="exp"/>
+        <xs:element ref="exp10"/>
+        <xs:element ref="spline"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pow">
+    <xs:complexType>
+      <xs:attribute name="exponent" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sqrt">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="log">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="log10">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="exp">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="exp10">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="spline">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="origin-control-point"/>
+        <xs:element ref="destination-control-point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="origin-control-point">
+    <xs:complexType>
+      <xs:attributeGroup ref="control-point-content"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="destination-control-point">
+    <xs:complexType>
+      <xs:attributeGroup ref="control-point-content"/>
+    </xs:complexType>
+  </xs:element>
   <xs:complexType name="thicknesses-scale-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="scalepoint">
-        <xs:complexType>
-          <xs:attributeGroup ref="for-ratio-attribute"/>
-          <xs:attribute name="factor" use="required" type="xs:float"/>
-        </xs:complexType>
-      </xs:element>
+      <xs:element ref="scalepoint"/>
       <xs:element name="range">
         <xs:complexType>
           <xs:attribute name="min" use="required" type="thickness-type"/>
@@ -280,12 +324,18 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
+  <xs:element name="scalepoint">
+    <xs:complexType>
+      <xs:attributeGroup ref="for-ratio-attribute"/>
+      <xs:attribute name="factor" use="required" type="xs:float"/>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="layout">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
       </xs:sequence>
-      <xs:attribute name="layoutalgorithm" use="required" type="xs:string"/>
+      <xs:attribute name="algorithm" use="required" type="xs:string"/>
       <xs:attribute name="step" use="required" type="xs:positiveInteger"/>
       <xs:attribute name="referenceURL" type="xs:anyURI"/>
     </xs:complexType>

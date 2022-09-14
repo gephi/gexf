@@ -240,8 +240,24 @@
       </element>
     </interleave>
   </define>
-  <define name="sizes-scale-content">
+  <define name="control-point-type">
     <a:documentation>quantitative scale content</a:documentation>
+    <data type="float">
+      <param name="minInclusive">0</param>
+      <param name="maxInclusive">1.0</param>
+    </data>
+  </define>
+  <define name="control-point-content">
+    <interleave>
+      <attribute name="x">
+        <ref name="control-point-type"/>
+      </attribute>
+      <attribute name="y">
+        <ref name="control-point-type"/>
+      </attribute>
+    </interleave>
+  </define>
+  <define name="sizes-scale-content">
     <interleave>
       <optional>
         <ref name="scale-label-attribute"/>
@@ -249,19 +265,38 @@
       <attribute name="scale">
         <value>quantitative</value>
       </attribute>
-      <zeroOrMore>
-        <element name="scalepoint">
-          <interleave>
-            <ref name="for-ratio-attribute"/>
-            <attribute name="factor">
-              <data type="float">
-                <param name="minInclusive">0</param>
-                <param name="maxInclusive">1.0</param>
-              </data>
+      <element name="transform">
+        <choice>
+          <element name="pow">
+            <attribute name="exponent">
+              <data type="integer"/>
             </attribute>
-          </interleave>
-        </element>
-      </zeroOrMore>
+          </element>
+          <element name="sqrt">
+            <empty/>
+          </element>
+          <element name="log">
+            <empty/>
+          </element>
+          <element name="log10">
+            <empty/>
+          </element>
+          <element name="exp">
+            <empty/>
+          </element>
+          <element name="exp10">
+            <empty/>
+          </element>
+          <element name="spline">
+            <element name="origin-control-point">
+              <ref name="control-point-content"/>
+            </element>
+            <element name="destination-control-point">
+              <ref name="control-point-content"/>
+            </element>
+          </element>
+        </choice>
+      </element>
       <element name="range">
         <attribute name="min">
           <ref name="size-type"/>
@@ -309,7 +344,7 @@
   <define name="layout">
     <a:documentation>layout </a:documentation>
     <element name="layout">
-      <attribute name="layoutalgorithm">
+      <attribute name="algorithm">
         <data type="string"/>
       </attribute>
       <attribute name="step">

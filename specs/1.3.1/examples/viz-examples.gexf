@@ -16,18 +16,31 @@
       <attribute id="degree" title="Degree" type="integer">
         <default>0</default>
         <viz:sizes scale="quantitative" scalelabel="square-root">
-          <viz:scalepoint forratio="0" factor="0" />
-          <viz:scalepoint forratio="0.1" factor="0.316227766"/>
-          <viz:scalepoint forratio="0.2" factor="0.447213595"/>
-          <viz:scalepoint forratio="0.3" factor="0.547722558"/>
-          <viz:scalepoint forratio="0.4" factor="0.632455532"/>
-          <viz:scalepoint forratio="0.5" factor="0.707106781"/>
-          <viz:scalepoint forratio="0.6" factor="0.774596669"/>
-          <viz:scalepoint forratio="0.7" factor="0.836660027"/>
-          <viz:scalepoint forratio="0.8" factor="0.894427191"/>
-          <viz:scalepoint forratio="0.9" factor="0.948683298"/>
-          <viz:scalepoint forratio="1.0" factor="1"/>
+          <viz:transform>
+            <viz:sqrt/>
+          </viz:transform>
           <viz:range min="1" max="10" default="1" />
+        </viz:sizes>
+      </attribute>
+      <attribute id="size" title="Size" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="square-root">
+          <viz:transform>
+            <viz:pow exponent="2"/>
+          </viz:transform>
+          <viz:range min="1" max="25" default="1" />
+        </viz:sizes>
+      </attribute>
+      <attribute id="pagerank" title="Page Rank" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="spline">
+          <viz:transform>
+            <viz:spline>
+              <viz:origin-control-point x="0.6" y="0.01"/>
+              <viz:destination-control-point x="0.8" y="0.9" />
+            </viz:spline>
+          </viz:transform>
+          <viz:range min="1" max="5" default="1" />
         </viz:sizes>
       </attribute>
       <viz:defaultscales  colors="type" sizes="degree" />
