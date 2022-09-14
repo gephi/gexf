@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://gexf.net/1.3" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- Extends graph -->
+  <define name="graph-content" combine="interleave">
+    <a:documentation>Gext and data extension</a:documentation>
+    <a:documentation>Note: dynamic weight can be obtained by using the reserved title "weight" in attributes</a:documentation>
+    <interleave>
+      <optional>
+        <attribute name="timeformat">
+          <ref name="timeformat-type"/>
+        </attribute>
+      </optional>
+      <choice>
+        <interleave>
+          <optional>
+            <attribute name="start">
+              <ref name="time-type"/>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="end">
+              <ref name="time-type"/>
+            </attribute>
+          </optional>
+        </interleave>
+        <attribute name="timestamp">
+          <ref name="time-type"/>
+        </attribute>
+      </choice>
+      <optional>
+        <attribute name="mode">
+          <ref name="mode-type-graph"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="timerepresentation">
+          <ref name="timerepresentation-type"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="timezone">
+          <data type="token"/>
+        </attribute>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Extends attributes -->
+  <define name="attributes-content" combine="interleave">
+    <optional>
+      <attribute name="mode">
+        <ref name="mode-type-attributes"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- Extends attribute values -->
+  <define name="attvalue-content" combine="interleave">
+    <choice>
+      <interleave>
+        <optional>
+          <attribute name="start">
+            <ref name="time-type"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="end">
+            <ref name="time-type"/>
+          </attribute>
+        </optional>
+      </interleave>
+      <attribute name="timestamp">
+        <ref name="time-type"/>
+      </attribute>
+    </choice>
+  </define>
+  <!-- Extends node -->
+  <define name="node-content" combine="interleave">
+    <interleave>
+      <choice>
+        <choice>
+          <interleave>
+            <optional>
+              <attribute name="start">
+                <ref name="time-type"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="end">
+                <ref name="time-type"/>
+              </attribute>
+            </optional>
+          </interleave>
+          <attribute name="intervals">
+            <data type="token"/>
+          </attribute>
+        </choice>
+        <attribute name="timestamp">
+          <ref name="time-type"/>
+        </attribute>
+        <attribute name="timestamps">
+          <data type="token"/>
+        </attribute>
+      </choice>
+      <optional>
+        <element name="spells">
+          <ref name="spells-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Extends edge -->
+  <define name="edge-content" combine="interleave">
+    <interleave>
+      <choice>
+        <choice>
+          <interleave>
+            <optional>
+              <attribute name="start">
+                <ref name="time-type"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="end">
+                <ref name="time-type"/>
+              </attribute>
+            </optional>
+          </interleave>
+          <attribute name="intervals">
+            <data type="token"/>
+          </attribute>
+        </choice>
+        <attribute name="timestamp">
+          <ref name="time-type"/>
+        </attribute>
+        <attribute name="timestamps">
+          <data type="token"/>
+        </attribute>
+      </choice>
+      <optional>
+        <element name="spells">
+          <ref name="spells-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Spells -->
+  <define name="spells-content">
+    <oneOrMore>
+      <element name="spell">
+        <ref name="spell-content"/>
+      </element>
+    </oneOrMore>
+  </define>
+  <!-- Spell -->
+  <define name="spell-content">
+    <choice>
+      <interleave>
+        <optional>
+          <attribute name="start">
+            <ref name="time-type"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="end">
+            <ref name="time-type"/>
+          </attribute>
+        </optional>
+      </interleave>
+      <attribute name="timestamp">
+        <ref name="time-type"/>
+      </attribute>
+    </choice>
+  </define>
+  <!-- Time type -->
+  <define name="time-type">
+    <choice>
+      <data type="integer"/>
+      <data type="double"/>
+      <data type="date"/>
+      <data type="dateTime"/>
+    </choice>
+  </define>
+  <!-- Mode type (for graph) -->
+  <define name="mode-type-graph">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="static">static</value>
+      <value type="string" datatypeLibrary="">dynamic</value>
+      <value type="string" datatypeLibrary="">slice</value>
+    </choice>
+  </define>
+  <!-- Mode type (for attributes) -->
+  <define name="mode-type-attributes">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="static">static</value>
+      <value type="string" datatypeLibrary="">dynamic</value>
+    </choice>
+  </define>
+  <!-- Time format type -->
+  <define name="timeformat-type">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="double">integer</value>
+      <value type="string" datatypeLibrary="">double</value>
+      <value type="string" datatypeLibrary="">date</value>
+      <value type="string" datatypeLibrary="">dateTime</value>
+    </choice>
+  </define>
+  <define name="timerepresentation-type">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="interval">interval</value>
+      <value type="string" datatypeLibrary="">timestamp</value>
+    </choice>
+  </define>
+</grammar>

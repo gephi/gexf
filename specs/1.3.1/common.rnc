@@ -1,0 +1,34 @@
+id-type =
+    xsd:string | xsd:integer | xsd:long 
+
+
+# Attribute types
+attrtype-type =
+    string "integer" |
+    string "long" |
+    string "double" |
+    string "float" |
+    string "boolean" |
+    string "bigdecimal" |
+    string "biginteger" |
+    string "byte" |
+    string "char" |
+    string "short" |
+    string "liststring" |
+    string "listboolean" |
+    string "listinteger" |
+    string "listlong" |
+    string "listfloat" |
+    string "listdouble" |
+    string "listbyte" |
+    string "listshort" |
+    string "listbigdecimal" |
+    string "listbiginteger" |
+    string "listchar" |
+    string "string" |
+    string "anyURI"
+
+# Attribute class (for attributes)
+class-type =
+    string "node" |
+    string "edge"

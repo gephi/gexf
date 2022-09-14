@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- Extends node -->
+  <define name="node-content" combine="interleave">
+    <interleave>
+      <optional>
+        <element name="color">
+          <ref name="color-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="position">
+          <ref name="position-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="size">
+          <ref name="size-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="shape">
+          <ref name="node-shape-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Extend edge -->
+  <define name="edge-content" combine="interleave">
+    <interleave>
+      <optional>
+        <element name="color">
+          <ref name="color-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="thickness">
+          <ref name="thickness-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="shape">
+          <ref name="edge-shape-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Color -->
+  <define name="color-content">
+    <interleave>
+      <choice>
+        <interleave>
+          <attribute name="r">
+            <ref name="color-channel"/>
+          </attribute>
+          <attribute name="g">
+            <ref name="color-channel"/>
+          </attribute>
+          <attribute name="b">
+            <ref name="color-channel"/>
+          </attribute>
+        </interleave>
+        <attribute name="hex">
+          <data type="token"/>
+        </attribute>
+      </choice>
+      <optional>
+        <attribute name="a">
+          <ref name="alpha-channel"/>
+        </attribute>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Position -->
+  <define name="position-content">
+    <interleave>
+      <attribute name="x">
+        <data type="float"/>
+      </attribute>
+      <attribute name="y">
+        <data type="float"/>
+      </attribute>
+      <optional>
+        <attribute name="z">
+          <data type="float"/>
+        </attribute>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Size -->
+  <define name="size-content">
+    <attribute name="value">
+      <ref name="size-type"/>
+    </attribute>
+  </define>
+  <!-- Thickness -->
+  <define name="thickness-content">
+    <attribute name="value">
+      <ref name="thickness-type"/>
+    </attribute>
+  </define>
+  <!-- Node shape -->
+  <define name="node-shape-content">
+    <interleave>
+      <attribute name="value">
+        <ref name="node-shape-type"/>
+      </attribute>
+      <optional>
+        <attribute name="uri">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Edge shape -->
+  <define name="edge-shape-content">
+    <attribute name="value">
+      <ref name="edge-shape-type"/>
+    </attribute>
+  </define>
+  <!-- Color -->
+  <define name="color-channel">
+    <data type="nonNegativeInteger">
+      <param name="maxInclusive">255</param>
+    </data>
+  </define>
+  <!-- Alpha Channel -->
+  <define name="alpha-channel">
+    <data type="float" a:defaultValue="1.0">
+      <param name="minInclusive">0.0</param>
+      <param name="maxInclusive">1.0</param>
+    </data>
+  </define>
+  <!-- Size -->
+  <define name="size-type">
+    <data type="float" a:defaultValue="1.0">
+      <param name="minInclusive">0.0</param>
+    </data>
+  </define>
+  <!-- Thickness -->
+  <define name="thickness-type">
+    <data type="float" a:defaultValue="1.0">
+      <param name="minInclusive">0.0</param>
+    </data>
+  </define>
+  <!-- Node shape -->
+  <define name="node-shape-type">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="disc">disc</value>
+      <value type="string" datatypeLibrary="">square</value>
+      <value type="string" datatypeLibrary="">triangle</value>
+      <value type="string" datatypeLibrary="">diamond</value>
+      <value type="string" datatypeLibrary="">image</value>
+    </choice>
+  </define>
+  <!-- Edge shape -->
+  <define name="edge-shape-type">
+    <choice>
+      <value type="string" datatypeLibrary="" a:defaultValue="solid">solid</value>
+      <value type="string" datatypeLibrary="">dotted</value>
+      <value type="string" datatypeLibrary="">dashed</value>
+      <value type="string" datatypeLibrary="">double</value>
+    </choice>
+  </define>
+  <!-- Scales specs -->
+  <define name="scale-label-attribute">
+    <a:documentation>common attributes</a:documentation>
+    <attribute name="scalelabel">
+      <data type="string"/>
+    </attribute>
+  </define>
+  <define name="for-value-attribute">
+    <attribute name="forvalue">
+      <data type="string"/>
+    </attribute>
+  </define>
+  <define name="for-ratio-attribute">
+    <attribute name="forratio">
+      <data type="float">
+        <param name="minInclusive">0</param>
+        <param name="maxInclusive">1.0</param>
+      </data>
+    </attribute>
+  </define>
+  <define name="colors-content">
+    <a:documentation>colors scale content</a:documentation>
+    <interleave>
+      <attribute name="scale">
+        <choice>
+          <value>quantitative</value>
+          <value>qualitative</value>
+        </choice>
+      </attribute>
+      <optional>
+        <ref name="scale-label-attribute"/>
+      </optional>
+      <zeroOrMore>
+        <element name="color">
+          <interleave>
+            <ref name="color-content"/>
+            <optional>
+              <ref name="for-value-attribute"/>
+            </optional>
+            <optional>
+              <ref name="for-ratio-attribute"/>
+            </optional>
+          </interleave>
+        </element>
+      </zeroOrMore>
+      <element name="colordefault">
+        <ref name="color-content"/>
+      </element>
+    </interleave>
+  </define>
+  <define name="shapes-content">
+    <a:documentation>shapes scale content</a:documentation>
+    <interleave>
+      <optional>
+        <ref name="scale-label-attribute"/>
+      </optional>
+      <attribute name="scale">
+        <value>qualitative</value>
+      </attribute>
+      <zeroOrMore>
+        <element name="shape">
+          <interleave>
+            <choice>
+              <ref name="node-shape-content"/>
+              <ref name="edge-shape-content"/>
+            </choice>
+            <ref name="for-value-attribute"/>
+          </interleave>
+        </element>
+      </zeroOrMore>
+      <element name="shapedefault">
+        <choice>
+          <ref name="node-shape-content"/>
+          <ref name="edge-shape-content"/>
+        </choice>
+      </element>
+    </interleave>
+  </define>
+  <define name="control-point-type">
+    <a:documentation>quantitative scale content</a:documentation>
+    <data type="float">
+      <param name="minInclusive">0</param>
+      <param name="maxInclusive">1.0</param>
+    </data>
+  </define>
+  <define name="control-point-content">
+    <interleave>
+      <attribute name="x">
+        <ref name="control-point-type"/>
+      </attribute>
+      <attribute name="y">
+        <ref name="control-point-type"/>
+      </attribute>
+    </interleave>
+  </define>
+  <define name="sizes-scale-content">
+    <interleave>
+      <optional>
+        <ref name="scale-label-attribute"/>
+      </optional>
+      <attribute name="scale">
+        <value>quantitative</value>
+      </attribute>
+      <element name="transform">
+        <choice>
+          <element name="pow">
+            <attribute name="exponent">
+              <data type="integer"/>
+            </attribute>
+          </element>
+          <element name="sqrt">
+            <empty/>
+          </element>
+          <element name="log">
+            <empty/>
+          </element>
+          <element name="log10">
+            <empty/>
+          </element>
+          <element name="exp">
+            <empty/>
+          </element>
+          <element name="exp10">
+            <empty/>
+          </element>
+          <element name="spline">
+            <element name="origin-control-point">
+              <ref name="control-point-content"/>
+            </element>
+            <element name="destination-control-point">
+              <ref name="control-point-content"/>
+            </element>
+          </element>
+        </choice>
+      </element>
+      <element name="range">
+        <attribute name="min">
+          <ref name="size-type"/>
+        </attribute>
+        <attribute name="max">
+          <ref name="size-type"/>
+        </attribute>
+        <attribute name="default">
+          <ref name="size-type"/>
+        </attribute>
+      </element>
+    </interleave>
+  </define>
+  <define name="thicknesses-scale-content">
+    <interleave>
+      <optional>
+        <ref name="scale-label-attribute"/>
+      </optional>
+      <attribute name="scale">
+        <value>quantitative</value>
+      </attribute>
+      <zeroOrMore>
+        <element name="scalepoint">
+          <interleave>
+            <ref name="for-ratio-attribute"/>
+            <attribute name="factor">
+              <data type="float"/>
+            </attribute>
+          </interleave>
+        </element>
+      </zeroOrMore>
+      <element name="range">
+        <attribute name="min">
+          <ref name="thickness-type"/>
+        </attribute>
+        <attribute name="max">
+          <ref name="thickness-type"/>
+        </attribute>
+        <attribute name="default">
+          <ref name="thickness-type"/>
+        </attribute>
+      </element>
+    </interleave>
+  </define>
+  <define name="layout">
+    <a:documentation>layout </a:documentation>
+    <element name="layout">
+      <attribute name="algorithm">
+        <data type="string"/>
+      </attribute>
+      <attribute name="step">
+        <data type="positiveInteger"/>
+      </attribute>
+      <optional>
+        <attribute name="referenceURL">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <element name="param">
+          <attribute name="name">
+            <data type="string"/>
+          </attribute>
+          <attribute name="type">
+            <ref name="attrtype-type"/>
+          </attribute>
+          <attribute name="value">
+            <data type="string"/>
+          </attribute>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!-- Extends attribute with scales -->
+  <define name="attribute-content" combine="interleave">
+    <interleave>
+      <optional>
+        <element name="colors">
+          <ref name="colors-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="shapes">
+          <ref name="shapes-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="sizes">
+          <ref name="sizes-scale-content"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="thicknesses">
+          <ref name="thicknesses-scale-content"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <!-- Extends attributes with positions and defaultscales -->
+  <define name="attributes-content" combine="interleave">
+    <interleave>
+      <optional>
+        <element name="positions">
+          <oneOrMore>
+            <ref name="layout"/>
+          </oneOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="defaultscales">
+          <optional>
+            <attribute name="colors">
+              <ref name="id-type"/>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="sizes">
+              <ref name="id-type"/>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="shapes">
+              <ref name="id-type"/>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="thicknesses">
+              <ref name="id-type"/>
+            </attribute>
+          </optional>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+</grammar>

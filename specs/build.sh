@@ -20,7 +20,10 @@ fi
 echo "Rebuilding all files in $dir"
 
 while IFS= read -r -d $'\0' rncfile; do
-  echo "Building file $(basename "${rncfile}")"
-  trang -I rnc -O xsd $rncfile $dir/$(basename "${rncfile}" .rnc).xsd
-  trang -I rnc -O rng $rncfile $dir/$(basename "${rncfile}" .rnc).rng
+  if [[ $(basename "${rncfile}") != _* ]]
+  then
+     echo "Building file $(basename "${rncfile}")"
+     trang -I rnc -O xsd $rncfile $dir/$(basename "${rncfile}" .rnc).xsd
+     trang -I rnc -O rng $rncfile $dir/$(basename "${rncfile}" .rnc).rng
+  fi
 done < <(find "$dir" -name "*.rnc" -print0)

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gexf xmlns="http://gexf.net/1.3.1" version="1.3.1" xmlns:viz="http://gexf.net/1.3.1/viz" >
+  <meta lastmodifieddate="2022-08-30">
+    <title>Legend examples</title>
+    <creator>Gephi 0.9.3</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="type" title="type" type="string">
+        <viz:colors scale="qualitative">
+          <viz:color forvalue="person" hex="#FF0000"/>
+          <viz:color forvalue="city" hex="#00FF00"/>
+        </viz:colors>
+      </attribute>
+      <attribute id="degree" title="Degree" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="square-root">
+          <viz:transform>
+            <viz:sqrt/>
+          </viz:transform>
+          <viz:range min="1" max="10" default="1" />
+        </viz:sizes>
+      </attribute>
+      <attribute id="size" title="Size" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="square-root">
+          <viz:transform>
+            <viz:pow exponent="2"/>
+          </viz:transform>
+          <viz:range min="1" max="25" default="1" />
+        </viz:sizes>
+      </attribute>
+      <attribute id="pagerank" title="Page Rank" type="integer">
+        <default>0</default>
+        <viz:sizes scale="quantitative" scalelabel="spline">
+          <viz:transform>
+            <viz:spline>
+              <viz:origin-control-point x="0.6" y="0.01"/>
+              <viz:destination-control-point x="0.8" y="0.9" />
+            </viz:spline>
+          </viz:transform>
+          <viz:range min="1" max="5" default="1" />
+        </viz:sizes>
+      </attribute>
+      <viz:defaultscales  colors="type" sizes="degree" />
+      <viz:positions> 
+        <viz:layout algorithm="forceatlas2" referenceURL="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679" step="1">
+          <viz:param name="scale" type="integer" value="10"/>
+          <viz:param name="stronger gravity" type="boolean" value="true"/>
+        </viz:layout>
+        <viz:layout algorithm="nooverlap" step="2">
+          <viz:param name="speed" type="integer" value="3"/>
+          <viz:param name="ratio" type="float" value="1.2"/>
+          <viz:param name="margin" type="float" value="5.0"/>
+        </viz:layout>  
+      </viz:positions>
+    </attributes>
+    <attributes class="edge" mode="static">
+      <attribute id="type" title="type" type="string">
+        <viz:colors scale="qualitative">
+          <viz:color forvalue="lives in" hex="#112345"/>
+          <viz:color forvalue="works with" hex="#654523"/>
+        </viz:colors>
+      </attribute>
+      <viz:defaultscales colors="type"/>
+    </attributes>
+    <nodes>
+      <node id="0" label="Paul">
+        <attvalues>
+          <attvalue for="type" value="person"/>
+          <attvalue for="degree" value="1"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-1301.586" y="688.9311"/>
+        <viz:color r="153" g="153" b="153"/>
+      </node>
+      <node id="1" label="Nantes">
+        <attvalues>
+          <attvalue for="type" value="city"/>
+          <attvalue for="degree" value="1"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-757.35565" y="647.0624"/>
+        <viz:color r="153" g="153" b="153"/>
+      </node>
+      <node id="2" label="Alexis">
+        <attvalues>
+          <attvalue for="type" value="person"/>
+          <attvalue for="degree" value="0"/>
+        </attvalues>
+        <viz:size value="10.0"/>
+        <viz:position x="-322.79947" y="461.26642"/>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="0" target="1">
+        <attvalues>
+          <attvalue for="type" value="lives in"/>
+        </attvalues>
+      </edge>
+      <edge id="1" source="2" target="1">
+        <attvalues>
+          <attvalue for="type" value="lives in"/>
+        </attvalues>
+      </edge>
+      <edge id="2" source="0" target="2">
+        <attvalues>
+          <attvalue for="type" value="works with"/>
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

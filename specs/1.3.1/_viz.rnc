@@ -1,0 +1,179 @@
+default namespace = inherit
+namespace       a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace     rng = "http://relaxng.org/ns/structure/1.0"
+datatypes     xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+
+# Extends node
+node-content &=
+    element color { color-content }?
+  & element position { position-content }?
+  & element size { size-content }?
+  & element shape { node-shape-content }?
+
+# Extend edge
+edge-content &=
+    element color { color-content }?
+  & element thickness { thickness-content }?
+  & element shape { edge-shape-content }?
+
+# Color
+color-content =
+    ((attribute r { color-channel }
+  & attribute g { color-channel }
+  & attribute b { color-channel })
+    | attribute hex { xsd:token })
+  & attribute a { alpha-channel }?
+
+# Position
+position-content =
+    attribute x { xsd:float }
+  & attribute y { xsd:float }
+  & attribute z { xsd:float }?
+
+# Size
+size-content =
+    attribute value { size-type }
+
+# Thickness
+thickness-content =
+    attribute value { thickness-type }
+
+# Node shape
+node-shape-content =
+    attribute value { node-shape-type }
+  & attribute uri { xsd:anyURI }?
+
+# Edge shape
+edge-shape-content =
+    attribute value { edge-shape-type }
+
+# Color
+color-channel = 
+    xsd:nonNegativeInteger { maxInclusive = "255" }
+
+# Alpha Channel
+alpha-channel = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0" maxInclusive = "1.0" }
+
+# Size
+size-type = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0"}
+
+# Thickness
+thickness-type = [ a:defaultValue = "1.0" ] 
+    xsd:float { minInclusive = "0.0"}
+
+# Node shape
+node-shape-type =  [ a:defaultValue = "disc" ] 
+    string "disc" |
+    string "square" |
+    string "triangle" |
+    string "diamond" |
+    string "image"
+
+# Edge shape
+edge-shape-type =  [ a:defaultValue = "solid" ] 
+    string "solid" |
+    string "dotted" |
+    string "dashed" |
+    string "double"
+
+# Scales specs
+
+## common attributes
+scale-label-attribute = attribute scalelabel {xsd:string}
+for-value-attribute = attribute forvalue {xsd:string}
+for-ratio-attribute = attribute forratio {xsd:float { minInclusive = "0" maxInclusive = "1.0" }}
+
+## colors scale content
+colors-content =  attribute scale { "quantitative" | "qualitative" }
+    & scale-label-attribute?
+    & element color {
+        color-content
+        & for-value-attribute?
+        & for-ratio-attribute?
+    }*
+    & element colordefault {
+        color-content
+    }
+
+## shapes scale content
+shapes-content = scale-label-attribute?
+    & attribute scale {"qualitative"} 
+    & element shape {
+        (node-shape-content | edge-shape-content)
+        & for-value-attribute
+    }*
+    & element shapedefault {
+        node-shape-content | edge-shape-content}
+
+## quantitative scale content
+
+control-point-type = xsd:float { minInclusive = "0" maxInclusive = "1.0" }
+
+control-point-content =  attribute x {control-point-type}
+                & attribute y {control-point-type}
+
+sizes-scale-content = scale-label-attribute?
+    & attribute scale {"quantitative"} 
+    & element transform {
+        (element pow { attribute exponent {xsd:integer}}|
+        element sqrt {empty}|
+        element log {empty}|
+        element log10 {empty}|
+        element exp {empty}|
+        element exp10 {empty}|
+        element spline {
+            element origin-control-point { 
+               control-point-content
+            },
+            element destination-control-point { 
+                control-point-content
+            }
+        })
+    }
+    & element range {
+        attribute min { size-type },
+        attribute max { size-type },
+        attribute default { size-type }
+    }
+thicknesses-scale-content = scale-label-attribute?
+    & attribute scale {"quantitative"} 
+    & element scalepoint {
+        for-ratio-attribute
+        & attribute factor {xsd:float}
+    }*
+    & element range {
+        attribute min { thickness-type },
+        attribute max { thickness-type },
+        attribute default { thickness-type }
+    }
+
+## layout 
+layout = element layout {
+    attribute algorithm { xsd:string },
+    attribute step {xsd:positiveInteger},
+    attribute referenceURL { xsd:anyURI}?,
+    element param {
+        attribute name { xsd:string },
+        attribute type { attrtype-type},
+        attribute value { xsd:string }
+    }*
+}
+
+# Extends attribute with scales
+attribute-content &= element colors {colors-content}?
+    & element shapes {shapes-content}?
+    & element sizes {sizes-scale-content}?
+    & element thicknesses {thicknesses-scale-content}?
+
+# Extends attributes with positions and defaultscales
+attributes-content &= element positions { layout+}?
+    & element defaultscales { 
+        attribute colors { id-type}?,
+        attribute sizes { id-type}?,
+        attribute shapes { id-type}?,
+        attribute thicknesses { id-type}?
+    }?
+
