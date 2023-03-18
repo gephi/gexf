@@ -17,10 +17,17 @@ then
    exit
 fi
 
+echo "Cleanup all files in $dir"
+
+while IFS= read -r -d $'\0' xsdfile; do
+  rm $xsdfile
+done < <(find "$dir" -name "*.xsd" -print0)
+
+while IFS= read -r -d $'\0' rngfile; do
+  rm $rngfile
+done < <(find "$dir" -name "*.rng" -print0)
+
 echo "Rebuilding all files in $dir"
 
-while IFS= read -r -d $'\0' rncfile; do
-  echo "Building file $(basename "${rncfile}")"
-  trang -I rnc -O xsd $rncfile $dir/$(basename "${rncfile}" .rnc).xsd
-  trang -I rnc -O rng $rncfile $dir/$(basename "${rncfile}" .rnc).rng
-done < <(find "$dir" -name "*.rnc" -print0)
+trang -I rnc -O xsd $dir/gexf.rnc $dir/gexf.xsd
+trang -I rnc -O rng $dir/gexf.rnc $dir/gexf.rng

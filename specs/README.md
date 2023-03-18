@@ -24,6 +24,10 @@ Execute the provided `build.sh` script with the folder name, e.g.
 
 ## Validate
 
-To validate a GEXF file against the specification executre the provided `validate.sh` script with the specs folder name, e.g.
+To validate a GEXF file against the specification execute the provided `validate.sh` script with the specs folder name, e.g.
 
 ```validate.sh 1.3 test.gexf```
+
+Alternatively, one can validate using [xmllint](https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html) with the following command:
+
+```xmllint --noout --schema 1.3/gexf.xsd test.gexf```
