@@ -6,6 +6,10 @@ The repository contains both the [specifications](specs) and the [primer](primer
 
 The latest **stable** version in **1.3**.
 
+# License
+
+The GEXF format and its related documentation is licensed under the [Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by/4.0/).
+
 # Changelog
 
 Note that we used to use "draft" in certain version (e.g "1.2draft") up until 1.3 when we decided to simply use full versions numbers.
