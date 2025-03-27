@@ -798,10 +798,10 @@ The simplest way is by setting a pair of \begin{footnotesize}start\end{footnotes
 </graph>
 \end{lstlisting}
 
-Each edge must declare time limits inside the join scope of its \begin{footnotesize}source\end{footnotesize} and \begin{footnotesize}target\end{footnotesize} nodes:
+Each edge must declare time limits inside the joined scope of its \begin{footnotesize}source\end{footnotesize} and \begin{footnotesize}target\end{footnotesize} nodes:
 \begin{itemize}
- \item edge.start $\le$ (source.start and target.start)
- \item edge.end   $\ge$ (source.end   and target.end)
+ \item edge.start $\ge$ $\max$(source.start, target.start)
+ \item edge.end   $\le$ $\min$(source.end, target.end)
 \end{itemize}
 
 \lstset{ style=gexf }
