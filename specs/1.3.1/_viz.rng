@@ -318,16 +318,38 @@
       <attribute name="scale">
         <value>quantitative</value>
       </attribute>
-      <zeroOrMore>
-        <element name="scalepoint">
-          <interleave>
-            <ref name="for-ratio-attribute"/>
-            <attribute name="factor">
-              <data type="float"/>
+      <element name="transform">
+        <choice>
+          <element name="pow">
+            <attribute name="exponent">
+              <data type="integer"/>
             </attribute>
-          </interleave>
-        </element>
-      </zeroOrMore>
+          </element>
+          <element name="sqrt">
+            <empty/>
+          </element>
+          <element name="log">
+            <empty/>
+          </element>
+          <element name="log10">
+            <empty/>
+          </element>
+          <element name="exp">
+            <empty/>
+          </element>
+          <element name="exp10">
+            <empty/>
+          </element>
+          <element name="spline">
+            <element name="origin-control-point">
+              <ref name="control-point-content"/>
+            </element>
+            <element name="destination-control-point">
+              <ref name="control-point-content"/>
+            </element>
+          </element>
+        </choice>
+      </element>
       <element name="range">
         <attribute name="min">
           <ref name="thickness-type"/>
