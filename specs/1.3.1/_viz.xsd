@@ -1,64 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://gexf.net/1.3.1/viz" xmlns:ns1="http://gexf.net/1.3" xmlns:viz="http://gexf.net/1.3.1/viz" xmlns:ns2="http://gexf.net/1.3.1">
+  <xs:import namespace="http://gexf.net/1.3" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://gexf.net/1.3.1" schemaLocation="gexf.xsd"/>
   <!-- Extends node -->
-  <xs:group name="node-content">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="color">
-          <xs:complexType>
-            <xs:attributeGroup ref="color-content"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:element ref="position"/>
-        <xs:element ref="size"/>
-        <xs:element name="shape">
-          <xs:complexType>
-            <xs:attributeGroup ref="node-shape-content"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:choice>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="position">
-    <xs:complexType>
-      <xs:attributeGroup ref="position-content"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="size">
-    <xs:complexType>
-      <xs:attributeGroup ref="size-content"/>
-    </xs:complexType>
-  </xs:element>
   <!-- Extend edge -->
-  <xs:group name="edge-content">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="color">
-          <xs:complexType>
-            <xs:attributeGroup ref="color-content"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:element ref="thickness"/>
-        <xs:element name="shape">
-          <xs:complexType>
-            <xs:attributeGroup ref="edge-shape-content"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:choice>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="thickness">
-    <xs:complexType>
-      <xs:attributeGroup ref="thickness-content"/>
-    </xs:complexType>
-  </xs:element>
   <!-- Color -->
   <xs:attributeGroup name="color-content">
-    <xs:attribute name="r" type="color-channel"/>
-    <xs:attribute name="g" type="color-channel"/>
-    <xs:attribute name="b" type="color-channel"/>
+    <xs:attribute name="r" type="viz:color-channel"/>
+    <xs:attribute name="g" type="viz:color-channel"/>
+    <xs:attribute name="b" type="viz:color-channel"/>
     <xs:attribute name="hex" type="xs:token"/>
-    <xs:attribute name="a" type="alpha-channel"/>
+    <xs:attribute name="a" type="viz:alpha-channel"/>
   </xs:attributeGroup>
   <!-- Position -->
   <xs:attributeGroup name="position-content">
@@ -68,20 +20,20 @@
   </xs:attributeGroup>
   <!-- Size -->
   <xs:attributeGroup name="size-content">
-    <xs:attribute name="value" use="required" type="size-type"/>
+    <xs:attribute name="value" use="required" type="viz:size-type"/>
   </xs:attributeGroup>
   <!-- Thickness -->
   <xs:attributeGroup name="thickness-content">
-    <xs:attribute name="value" use="required" type="thickness-type"/>
+    <xs:attribute name="value" use="required" type="viz:thickness-type"/>
   </xs:attributeGroup>
   <!-- Node shape -->
   <xs:attributeGroup name="node-shape-content">
-    <xs:attribute name="value" use="required" type="node-shape-type"/>
+    <xs:attribute name="value" use="required" type="viz:node-shape-type"/>
     <xs:attribute name="uri" type="xs:anyURI"/>
   </xs:attributeGroup>
   <!-- Edge shape -->
   <xs:attributeGroup name="edge-shape-content">
-    <xs:attribute name="value" use="required" type="edge-shape-type"/>
+    <xs:attribute name="value" use="required" type="viz:edge-shape-type"/>
   </xs:attributeGroup>
   <!-- Color -->
   <xs:simpleType name="color-channel">
@@ -152,21 +104,8 @@
       <xs:documentation>colors scale content</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="color">
-        <xs:complexType>
-          <xs:attributeGroup ref="color-content"/>
-          <xs:attribute name="forvalue" type="xs:string"/>
-          <xs:attribute name="forratio">
-            <xs:simpleType>
-              <xs:restriction base="xs:float">
-                <xs:minInclusive value="0"/>
-                <xs:maxInclusive value="1.0"/>
-              </xs:restriction>
-            </xs:simpleType>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
-      <xs:element ref="colordefault"/>
+      <xs:element ref="viz:color"/>
+      <xs:element ref="viz:colordefault"/>
     </xs:choice>
     <xs:attribute name="scale" use="required">
       <xs:simpleType>
@@ -178,9 +117,23 @@
     </xs:attribute>
     <xs:attribute name="scalelabel" type="xs:string"/>
   </xs:complexType>
+  <xs:element name="color">
+    <xs:complexType>
+      <xs:attributeGroup ref="viz:color-content"/>
+      <xs:attribute name="forvalue" type="xs:string"/>
+      <xs:attribute name="forratio">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="1.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="colordefault">
     <xs:complexType>
-      <xs:attributeGroup ref="color-content"/>
+      <xs:attributeGroup ref="viz:color-content"/>
     </xs:complexType>
   </xs:element>
   <xs:complexType name="shapes-content">
@@ -188,18 +141,8 @@
       <xs:documentation>shapes scale content</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="shape">
-        <xs:complexType>
-          <xs:attribute name="value" use="required">
-            <xs:simpleType>
-              <xs:union memberTypes="node-shape-type edge-shape-type"/>
-            </xs:simpleType>
-          </xs:attribute>
-          <xs:attribute name="uri" type="xs:anyURI"/>
-          <xs:attributeGroup ref="for-value-attribute"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element ref="shapedefault"/>
+      <xs:element ref="viz:shape"/>
+      <xs:element ref="viz:shapedefault"/>
     </xs:choice>
     <xs:attribute name="scalelabel" type="xs:string"/>
     <xs:attribute name="scale" use="required">
@@ -210,11 +153,22 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
+  <xs:element name="shape">
+    <xs:complexType>
+      <xs:attribute name="value" use="required">
+        <xs:simpleType>
+          <xs:union memberTypes="viz:node-shape-type viz:edge-shape-type"/>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="uri" type="xs:anyURI"/>
+      <xs:attributeGroup ref="viz:for-value-attribute"/>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="shapedefault">
     <xs:complexType>
       <xs:attribute name="value" use="required">
         <xs:simpleType>
-          <xs:union memberTypes="node-shape-type edge-shape-type"/>
+          <xs:union memberTypes="viz:node-shape-type viz:edge-shape-type"/>
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="uri" type="xs:anyURI"/>
@@ -230,17 +184,17 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:attributeGroup name="control-point-content">
-    <xs:attribute name="x" use="required" type="control-point-type"/>
-    <xs:attribute name="y" use="required" type="control-point-type"/>
+    <xs:attribute name="x" use="required" type="viz:control-point-type"/>
+    <xs:attribute name="y" use="required" type="viz:control-point-type"/>
   </xs:attributeGroup>
   <xs:complexType name="sizes-scale-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="transform"/>
+      <xs:element ref="viz:transform"/>
       <xs:element name="range">
         <xs:complexType>
-          <xs:attribute name="min" use="required" type="size-type"/>
-          <xs:attribute name="max" use="required" type="size-type"/>
-          <xs:attribute name="default" use="required" type="size-type"/>
+          <xs:attribute name="min" use="required" type="viz:size-type"/>
+          <xs:attribute name="max" use="required" type="viz:size-type"/>
+          <xs:attribute name="default" use="required" type="viz:size-type"/>
         </xs:complexType>
       </xs:element>
     </xs:choice>
@@ -256,13 +210,13 @@
   <xs:element name="transform">
     <xs:complexType>
       <xs:choice>
-        <xs:element ref="pow"/>
-        <xs:element ref="sqrt"/>
-        <xs:element ref="log"/>
-        <xs:element ref="log10"/>
-        <xs:element ref="exp"/>
-        <xs:element ref="exp10"/>
-        <xs:element ref="spline"/>
+        <xs:element ref="viz:pow"/>
+        <xs:element ref="viz:sqrt"/>
+        <xs:element ref="viz:log"/>
+        <xs:element ref="viz:log10"/>
+        <xs:element ref="viz:exp"/>
+        <xs:element ref="viz:exp10"/>
+        <xs:element ref="viz:spline"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -289,29 +243,29 @@
   <xs:element name="spline">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="origin-control-point"/>
-        <xs:element ref="destination-control-point"/>
+        <xs:element ref="viz:origin-control-point"/>
+        <xs:element ref="viz:destination-control-point"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="origin-control-point">
     <xs:complexType>
-      <xs:attributeGroup ref="control-point-content"/>
+      <xs:attributeGroup ref="viz:control-point-content"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="destination-control-point">
     <xs:complexType>
-      <xs:attributeGroup ref="control-point-content"/>
+      <xs:attributeGroup ref="viz:control-point-content"/>
     </xs:complexType>
   </xs:element>
   <xs:complexType name="thicknesses-scale-content">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="scalepoint"/>
+      <xs:element ref="viz:transform"/>
       <xs:element name="range">
         <xs:complexType>
-          <xs:attribute name="min" use="required" type="thickness-type"/>
-          <xs:attribute name="max" use="required" type="thickness-type"/>
-          <xs:attribute name="default" use="required" type="thickness-type"/>
+          <xs:attribute name="min" use="required" type="viz:thickness-type"/>
+          <xs:attribute name="max" use="required" type="viz:thickness-type"/>
+          <xs:attribute name="default" use="required" type="viz:thickness-type"/>
         </xs:complexType>
       </xs:element>
     </xs:choice>
@@ -324,16 +278,10 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
-  <xs:element name="scalepoint">
-    <xs:complexType>
-      <xs:attributeGroup ref="for-ratio-attribute"/>
-      <xs:attribute name="factor" use="required" type="xs:float"/>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="layout">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="viz:param"/>
       </xs:sequence>
       <xs:attribute name="algorithm" use="required" type="xs:string"/>
       <xs:attribute name="step" use="required" type="xs:positiveInteger"/>
@@ -343,47 +291,31 @@
   <xs:element name="param">
     <xs:complexType>
       <xs:attribute name="name" use="required" type="xs:string"/>
-      <xs:attribute name="type" use="required" type="attrtype-type"/>
+      <xs:attribute name="type" use="required" type="ns2:attrtype-type"/>
       <xs:attribute name="value" use="required" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <!-- Extends attribute with scales -->
-  <xs:group name="attribute-content">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="colors"/>
-        <xs:element ref="shapes"/>
-        <xs:element ref="sizes"/>
-        <xs:element ref="thicknesses"/>
+  <xs:complexType name="attribute-content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:choice>
+        <xs:element ref="viz:colors"/>
+        <xs:element ref="viz:shapes"/>
+        <xs:element ref="viz:sizes"/>
+        <xs:element ref="viz:thicknesses"/>
       </xs:choice>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="colors" type="colors-content"/>
-  <xs:element name="shapes" type="shapes-content"/>
-  <xs:element name="sizes" type="sizes-scale-content"/>
-  <xs:element name="thicknesses" type="thicknesses-scale-content"/>
+      <xs:choice>
+        <xs:element ref="ns2:default"/>
+        <xs:element ref="ns2:options"/>
+      </xs:choice>
+    </xs:choice>
+    <xs:attribute name="id" use="required" type="ns2:id-type"/>
+    <xs:attribute name="title" use="required" type="xs:string"/>
+    <xs:attribute name="type" use="required" type="ns2:attrtype-type"/>
+  </xs:complexType>
+  <xs:element name="colors" type="viz:colors-content"/>
+  <xs:element name="shapes" type="viz:shapes-content"/>
+  <xs:element name="sizes" type="viz:sizes-scale-content"/>
+  <xs:element name="thicknesses" type="viz:thicknesses-scale-content"/>
   <!-- Extends attributes with positions and defaultscales -->
-  <xs:group name="attributes-content">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="positions"/>
-        <xs:element ref="defaultscales"/>
-      </xs:choice>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="positions">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="layout"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="defaultscales">
-    <xs:complexType>
-      <xs:attribute name="colors" type="id-type"/>
-      <xs:attribute name="sizes" type="id-type"/>
-      <xs:attribute name="shapes" type="id-type"/>
-      <xs:attribute name="thicknesses" type="id-type"/>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

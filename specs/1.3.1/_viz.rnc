@@ -140,10 +140,22 @@ sizes-scale-content = scale-label-attribute?
     }
 thicknesses-scale-content = scale-label-attribute?
     & attribute scale {"quantitative"} 
-    & element scalepoint {
-        for-ratio-attribute
-        & attribute factor {xsd:float}
-    }*
+    & element transform {
+        (element pow { attribute exponent {xsd:integer}}|
+        element sqrt {empty}|
+        element log {empty}|
+        element log10 {empty}|
+        element exp {empty}|
+        element exp10 {empty}|
+        element spline {
+            element origin-control-point { 
+               control-point-content
+            },
+            element destination-control-point { 
+                control-point-content
+            }
+        })
+    }
     & element range {
         attribute min { thickness-type },
         attribute max { thickness-type },
