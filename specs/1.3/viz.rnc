@@ -65,15 +65,36 @@ thickness-type = [ a:defaultValue = "1.0" ]
 
 # Node shape
 node-shape-type =  [ a:defaultValue = "disc" ] 
-    string "disc" |
-    string "square" |
-    string "triangle" |
-    string "diamond" |
-    string "image"
+                        # Byte value in Gephi
+    string "disc"     | # 0000 0000 0
+    string "triangle" | # 0000 0001 1
+    string "square"   | # 0000 0010 2
+    string "diamond"  | # 0000 0011 3 
+    string "star"     | # 0000 0100 4
+    string "pentagon" | # 0000 0101 5 
+    string "hexagon"  | # 0000 0110 6
+    string "cross"    | # 0000 0111 7 
+    string "custom_1" | # 1000 0000 128
+    string "custom_2" | # 1000 0001 129
+    string "custom_3" | # 1000 0010 130
+    string "custom_4" | # 1000 0011 131
+    string "custom_5" | # 1000 0100 132
+    string "custom_6" | # 1000 0101 133
+    string "custom_7" | # 1000 0110 134
+    string "custom_8"   # 1000 0111 135
 
 # Edge shape
 edge-shape-type =  [ a:defaultValue = "solid" ] 
-    string "solid" |
-    string "dotted" |
-    string "dashed" |
-    string "double"
+                          # Byte value in Gephi
+    string "solid"    |   # 0000 0000 0
+    string "dotted"   |   # 0000 0001 1
+    string "dashed"   |   # 0000 0010 2
+    string "double"   |   # 0000 0011 3
+    string "custom_1" |   # 1000 0000 128
+    string "custom_2" |   # 1000 0001 129
+    string "custom_3" |   # 1000 0010 130
+    string "custom_4" |   # 1000 0011 131
+    string "custom_5" |   # 1000 0100 132
+    string "custom_6" |   # 1000 0101 133
+    string "custom_7" |   # 1000 0110 134
+    string "custom_8"     # 1000 0111 135
