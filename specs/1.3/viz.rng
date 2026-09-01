@@ -147,19 +147,68 @@
   <define name="node-shape-type">
     <choice>
       <value type="string" datatypeLibrary="" a:defaultValue="disc">disc</value>
-      <value type="string" datatypeLibrary="">square</value>
+      <!-- Byte value in Gephi -->
+      <!-- 0000 0000 0 -->
       <value type="string" datatypeLibrary="">triangle</value>
+      <!-- 0000 0001 1 -->
+      <value type="string" datatypeLibrary="">square</value>
+      <!-- 0000 0010 2 -->
       <value type="string" datatypeLibrary="">diamond</value>
-      <value type="string" datatypeLibrary="">image</value>
+      <!-- 0000 0011 3 -->
+      <value type="string" datatypeLibrary="">star</value>
+      <!-- 0000 0100 4 -->
+      <value type="string" datatypeLibrary="">pentagon</value>
+      <!-- 0000 0101 5 -->
+      <value type="string" datatypeLibrary="">hexagon</value>
+      <!-- 0000 0110 6 -->
+      <value type="string" datatypeLibrary="">cross</value>
+      <!-- 0000 0111 7 -->
+      <value type="string" datatypeLibrary="">custom_1</value>
+      <!-- 1000 0000 128 -->
+      <value type="string" datatypeLibrary="">custom_2</value>
+      <!-- 1000 0001 129 -->
+      <value type="string" datatypeLibrary="">custom_3</value>
+      <!-- 1000 0010 130 -->
+      <value type="string" datatypeLibrary="">custom_4</value>
+      <!-- 1000 0011 131 -->
+      <value type="string" datatypeLibrary="">custom_5</value>
+      <!-- 1000 0100 132 -->
+      <value type="string" datatypeLibrary="">custom_6</value>
+      <!-- 1000 0101 133 -->
+      <value type="string" datatypeLibrary="">custom_7</value>
+      <!-- 1000 0110 134 -->
+      <value type="string" datatypeLibrary="">custom_8</value>
     </choice>
   </define>
+  <!-- 1000 0111 135 -->
   <!-- Edge shape -->
   <define name="edge-shape-type">
     <choice>
       <value type="string" datatypeLibrary="" a:defaultValue="solid">solid</value>
+      <!-- Byte value in Gephi -->
+      <!-- 0000 0000 0 -->
       <value type="string" datatypeLibrary="">dotted</value>
+      <!-- 0000 0001 1 -->
       <value type="string" datatypeLibrary="">dashed</value>
+      <!-- 0000 0010 2 -->
       <value type="string" datatypeLibrary="">double</value>
+      <!-- 0000 0011 3 -->
+      <value type="string" datatypeLibrary="">custom_1</value>
+      <!-- 1000 0000 128 -->
+      <value type="string" datatypeLibrary="">custom_2</value>
+      <!-- 1000 0001 129 -->
+      <value type="string" datatypeLibrary="">custom_3</value>
+      <!-- 1000 0010 130 -->
+      <value type="string" datatypeLibrary="">custom_4</value>
+      <!-- 1000 0011 131 -->
+      <value type="string" datatypeLibrary="">custom_5</value>
+      <!-- 1000 0100 132 -->
+      <value type="string" datatypeLibrary="">custom_6</value>
+      <!-- 1000 0101 133 -->
+      <value type="string" datatypeLibrary="">custom_7</value>
+      <!-- 1000 0110 134 -->
+      <value type="string" datatypeLibrary="">custom_8</value>
     </choice>
   </define>
 </grammar>
+<!-- 1000 0111 135 -->

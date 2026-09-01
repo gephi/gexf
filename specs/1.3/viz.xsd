@@ -63,12 +63,24 @@
   <xs:simpleType name="node-shape-type">
     <xs:restriction base="xs:string">
       <xs:enumeration value="disc"/>
-      <xs:enumeration value="square"/>
       <xs:enumeration value="triangle"/>
+      <xs:enumeration value="square"/>
       <xs:enumeration value="diamond"/>
-      <xs:enumeration value="image"/>
+      <xs:enumeration value="star"/>
+      <xs:enumeration value="pentagon"/>
+      <xs:enumeration value="hexagon"/>
+      <xs:enumeration value="cross"/>
+      <xs:enumeration value="custom_1"/>
+      <xs:enumeration value="custom_2"/>
+      <xs:enumeration value="custom_3"/>
+      <xs:enumeration value="custom_4"/>
+      <xs:enumeration value="custom_5"/>
+      <xs:enumeration value="custom_6"/>
+      <xs:enumeration value="custom_7"/>
+      <xs:enumeration value="custom_8"/>
     </xs:restriction>
   </xs:simpleType>
+  <!-- 1000 0111 135 -->
   <!-- Edge shape -->
   <xs:simpleType name="edge-shape-type">
     <xs:restriction base="xs:string">
@@ -76,6 +88,15 @@
       <xs:enumeration value="dotted"/>
       <xs:enumeration value="dashed"/>
       <xs:enumeration value="double"/>
+      <xs:enumeration value="custom_1"/>
+      <xs:enumeration value="custom_2"/>
+      <xs:enumeration value="custom_3"/>
+      <xs:enumeration value="custom_4"/>
+      <xs:enumeration value="custom_5"/>
+      <xs:enumeration value="custom_6"/>
+      <xs:enumeration value="custom_7"/>
+      <xs:enumeration value="custom_8"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
+<!-- 1000 0111 135 -->
